@@ -11,3 +11,5 @@ variable iam_roles {
       r2 = "roles/storage.admin" 
   }
 }
+
+variable create_ci_cd_service_account {}
