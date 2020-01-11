@@ -10,13 +10,13 @@ resource "google_project_iam_member" "project" {
   for_each = var.iam_roles
   project  = var.project
   role     = each.value
-  member   = "serviceAccount:${google_service_account.ci_cd.email}"
+  member   = "serviceAccount:${google_service_account.ci_cd[0].email}"
 
-  depends_on = [google_service_account.ci_cd]
+  depends_on = [google_service_account.ci_cd[0]]
 }
 
 resource "google_service_account_key" "key_json" {
-  service_account_id = google_service_account.ci_cd.id
+  service_account_id = google_service_account.ci_cd[0].id
 
-  depends_on = [google_service_account.ci_cd]
+  depends_on = [google_service_account.ci_cd[0]]
 }
