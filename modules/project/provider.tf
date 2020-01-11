@@ -7,4 +7,5 @@ terraform {
 provider "google" {
   version = "~> 2.7"
   region  = "europe-west-1"
+  credentials = var.credentials
 }

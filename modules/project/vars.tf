@@ -1,3 +1,7 @@
+variable credentials {
+  description = "JSON encoded service account credentials file with rights to run the Project Factory. If this file is absent Terraform will fail to provision the Project."
+}
+
 variable name {
   description = "The name for the project "
 }
