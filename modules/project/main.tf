@@ -20,4 +20,5 @@ module "ci_cd_sa" {
   create_ci_cd_service_account = var.create_ci_cd_service_account
 
   project = module.project_factory.project_name
+  iam_roles = var.ci_cd_sa_iam_roles
 }

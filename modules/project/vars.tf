@@ -28,3 +28,13 @@ variable create_ci_cd_service_account {
   type        = bool
   default     = true
 }
+
+variable "ci_cd_sa_iam_roles" {
+  type = map
+  default = {
+      r0 = "roles/iam.serviceAccountUser",
+      r1 = "roles/run.admin",
+      r2 = "roles/storage.admin" 
+  }
+  description = "Map of IAM Roles to assign to the CI/CD Pipeline Service Account"
+}
