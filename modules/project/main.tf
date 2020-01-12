@@ -3,7 +3,7 @@ module "project_factory" {
   version = "6.1"
 
   name              = var.name
-  random_project_id = true
+  random_project_id = false
 
   default_service_account = "deprivilege"
 
