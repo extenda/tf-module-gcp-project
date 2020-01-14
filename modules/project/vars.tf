@@ -6,21 +6,32 @@ variable name {
   description = "The name for the project "
 }
 
+variable "random_project_id" {
+  type = bool
+  description = "Adds a suffix of 4 random characters to the project_id"
+  default = true
+}
+
 variable org_id {
   description = "The organization ID"
 }
 
 variable folder_id {
-  description = "The ID of a folder to host this project  "
+  description = "The ID of a folder to host this project"
 }
 
 variable billing_account {
-  description = "The ID of the billing account to associate this project with "
+  description = "The ID of the billing account to associate this project with"
 }
 
 variable activate_apis {
   type = list(string)
   description = "The list of apis to activate within the project"
+}
+
+variable default_service_account {
+  description = "Project default service account setting: can be one of delete, deprivilege, disable, or keep."
+  default = "deprivilege"
 }
 
 variable create_ci_cd_service_account {

@@ -3,9 +3,9 @@ module "project_factory" {
   version = "6.1"
 
   name              = var.name
-  random_project_id = false
+  random_project_id = var.random_project_id
 
-  default_service_account = "deprivilege"
+  default_service_account = var.default_service_account
 
   org_id          = var.org_id
   folder_id       = var.folder_id
