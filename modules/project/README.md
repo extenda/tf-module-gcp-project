@@ -24,6 +24,7 @@ No provider.
 | Name | Description |
 |------|-------------|
 | ci\_cd\_service\_account\_email | n/a |
+| ci\_cd\_service\_account\_private\_key\_encoded | n/a |
 | cloudrun\_service\_account\_email | n/a |
 | project\_id | n/a |
 | project\_name | n/a |

@@ -14,6 +14,10 @@ output ci_cd_service_account_email {
   value = module.ci_cd_sa.email
 }
 
+output ci_cd_service_account_private_key_encoded {
+  value = module.ci_cd_sa.private_key_encoded
+}
+
 output cloudrun_service_account_email {
   value = module.cloudrun_sa.email
 }
