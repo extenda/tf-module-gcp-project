@@ -34,6 +34,8 @@ variable default_service_account {
   default = "deprivilege"
 }
 
+## CI/CD Service Account
+
 variable create_ci_cd_service_account {
   description = "If the CI/CD Service Account should be created"
   type        = bool
@@ -48,4 +50,20 @@ variable "ci_cd_sa_iam_roles" {
       r2 = "roles/storage.admin" 
   }
   description = "Map of IAM Roles to assign to the CI/CD Pipeline Service Account"
+}
+
+## Cloud Run Service Account
+
+variable create_cloudrun_service_account {
+  description = "If the CloudRun Runtime Service Account should be created"
+  type        = bool
+  default     = true
+}
+
+variable "cloudrun_sa_iam_roles" {
+  type = map
+  default = {
+      r0 = "roles/editor"
+  }
+  description = "Map of IAM Roles to assign to the CloudRun Runtime Service Account"
 }

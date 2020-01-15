@@ -17,8 +17,17 @@ module "project_factory" {
 module "ci_cd_sa" {
   source = "../ci-cd-service-account"
 
-  create_ci_cd_service_account = var.create_ci_cd_service_account
+  create_service_account = var.create_ci_cd_service_account
 
-  project = module.project_factory.project_id
-  iam_roles = var.ci_cd_sa_iam_roles
+  project_id = module.project_factory.project_id
+  iam_roles  = var.ci_cd_sa_iam_roles
+}
+
+module "cloudrun_sa" {
+  source = "../cloud-run-service-account"
+
+  create_service_account = var.create_cloudrun_service_account
+
+  project_id = module.project_factory.project_id
+  iam_roles  = var.cloudrun_sa_iam_roles
 }
