@@ -16,6 +16,5 @@
 
 | Name | Description |
 |------|-------------|
-| private\_key | n/a |
-| private\_key\_encoded | n/a |
+| service\_account\_email | n/a |
 

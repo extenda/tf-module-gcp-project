@@ -14,9 +14,3 @@ resource "google_project_iam_member" "project" {
 
   depends_on = [google_service_account.sa[0]]
 }
-
-resource "google_service_account_key" "key_json" {
-  service_account_id = google_service_account.sa[0].id
-
-  depends_on = [google_service_account.sa[0]]
-}
