@@ -23,6 +23,8 @@ No provider.
 
 | Name | Description |
 |------|-------------|
+| ci\_cd\_service\_account\_email | n/a |
+| cloudrun\_service\_account\_email | n/a |
 | project\_id | n/a |
 | project\_name | n/a |
 | service\_account\_email | n/a |

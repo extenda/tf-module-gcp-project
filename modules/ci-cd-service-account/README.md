@@ -16,6 +16,7 @@
 
 | Name | Description |
 |------|-------------|
+| email | n/a |
 | private\_key | n/a |
 | private\_key\_encoded | n/a |
 
