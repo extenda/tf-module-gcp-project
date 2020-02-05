@@ -1,23 +1,34 @@
 output project_id {
-  value = module.project_factory.project_id
+  description = "The project ID"
+  value       = module.project_factory.project_id
 }
 
 output project_name {
-  value = module.project_factory.project_name
+  description = "The project name"
+  value       = module.project_factory.project_name
 }
 
 output service_account_email {
-  value = module.project_factory.service_account_email
+  description = "The default service acccount email"
+  value       = module.project_factory.service_account_email
 }
 
 output ci_cd_service_account_email {
-  value = module.ci_cd_sa.email
+  description = "The CI/CD pipeline service account email"
+  value       = module.ci_cd_sa.email
 }
 
 output ci_cd_service_account_private_key_encoded {
-  value = module.ci_cd_sa.private_key_encoded
+  description = "The CI/CD pipeline service account base64 encoded JSON key"
+  value       = module.ci_cd_sa.private_key_encoded
 }
 
 output cloudrun_service_account_email {
-  value = module.cloudrun_sa.email
+  description = "The Cloud Run service account email"
+  value       = module.cloudrun_sa.email
+}
+
+output secret_manager_service_account_private_key_encoded {
+  description = "The Cloud Run service account base64 encoded JSON key"
+  value       = module.secret_manager_sa.private_key_encoded
 }

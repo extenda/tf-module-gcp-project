@@ -1,8 +1,8 @@
 resource "google_service_account" "sa" {
   count = var.create_service_account ? 1 : 0
 
-  account_id   = "ci-cd-pipeline"
-  display_name = "CI/CD Service Account"
+  account_id   = var.account_id
+  display_name = var.display_name
   project      = var.project_id
 }
 
