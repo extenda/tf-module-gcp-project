@@ -21,6 +21,7 @@ output ci_cd_service_account_email {
 output ci_cd_service_account_private_key_encoded {
   description = "The CI/CD pipeline service account base64 encoded JSON key"
   value       = module.ci_cd_sa.private_key_encoded
+  sensitive   = true
 }
 
 output cloudrun_service_account_email {
@@ -31,4 +32,5 @@ output cloudrun_service_account_email {
 output secret_manager_service_account_private_key_encoded {
   description = "The Cloud Run service account base64 encoded JSON key"
   value       = module.secret_manager_sa.private_key_encoded
+  sensitive   = true
 }
