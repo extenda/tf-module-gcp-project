@@ -15,19 +15,37 @@ module "project_factory" {
 }
 
 module "ci_cd_sa" {
-  source = "../ci-cd-service-account"
+  source = "../service-account"
 
   create_service_account = var.create_ci_cd_service_account
 
-  project_id = module.project_factory.project_id
-  iam_roles  = var.ci_cd_sa_iam_roles
+  project_id   = module.project_factory.project_id
+  account_id   = "ci-cd-pipeline"
+  display_name = "CI/CD Service Account"
+  iam_roles    = var.ci_cd_sa_iam_roles
 }
 
 module "cloudrun_sa" {
-  source = "../cloud-run-service-account"
+  source = "../service-account"
 
   create_service_account = var.create_cloudrun_service_account
 
-  project_id = module.project_factory.project_id
-  iam_roles  = var.cloudrun_sa_iam_roles
+  project_id   = module.project_factory.project_id
+  account_id   = "cloudrun-runtime"
+  display_name = "Cloud Run Runtime Service Account"
+  iam_roles    = var.cloudrun_sa_iam_roles
+}
+
+module "secret_manager_sa" {
+  source = "../service-account"
+
+  create_service_account = var.create_secret_manager_service_account
+
+  project_id   = module.project_factory.project_id
+  account_id   = "secret-accessor"
+  display_name = "Secret Manager Accessor Service Account"
+
+  iam_roles = {
+    r0 : "roles/secretmanager.secretAccessor"
+  }
 }
