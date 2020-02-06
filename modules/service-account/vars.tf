@@ -10,9 +10,9 @@ variable display_name {
   description = "The service account display name"
 }
 
-# Role permission bindings
 variable iam_roles {
-  type = map
+  type        = map
+  description = "Role permission bindings"
 }
 
 variable create_service_account {
