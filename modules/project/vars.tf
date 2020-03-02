@@ -35,6 +35,19 @@ variable default_service_account {
   default     = "deprivilege"
 }
 
+## Terraform state bucket
+variable "tribe" {
+  description = "Tribe name that project belongs with"
+}
+
+variable "clan" {
+  description = "Clan name that project belongs with"
+}
+
+variable "environment" {
+  description = "Environment (prod/staging) that project belongs with"
+}
+
 ## CI/CD Service Account
 
 variable create_ci_cd_service_account {

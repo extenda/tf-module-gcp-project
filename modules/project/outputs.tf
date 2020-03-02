@@ -34,3 +34,8 @@ output secret_manager_service_account_private_key_encoded {
   value       = module.secret_manager_sa.private_key_encoded
   sensitive   = true
 }
+
+output terraform_state_bucket {
+  description = "Bucket for saving terraform state of project resources"
+  value       = module.project_factory.project_bucket_self_link
+}
