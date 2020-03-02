@@ -37,15 +37,15 @@ variable default_service_account {
 
 ## Terraform state bucket
 variable tribe {
-  description = "Tribe name that project belongs with"
+  description = "Tribe name that project belongs to"
 }
 
 variable clan {
-  description = "Clan name that project belongs with"
+  description = "Clan name that project belongs to"
 }
 
 variable environment {
-  description = "Environment (prod/staging) that project belongs with"
+  description = "Environment (prod/staging) that project belongs to"
 }
 
 ## CI/CD Service Account
