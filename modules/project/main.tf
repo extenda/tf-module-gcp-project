@@ -11,6 +11,10 @@ module "project_factory" {
   folder_id       = var.folder_id
   billing_account = var.billing_account
 
+  bucket_name     = "tf-state-${var.tribe}-${var.clan}-${var.environment}-${var.name}"
+  bucket_location = "EU"
+  bucket_project  = var.name
+
   activate_apis = var.activate_apis
 }
 
