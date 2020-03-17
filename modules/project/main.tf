@@ -53,14 +53,3 @@ module "secret_manager_sa" {
     r0 : "roles/secretmanager.secretAccessor"
   }
 }
-
-module "service_sa" {
-  source = "../service-account"
-
-  create_service_account = var.create_service_account
-  for_each     = var.services
-  project_id   = module.project_factory.project_id
-  account_id   = each.key
-  display_name = "${var.account_id} Service Account"
-  iam_roles    = each.value
-}

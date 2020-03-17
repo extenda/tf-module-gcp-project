@@ -86,16 +86,3 @@ variable create_secret_manager_service_account {
   type        = bool
   default     = false
 }
-
-## Service's Service Account
-
-variable create_service_account {
-  description = "If the Service Account for Service X should be created"
-  type        = bool
-  default     = true
-}
-
-variable services {
-  type = map
-  description = "The service account ID"
-}
