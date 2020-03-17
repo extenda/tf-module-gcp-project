@@ -95,11 +95,7 @@ variable create_service_account {
   default     = true
 }
 
-variable account_id {
+variable services {
+  type = map
   description = "The service account ID"
-}
-
-variable sa_iam_roles {
-  type        = map
-  description = "Role permission bindings"
 }
