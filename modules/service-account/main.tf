@@ -1,34 +1,21 @@
-locals {
-  names                 = toset(var.names)
-  name_role_pairs       = setproduct(local.names, toset(var.project_roles))
-  project_roles_map_data = zipmap(
-    [for pair in local.name_role_pairs : "${pair[0]}-${pair[1]}"],
-    [for pair in local.name_role_pairs : {
-      name = pair[0]
-      role = pair[1]
-    }]
-  )
-}
-
 resource "google_service_account" "sa" {
-  for_each     = local.names
-  account_id    = lower(each.value)
-  display_name  = "${lower(each.value)} service account"
+  for_each = {
+        for key, value in var.services:
+        key => key
+  }
+  account_id    = var.services[each.value].name
+  display_name  = var.display_name
   project       = var.project_id
 }
 
 resource "google_project_iam_member" "project-roles" {
-  for_each = local.project_roles_map_data
-
+  for_each = {
+        for key, value in var.services:
+        key => key
+  }
   project = var.project_id
 
-  role = element(
-    split(
-      "=>",
-      each.value.role
-    ),
-    1,
-  )
+  role = var.services[each.value].iam_roles[0]
 
-  member = "serviceAccount:${google_service_account.sa[each.value.name].email}"
+  member = "serviceAccount:${google_service_account.sa[0].email}"
 }
