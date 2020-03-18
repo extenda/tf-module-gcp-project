@@ -6,21 +6,21 @@ variable project_id {
 #   description = "The service account ID"
 # }
 
-variable services {
-  type        = any
-  description = "TODO"
+variable names {
+  type        = list(string)
+  description = "Names of the service accounts to create."
 }
 
-variable display_name {
-  description = "The service account display name"
-}
+# variable display_name {
+#   description = "The service account display name"
+# }
 
-variable iam_roles {
-  type        = map
+variable project_roles {
+  type        = list(string)
   description = "Role permission bindings"
 }
 
-variable create_service_account {
-  type        = bool
-  description = "If this Service Account should be created."
-}
+# variable create_service_account {
+#   type        = bool
+#   description = "If this Service Account should be created."
+# }
