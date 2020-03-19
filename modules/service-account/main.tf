@@ -1,31 +1,30 @@
 locals {
- association_list =  flatten([
-    for service, roles in var.services : [
-      for role in roles : {
-        "${service}-${role}" = {
-          "role" = role
-          "service" = service
-          }
-      }
+  service_roles = flatten([for service_key, service in var.services : [
+    for role_key, role in service.iam_roles : {
+      service_key = service_key
+      role_key    = role_key
+      service_id  = google_service_account.sa[service_key].account_id
+      role_id     = role
+    }
     ]
- ])
- 
-association_map = { for item in local.association_list: 
-     keys(item)[0] => values(item)[0]
-   }
+  ])
 }
 
 resource "google_service_account" "sa" {
-  for_each      = local.association_map
-  account_id    = each.value.service
-  display_name  = var.display_name
-  project       = var.project_id
+  for_each = {
+    for key, value in var.services :
+    key => key
+  }
+  account_id   = var.services[each.value].name
+  display_name = "${var.services[each.value].name} Service Account"
+  project      = var.project_id
 }
 
 resource "google_project_iam_member" "project-roles" {
-  for_each = local.association_map
-  project  = var.project_id
-  role     = each.value.role
-
-  member = "serviceAccount:${google_service_account.sa[each.key].email}"
+  for_each = {
+    for service in local.service_roles : "${service.service_key}.${service.role_key}" => service
+  }
+  project = var.project_id
+  role    = each.value.role_id
+  member  = "serviceAccount:${google_service_account.sa[each.value.service_key].email}"
 }
