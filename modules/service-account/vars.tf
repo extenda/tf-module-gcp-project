@@ -6,13 +6,16 @@ variable project_id {
 #   description = "The service account ID"
 # }
 
-variable services {
-  type = list(object({
-    name = string
-    iam_roles = list(string)
-  }))
-}
+# variable services {
+#   type = list(object({
+#     name = string
+#     iam_roles = list(string)
+#   }))
+# }
 
+variable services {
+  type = any
+}
 # variable names {
 #   type        = list(string)
 #   description = "Names of the service accounts to create."
