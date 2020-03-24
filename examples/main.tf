@@ -1,6 +1,7 @@
 module service-account {
-  source       = "../modules/service-account"
-  project_id   = "project-test-id"
+  source                 = "../modules/service-account"
+  project_id             = "project-test-id"
+  create_service_account = true
   services = [
     {
       name = "my-service-1"

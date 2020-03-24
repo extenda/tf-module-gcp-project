@@ -23,10 +23,8 @@ module "ci_cd_sa" {
 
   create_service_account = var.create_ci_cd_service_account
 
-  project_id   = module.project_factory.project_id
-  account_id   = "ci-cd-pipeline"
-  display_name = "CI/CD Service Account"
-  iam_roles    = var.ci_cd_sa_iam_roles
+  project_id = module.project_factory.project_id
+  services   = var.ci_cd_sa
 }
 
 module "cloudrun_sa" {
@@ -34,10 +32,8 @@ module "cloudrun_sa" {
 
   create_service_account = var.create_cloudrun_service_account
 
-  project_id   = module.project_factory.project_id
-  account_id   = "cloudrun-runtime"
-  display_name = "Cloud Run Runtime Service Account"
-  iam_roles    = var.cloudrun_sa_iam_roles
+  project_id = module.project_factory.project_id
+  services   = var.cloudrun_sa
 }
 
 module "secret_manager_sa" {
@@ -45,11 +41,15 @@ module "secret_manager_sa" {
 
   create_service_account = var.create_secret_manager_service_account
 
-  project_id   = module.project_factory.project_id
-  account_id   = "secret-accessor"
-  display_name = "Secret Manager Accessor Service Account"
+  project_id = module.project_factory.project_id
+  services   = var.secret_manager_sa
+}
 
-  iam_roles = {
-    r0 : "roles/secretmanager.secretAccessor"
-  }
+module "services_sa" {
+  source = "../service-account"
+
+  create_service_account = var.create_service_sa
+
+  project_id = module.project_factory.project_id
+  services   = var.services
 }
