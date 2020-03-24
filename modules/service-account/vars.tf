@@ -9,6 +9,7 @@ variable services {
   }))
 }
 
-# variable display_name {
-#   description = "The service account display name"
-# }
+variable create_service_account {
+  type        = bool
+  description = "If this Service Account should be created."
+}
