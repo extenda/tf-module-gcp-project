@@ -100,7 +100,7 @@ variable cloudrun_sa {
 variable create_secret_manager_service_account {
   description = "If the Secret Manager Access Service Account should be created"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable secret_manager_sa {
@@ -124,10 +124,11 @@ variable services {
     name      = string
     iam_roles = list(string)
   }))
+  description = "Map of IAM Roles to assign to the Services Service Account"
 }
 
 variable create_service_sa {
-  description = "If the Service Account for new Service should be created"
+  description = "If the Service Account for new Services should be created"
   type        = bool
   default     = true
 }

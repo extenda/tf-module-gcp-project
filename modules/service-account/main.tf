@@ -3,7 +3,7 @@ locals {
     for role_key, role in service.iam_roles : {
       service_key = service_key
       role_key    = role_key
-      service_id  = google_service_account.sa[service_key].account_id
+      service_id  = var.create_service_account == true ? google_service_account.sa[service_key].account_id : ""
       role_id     = role
     }
     ]
@@ -11,7 +11,6 @@ locals {
 }
 
 resource "google_service_account" "sa" {
-  # for_each = var.create_service_account == true ? {for key, value in var.services: key => key} : {}
   for_each = {
     for key, value in var.services :
     key => key
@@ -23,7 +22,6 @@ resource "google_service_account" "sa" {
 }
 
 resource "google_project_iam_member" "project-roles" {
-  # for_each = var.create_service_account == true ? {for service in local.service_roles: "${service.service_key}.${service.role_key}" => service} : {}
   for_each = {
     for service in local.service_roles :
     "${service.service_key}.${service.role_key}" => service
@@ -37,7 +35,6 @@ resource "google_project_iam_member" "project-roles" {
 }
 
 resource "google_service_account_key" "key_json" {
-  # for_each = var.create_service_account == true ? {for key, value in var.services: key => key} : {}
   for_each = {
     for key, value in var.services :
     key => key
