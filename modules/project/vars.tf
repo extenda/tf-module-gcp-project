@@ -52,13 +52,21 @@ variable create_ci_cd_service_account {
   default     = true
 }
 
-variable ci_cd_sa_iam_roles {
-  type = map
-  default = {
-    r0 = "roles/iam.serviceAccountUser",
-    r1 = "roles/run.admin",
-    r2 = "roles/storage.admin"
-  }
+variable ci_cd_sa {
+  type = list(object({
+    name      = string
+    iam_roles = list(string)
+  }))
+  default = [
+    {
+      name = "ci-cd-pipeline"
+      iam_roles = [
+        "roles/iam.serviceAccountUser",
+        "roles/run.admin",
+        "roles/storage.admin"
+      ]
+    }
+  ]
   description = "Map of IAM Roles to assign to the CI/CD Pipeline Service Account"
 }
 
@@ -70,12 +78,20 @@ variable create_cloudrun_service_account {
   default     = true
 }
 
-variable cloudrun_sa_iam_roles {
-  type = map
-  default = {
-    r0 = "roles/editor"
-    r1 = "roles/secretmanager.secretAccessor"
-  }
+variable cloudrun_sa {
+  type = list(object({
+    name      = string
+    iam_roles = list(string)
+  }))
+  default = [
+    {
+      name = "cloudrun-runtime"
+      iam_roles = [
+        "roles/editor",
+        "roles/secretmanager.secretAccessor"
+      ]
+    }
+  ]
   description = "Map of IAM Roles to assign to the CloudRun Runtime Service Account"
 }
 
@@ -85,4 +101,34 @@ variable create_secret_manager_service_account {
   description = "If the Secret Manager Access Service Account should be created"
   type        = bool
   default     = false
+}
+
+variable secret_manager_sa {
+  type = list(object({
+    name      = string
+    iam_roles = list(string)
+  }))
+  default = [
+    {
+      name = "secret-accessor"
+      iam_roles = [
+        "roles/secretmanager.secretAccessor"
+      ]
+    }
+  ]
+  description = "Map of IAM Roles to assign to the Secret Manager Access Service Account"
+}
+
+variable services {
+  type = list(object({
+    name      = string
+    iam_roles = list(string)
+  }))
+  description = "Map of IAM Roles to assign to the Services Service Account"
+}
+
+variable create_service_sa {
+  description = "If the Service Account for new Services should be created"
+  type        = bool
+  default     = true
 }
