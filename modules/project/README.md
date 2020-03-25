@@ -8,8 +8,8 @@ No provider.
 |------|-------------|------|---------|:-----:|
 | activate\_apis | The list of apis to activate within the project | `list(string)` | n/a | yes |
 | billing\_account | The ID of the billing account to associate this project with | `any` | n/a | yes |
+| bucket\_name | The name of the bucket that will contain terraform state - must be globally unique | `any` | n/a | yes |
 | ci\_cd\_sa | Map of IAM Roles to assign to the CI/CD Pipeline Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/iam.serviceAccountUser",<br>      "roles/run.admin",<br>      "roles/storage.admin"<br>    ],<br>    "name": "ci-cd-pipeline"<br>  }<br>]<br></pre> | no |
-| clan\_name | Clan name that project belongs to | `any` | n/a | yes |
 | cloudrun\_sa | Map of IAM Roles to assign to the CloudRun Runtime Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/editor",<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "cloudrun-runtime"<br>  }<br>]<br></pre> | no |
 | create\_ci\_cd\_service\_account | If the CI/CD Service Account should be created | `bool` | `true` | no |
 | create\_cloudrun\_service\_account | If the CloudRun Runtime Service Account should be created | `bool` | `true` | no |
@@ -23,7 +23,6 @@ No provider.
 | random\_project\_id | Adds a suffix of 4 random characters to the project\_id | `bool` | `true` | no |
 | secret\_manager\_sa | Map of IAM Roles to assign to the Secret Manager Access Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "secret-accessor"<br>  }<br>]<br></pre> | no |
 | services | Map of IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | n/a | yes |
-| tribe\_name | Tribe name that project belongs to | `any` | n/a | yes |
 
 ## Outputs
 
