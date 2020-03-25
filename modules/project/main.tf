@@ -11,7 +11,7 @@ module "project_factory" {
   folder_id       = var.folder_id
   billing_account = var.billing_account
 
-  bucket_name     = "tf-state-${var.tribe_name}-${var.clan_name}-${var.name}"
+  bucket_name     = var.bucket_name
   bucket_location = "EU"
   bucket_project  = var.name
 
