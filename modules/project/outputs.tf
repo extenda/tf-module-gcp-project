@@ -37,5 +37,5 @@ output secret_manager_service_account_private_key_encoded {
 
 output terraform_state_bucket {
   description = "Bucket for saving terraform state of project resources"
-  value       = "tf-state-${var.tribe_name}-${var.clan_name}-${var.name}"
+  value       = var.bucket_name
 }
