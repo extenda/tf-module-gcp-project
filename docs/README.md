@@ -24,13 +24,13 @@ You will need to migrate your state.
     curl -O https://raw.githubusercontent.com/extenda/tf-module-gcp-project/master/docs/migration_v0.3.2_v0.4.0.sh
     chmod +x migration_v0.3.2_v0.4.0.sh
     ```
-    
+
 2. Set you environment variable GOOGLE_PROJECT=PROJECT_ID
 
 3.  Back up your Terraform state:
 
     ```sh
-    terraform state pull >> state.json
+    terraform state pull > state.json
     ```
 
 4. Execute the migration script:
