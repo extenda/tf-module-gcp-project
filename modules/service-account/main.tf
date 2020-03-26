@@ -21,6 +21,32 @@ resource "google_service_account" "sa" {
   project      = var.project_id
 }
 
+
+resource "gsuite_group" "service_group" {
+  for_each = {
+    for key, value in var.services :
+    key => key
+    if var.create_service_account == true
+  }
+  email       = "${var.services[each.value].name}@extenda.io"
+  name        = "${var.services[each.value].name} group"
+  description = "Service GSuite Group"
+}
+
+
+resource "gsuite_group_member" "service_account_sa_group_member" {
+  for_each = {
+    for service in local.service_roles :
+      "${service.service_key}.${service.role_key}" => service
+      if var.create_service_account == true
+  }
+  #group = "${var.services[each.value].name}@extenda.io"
+  group = "${var.services[each.value.service_key].name}@extenda.io"
+  email = "serviceAccount:${google_service_account.sa[each.value.service_key].email}"
+  role  = "MEMBER"
+}
+
+
 resource "google_project_iam_member" "project-roles" {
   for_each = {
     for service in local.service_roles :
