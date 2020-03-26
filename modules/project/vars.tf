@@ -120,6 +120,14 @@ variable services {
     name      = string
     iam_roles = list(string)
   }))
+  default = [
+    {
+      name = "foo"
+      iam_roles = [
+        "bar"
+      ]
+    }
+  ]
   description = "Map of IAM Roles to assign to the Services Service Account"
 }
 
