@@ -8,6 +8,7 @@ locals {
     }
     ]
   ])
+  impersonated_user_email = coalesce(var.impersonated_user_email, format("%s@%s", "terraform", var.domain))
 }
 
 resource "google_service_account" "sa" {
@@ -21,11 +22,11 @@ resource "google_service_account" "sa" {
   project      = var.project_id
 }
 
-resource "google_project_iam_member" "project-roles" {
+resource "google_project_iam_member" "project_roles" {
   for_each = {
     for service in local.service_roles :
     "${service.service_key}.${service.role_key}" => service
-    if var.create_service_account == true
+    if var.create_service_account == true && var.create_service_group == false
   }
   project = var.project_id
   role    = each.value.role_id
@@ -43,4 +44,58 @@ resource "google_service_account_key" "key_json" {
   service_account_id = var.services[each.value].name
 
   depends_on = [google_service_account.sa]
+}
+
+resource "gsuite_group" "service_group" {
+  for_each = {
+    for key, value in var.services :
+    key => key
+    if var.create_service_account == true && var.create_service_group == true
+  }
+  email       = "${var.service_group_name}-${var.services[each.value].name}@${var.domain}"
+  name        = "${var.service_group_name}-${var.services[each.value].name}"
+  description = "${var.services[each.value].name} GSuite Group"
+
+  depends_on = [google_service_account.sa]
+}
+
+
+resource "gsuite_group_member" "service_account_sa_group_member" {
+  for_each = {
+    for key, value in var.services :
+    key => key
+    if var.create_service_account == true && var.create_service_group == true
+  }
+  group = "${var.service_group_name}-${var.services[each.value].name}@${var.domain}"
+  email = google_service_account.sa[each.value].email
+  role  = "MEMBER"
+
+  depends_on = [gsuite_group.service_group]
+}
+
+resource "gsuite_group_member" "clan_group_member" {
+  for_each = {
+    for key, value in var.services :
+    key => key
+    if var.create_service_account == true && var.create_service_group == true
+  }
+  group = "${var.service_group_name}-${var.services[each.value].name}@${var.domain}"
+  email = "${var.clan_gsuite_group}@${var.domain}"
+  role  = "MEMBER"
+
+  depends_on = [gsuite_group.service_group]
+}
+
+
+resource "google_project_iam_member" "service_group_roles" {
+  for_each = {
+    for service in local.service_roles :
+    "${service.service_key}.${service.role_key}" => service
+    if var.create_service_account == true && var.create_service_group == true
+  }
+  project = var.project_id
+  role    = each.value.role_id
+  member  = "group:${var.service_group_name}-${var.services[each.value.service_key].name}@${var.domain}"
+
+  depends_on = [gsuite_group.service_group]
 }

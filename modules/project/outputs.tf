@@ -39,3 +39,8 @@ output terraform_state_bucket {
   description = "Bucket for saving terraform state of project resources"
   value       = var.bucket_name
 }
+
+output service_emails {
+  description = "Services service account emails"
+  value = module.services_sa.email
+}

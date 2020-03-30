@@ -2,6 +2,11 @@ module service-account {
   source                 = "../modules/service-account"
   project_id             = "project-test-id"
   create_service_account = true
+  create_service_group   = true
+  service_group_name     = "clan1-tribe1-staging"
+  clan_gsuite_group      = "tribe-tribe1-clan1"
+  domain                 = "extenda.io"
+
   services = [
     {
       name = "my-service-1"

@@ -22,34 +22,50 @@ module "ci_cd_sa" {
   source = "../service-account"
 
   create_service_account = var.create_ci_cd_service_account
+  create_service_group   = var.create_ci_cd_group
+  service_group_name     = var.service_group_name
+  clan_gsuite_group      = var.clan_gsuite_group
 
   project_id = module.project_factory.project_id
   services   = var.ci_cd_sa
+  domain     = var.domain
 }
 
 module "cloudrun_sa" {
   source = "../service-account"
 
   create_service_account = var.create_cloudrun_service_account
+  create_service_group   = var.create_cloudrun_group
+  service_group_name     = var.service_group_name
+  clan_gsuite_group      = var.clan_gsuite_group
 
   project_id = module.project_factory.project_id
   services   = var.cloudrun_sa
+  domain     = var.domain
 }
 
 module "secret_manager_sa" {
   source = "../service-account"
 
   create_service_account = var.create_secret_manager_service_account
+  create_service_group   = var.create_secret_manager_group
+  service_group_name     = var.service_group_name
+  clan_gsuite_group      = var.clan_gsuite_group
 
   project_id = module.project_factory.project_id
   services   = var.secret_manager_sa
+  domain     = var.domain
 }
 
 module "services_sa" {
   source = "../service-account"
 
   create_service_account = var.create_service_sa
+  create_service_group   = var.create_services_group
+  service_group_name     = var.service_group_name
+  clan_gsuite_group      = var.clan_gsuite_group
 
   project_id = module.project_factory.project_id
   services   = var.services
+  domain     = var.domain
 }
