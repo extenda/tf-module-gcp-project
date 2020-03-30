@@ -48,6 +48,12 @@ variable create_ci_cd_service_account {
   default     = true
 }
 
+variable create_ci_cd_group {
+  description = "If the Service GSuite Group should be created for the CI/CD Service Account"
+  type        = bool
+  default     = false
+}
+
 variable ci_cd_sa {
   type = list(object({
     name      = string
@@ -74,6 +80,12 @@ variable create_cloudrun_service_account {
   default     = true
 }
 
+variable create_cloudrun_group {
+  description = "If the Service GSuite Group should be created for the CloudRun Runtime Service Account"
+  type        = bool
+  default     = false
+}
+
 variable cloudrun_sa {
   type = list(object({
     name      = string
@@ -95,6 +107,12 @@ variable cloudrun_sa {
 
 variable create_secret_manager_service_account {
   description = "If the Secret Manager Access Service Account should be created"
+  type        = bool
+  default     = false
+}
+
+variable create_secret_manager_group {
+  description = "If the Service GSuite Group should be created for the Secret Manager Access Service Account"
   type        = bool
   default     = false
 }
@@ -135,4 +153,26 @@ variable create_service_sa {
   description = "If the Service Account for new Services should be created"
   type        = bool
   default     = true
+}
+
+variable create_services_group {
+  description = "If the Service GSuite Group should be created for the Services (services variable)"
+  type        = bool
+  default     = true
+}
+
+variable service_group_name {
+  type        = string
+  description = "The name of the group that will be created for a service"
+  default     = ""
+}
+
+variable clan_gsuite_group {
+  type        = string
+  description = "The name of the clan group that needs to be added to the Service GSuite Group"
+}
+
+variable domain {
+  type        = string
+  description = "Domain name of the Organization"
 }
