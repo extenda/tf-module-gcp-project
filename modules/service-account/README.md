@@ -17,6 +17,7 @@ For GSuite Group creation you must use a Service Account which is granted GSuite
 | create\_service\_account | If this Service Account should be created | `bool` | n/a | yes |
 | create\_service\_group | If the Service GSuite Group should be created | `bool` | n/a | yes |
 | domain | Domain name of the Organization | `string` | n/a | yes |
+| env\_name | Environment name (staging/prod). Creation of some resources depends on env_name | `string` | n/a | yes |
 | impersonated\_user\_email | Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>` | `string` | `""` | no |
 | project\_id | Project ID where we will create the service accounts | `any` | n/a | yes |
 | services | Map of IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | n/a | yes |

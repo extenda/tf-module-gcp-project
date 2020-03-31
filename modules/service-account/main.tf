@@ -77,7 +77,7 @@ resource "gsuite_group_member" "clan_group_member" {
   for_each = {
     for key, value in var.services :
     key => key
-    if var.create_service_account == true && var.create_service_group == true
+    if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging"
   }
   group = "${var.service_group_name}-${var.services[each.value].name}@${var.domain}"
   email = "${var.clan_gsuite_group}@${var.domain}"

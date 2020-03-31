@@ -23,6 +23,7 @@ No provider.
 | credentials | JSON encoded service account credentials file with rights to run the Project Factory. If this file is absent Terraform will fallback to GOOGLE\_APPLICATION\_CREDENTIALS env variable. | `any` | n/a | yes |
 | default\_service\_account | Project default service account setting: can be one of delete, deprivilege, disable, or keep. | `string` | `"deprivilege"` | no |
 | domain | Domain name of the Organization | `string` | n/a | yes |
+| env\_name | Environment name (staging/prod). Creation of some resources depends on env_name | `string` | "" | yes |
 | folder\_id | The ID of a folder to host this project | `any` | n/a | yes |
 | name | The name for the project | `any` | n/a | yes |
 | org\_id | The organization ID | `any` | n/a | yes |

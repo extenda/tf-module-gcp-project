@@ -40,3 +40,8 @@ variable clan_gsuite_group {
   type        = string
   description = "The name of the clan group that needs to be added to the Service GSuite Group"
 }
+
+variable env_name {
+  type        = string
+  description = "Environment name (staging/prod). Creation of some resources depends on env_name"
+}

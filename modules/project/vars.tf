@@ -170,9 +170,16 @@ variable service_group_name {
 variable clan_gsuite_group {
   type        = string
   description = "The name of the clan group that needs to be added to the Service GSuite Group"
+  default     = ""
 }
 
 variable domain {
   type        = string
   description = "Domain name of the Organization"
+}
+
+variable env_name {
+  type        = string
+  description = "Environment name (staging/prod). Creation of some resources depends on env_name"
+  default     = ""
 }

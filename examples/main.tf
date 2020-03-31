@@ -6,6 +6,7 @@ module service-account {
   service_group_name     = "clan1-tribe1-staging"
   clan_gsuite_group      = "tribe-tribe1-clan1"
   domain                 = "extenda.io"
+  env_name               = "staging"
 
   services = [
     {
