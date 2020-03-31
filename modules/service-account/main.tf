@@ -41,7 +41,7 @@ resource "google_service_account_key" "key_json" {
     key => key
     if var.create_service_account == true
   }
-  service_account_id = var.services[each.value].name
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${var.services[each.value].name}"
 
   depends_on = [google_service_account.sa]
 }
