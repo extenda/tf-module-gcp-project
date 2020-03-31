@@ -29,6 +29,7 @@ module "ci_cd_sa" {
   project_id = module.project_factory.project_id
   services   = var.ci_cd_sa
   domain     = var.domain
+  env_name   = var.env_name
 }
 
 module "cloudrun_sa" {
@@ -42,6 +43,7 @@ module "cloudrun_sa" {
   project_id = module.project_factory.project_id
   services   = var.cloudrun_sa
   domain     = var.domain
+  env_name   = var.env_name
 }
 
 module "secret_manager_sa" {
@@ -55,6 +57,7 @@ module "secret_manager_sa" {
   project_id = module.project_factory.project_id
   services   = var.secret_manager_sa
   domain     = var.domain
+  env_name   = var.env_name
 }
 
 module "services_sa" {
@@ -68,4 +71,5 @@ module "services_sa" {
   project_id = module.project_factory.project_id
   services   = var.services
   domain     = var.domain
+  env_name   = var.env_name
 }
