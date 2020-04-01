@@ -8,3 +8,15 @@ provider "google" {
   region      = "europe-west-1"
   credentials = var.credentials
 }
+
+provider "gsuite" {
+  impersonated_user_email = coalesce(var.impersonated_user_email, format("%s@%s", "terraform", var.domain))
+
+  oauth_scopes = [
+    "https://www.googleapis.com/auth/admin.directory.user",
+    "https://www.googleapis.com/auth/admin.directory.group",
+    "https://www.googleapis.com/auth/admin.directory.group.member"
+  ]
+
+  version = "~> 0.1.35"
+}

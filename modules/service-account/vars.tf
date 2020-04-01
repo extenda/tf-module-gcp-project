@@ -20,12 +20,6 @@ variable create_service_group {
   description = "If the Service GSuite Group should be created"
 }
 
-variable impersonated_user_email {
-  type        = string
-  description = "Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>`"
-  default     = ""
-}
-
 variable domain {
   type        = string
   description = "Domain name of the Organization - needed for var impersonated_user_email"
