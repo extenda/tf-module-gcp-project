@@ -183,3 +183,9 @@ variable env_name {
   description = "Environment name (staging/prod). Creation of some resources depends on env_name"
   default     = ""
 }
+
+variable impersonated_user_email {
+  type        = string
+  description = "Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>`"
+  default     = ""
+}
