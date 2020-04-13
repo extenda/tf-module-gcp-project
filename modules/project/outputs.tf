@@ -45,6 +45,6 @@ output service_emails {
   value = module.services_sa.email
 }
 
-output gsuite_group_name {
-  value = module.services_sa.gsuite_group_name
+output gsuite_group_email {
+  value = module.services_sa.gsuite_group_email
 }
