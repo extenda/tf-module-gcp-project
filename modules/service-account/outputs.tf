@@ -25,5 +25,8 @@ output private_key_encoded {
 }
 
 output gsuite_group_email {
-  value = [ for group in gsuite_group.service_group: group.email]
+  value = {
+    for group in gsuite_group.service_group :
+    group.name => group.email
+  }
 }
