@@ -30,6 +30,18 @@ variable activate_apis {
   description = "The list of apis to activate within the project"
 }
 
+variable shared_vpc {
+  type        = string
+  description = "The ID of the host project which hosts the shared VPC"
+  default     = ""
+}
+
+variable shared_vpc_subnets {
+  type        = list(string)
+  description = "List of subnets fully qualified subnet IDs (ie. projects/$project_id/regions/$region/subnetworks/$subnet_id)"
+  default     = []
+}
+
 variable default_service_account {
   description = "Project default service account setting: can be one of delete, deprivilege, disable, or keep."
   default     = "deprivilege"
