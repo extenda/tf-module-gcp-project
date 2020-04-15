@@ -11,3 +11,7 @@ output private_keys_encoded {
   value     = module.service-account.private_key_encoded
   sensitive = true
 }
+
+output gsuite_group_email {
+  value = module.service-account.gsuite_group_email
+}
