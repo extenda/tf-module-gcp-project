@@ -31,6 +31,8 @@ No provider.
 | secret\_manager\_sa | Map of IAM Roles to assign to the Secret Manager Access Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "secret-accessor"<br>  }<br>]<br></pre> | no |
 | services | Map of IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | n/a | yes |
 | service\_group\_name | Adds a suffix of 4 random characters to the project\_id | `string` | `""` | yes |
+| shared\_vpc | The ID of the host project which hosts the shared VPC | `string` | `""` | no |
+| shared\_vpc\_subnets | List of subnets fully qualified subnet IDs (ie. projects/$project_id/regions/$region/subnetworks/$subnet_id) | `[]` | no |
 
 ## Outputs
 
