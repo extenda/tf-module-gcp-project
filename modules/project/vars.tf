@@ -201,3 +201,18 @@ variable impersonated_user_email {
   description = "Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>`"
   default     = ""
 }
+
+variable parent_project_id {
+  type        = string
+  description = "ID of the project to which add additional IAM roles for current project's CI/CD service account. Ignore if empty"
+  default     = ""
+}
+
+variable parent_project_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to the parent project"
+  default     = [
+    "roles/container.admin",
+    "roles/iam.serviceAccountUser"
+  ]
+}

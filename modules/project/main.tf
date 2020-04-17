@@ -1,3 +1,7 @@
+locals {
+  ci_cd_sa_email = var.create_ci_cd_service_account ? module.ci_cd_sa.email[var.ci_cd_sa[0].name] : "mock@nonexisting"
+}
+
 module "project_factory" {
   source  = "terraform-google-modules/project-factory/google"
   version = "6.1"
@@ -75,4 +79,13 @@ module "services_sa" {
   services   = var.services
   domain     = var.domain
   env_name   = var.env_name
+}
+
+module "parent_project_iam" {
+  source = "../parent-project-iam"
+
+  service_account          = local.ci_cd_sa_email
+  parent_project_id        = var.parent_project_id
+  parent_project_iam_roles = var.parent_project_iam_roles
+
 }
