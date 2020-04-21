@@ -216,3 +216,17 @@ variable parent_project_iam_roles {
     "roles/iam.serviceAccountUser"
   ]
 }
+
+variable gcr_project_id {
+  type        = string
+  description = "ID of the project hosting Google Container Registry"
+  default     = ""
+}
+
+variable gcr_project_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add GCR project"
+  default     = [
+    "roles/storage.admin"
+  ]
+}

@@ -35,6 +35,8 @@ No provider.
 | shared\_vpc\_subnets | List of subnets fully qualified subnet IDs (ie. projects/$project_id/regions/$region/subnetworks/$subnet_id) | `[]` | no |
 | parent\_project\_id | ID of the project to which add additional IAM roles for current project's CI/CD service account. Ignore if empty | `string` | `""` | no |
 | parent_project_iam_roles | List of IAM Roles to add to the parent project | `list(string)` | `["roles/container.admin","roles/iam.serviceAccountUser"]` | no |
+| gcr\_project\_id | ID of the project hosting Google Container Registry | `string` | `""` | no |
+| gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | | `list(string)` | `[""roles/storage.admin""]` | no |
 
 ## Outputs
 
