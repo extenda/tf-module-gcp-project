@@ -82,7 +82,7 @@ module "services_sa" {
 }
 
 module "parent_project_iam" {
-  source = "../external-project-iam"
+  source = "../external-project-iam-roles"
 
   service_account          = local.ci_cd_sa_email
   parent_project_id        = var.parent_project_id
