@@ -230,3 +230,27 @@ variable gcr_project_iam_roles {
     "roles/storage.admin"
   ]
 }
+
+variable gke_service_account {
+  type        = string
+  description = "GKE service account email to add IAM roles in tribe project for"
+  default     = ""
+}
+
+variable gke_tribe_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to the tribe project"
+  default     = [
+    "roles/logging.logWriter",
+    "roles/monitoring.metricWriter",
+    "roles/monitoring.viewer"
+  ]
+}
+
+variable gke_gcr_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to the GCR project"
+  default     = [
+    "roles/storage.objectViewer"
+  ]
+}

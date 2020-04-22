@@ -13,3 +13,19 @@ resource "google_project_iam_member" "gcr_project_roles" {
   role    = each.key
   member  = "serviceAccount:${var.service_account}"
 }
+
+resource "google_project_iam_member" "gke_tribe_roles" {
+  for_each = var.parent_project_id != "" ? toset(var.gke_tribe_iam_roles) : toset([])
+
+  project = var.parent_project_id
+  role    = each.key
+  member  = "serviceAccount:${var.gke_service_account}"
+}
+
+resource "google_project_iam_member" "gke_gcr_roles" {
+  for_each = var.parent_project_id != "" ? toset(var.gke_gcr_iam_roles) : toset([])
+
+  project = var.gcr_project_id
+  role    = each.key
+  member  = "serviceAccount:${var.gke_service_account}"
+}

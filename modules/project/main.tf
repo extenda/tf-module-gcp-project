@@ -88,6 +88,9 @@ module "parent_project_iam" {
   parent_project_id        = var.parent_project_id
   parent_project_iam_roles = var.parent_project_iam_roles
 
-  gcr_project_id           = var.gcr_project_id
-  gcr_project_iam_roles    = var.gcr_project_iam_roles
+  gcr_project_id        = var.gcr_project_id
+  gcr_project_iam_roles = var.gcr_project_iam_roles
+  gke_service_account   = var.gke_service_account
+  gke_tribe_iam_roles   = var.gke_tribe_iam_roles
+  gke_gcr_iam_roles     = var.gke_gcr_iam_roles
 }
