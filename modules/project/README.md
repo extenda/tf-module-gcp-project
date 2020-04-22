@@ -36,7 +36,10 @@ No provider.
 | parent\_project\_id | ID of the project to which add additional IAM roles for current project's CI/CD service account. Ignore if empty | `string` | `""` | no |
 | parent_project_iam_roles | List of IAM Roles to add to the parent project | `list(string)` | `["roles/container.admin","roles/iam.serviceAccountUser"]` | no |
 | gcr\_project\_id | ID of the project hosting Google Container Registry | `string` | `""` | no |
-| gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | | `list(string)` | `[""roles/storage.admin""]` | no |
+| gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | `list(string)` | `["roles/storage.admin"]` | no |
+| gke\_service\_account | GKE service account email that IAM roles will be added to | `string` | `""` | no |
+| gke\_parent\_iam\_roles | List of IAM Roles to add to the parent project for GKE service account | `list(string)` | `["roles/logging.logWriter", "roles/monitoring.metricWriter", "roles/monitoring.viewer"]` | no |
+| gke\_gcr\_iam\_roles | List of IAM Roles to add to the GCR project for GKE service account | `list(string)` | `["roles/storage.objectViewer"]` | no |
 
 ## Outputs
 

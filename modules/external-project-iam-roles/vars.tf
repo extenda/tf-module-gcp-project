@@ -25,7 +25,7 @@ variable gcr_project_iam_roles {
 
 variable gke_service_account {
   type        = string
-  description = "GKE service account email that IAM roles will be added to in the parent project"
+  description = "GKE service account email that IAM roles will be added to"
 }
 
 variable gke_parent_iam_roles {

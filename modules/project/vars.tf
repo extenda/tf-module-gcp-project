@@ -4,7 +4,7 @@ variable credentials {
 }
 
 variable name {
-  description = "The name for the project "
+  description = "The name for the project"
 }
 
 variable random_project_id {
@@ -233,13 +233,13 @@ variable gcr_project_iam_roles {
 
 variable gke_service_account {
   type        = string
-  description = "GKE service account email to add IAM roles in parent project for"
+  description = "GKE service account email that IAM roles will be added to in the parent project"
   default     = ""
 }
 
 variable gke_parent_iam_roles {
   type        = list(string)
-  description = "List of IAM Roles to add to the parent project"
+  description = "List of IAM Roles to add to the parent project for GKE service account"
   default     = [
     "roles/logging.logWriter",
     "roles/monitoring.metricWriter",
@@ -249,7 +249,7 @@ variable gke_parent_iam_roles {
 
 variable gke_gcr_iam_roles {
   type        = list(string)
-  description = "List of IAM Roles to add to the GCR project"
+  description = "List of IAM Roles to add to the GCR project for GKE service account"
   default     = [
     "roles/storage.objectViewer"
   ]
