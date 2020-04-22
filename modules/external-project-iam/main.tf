@@ -14,8 +14,8 @@ resource "google_project_iam_member" "gcr_project_roles" {
   member  = "serviceAccount:${var.service_account}"
 }
 
-resource "google_project_iam_member" "gke_tribe_roles" {
-  for_each = var.parent_project_id != "" ? toset(var.gke_tribe_iam_roles) : toset([])
+resource "google_project_iam_member" "gke_parent_roles" {
+  for_each = var.parent_project_id != "" ? toset(var.gke_parent_iam_roles) : toset([])
 
   project = var.parent_project_id
   role    = each.key

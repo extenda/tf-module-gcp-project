@@ -233,13 +233,13 @@ variable gcr_project_iam_roles {
 
 variable gke_service_account {
   type        = string
-  description = "GKE service account email to add IAM roles in tribe project for"
+  description = "GKE service account email to add IAM roles in parent project for"
   default     = ""
 }
 
-variable gke_tribe_iam_roles {
+variable gke_parent_iam_roles {
   type        = list(string)
-  description = "List of IAM Roles to add to the tribe project"
+  description = "List of IAM Roles to add to the parent project"
   default     = [
     "roles/logging.logWriter",
     "roles/monitoring.metricWriter",
