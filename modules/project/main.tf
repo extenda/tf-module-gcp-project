@@ -91,3 +91,11 @@ module "parent_project_iam" {
   gcr_project_id           = var.gcr_project_id
   gcr_project_iam_roles    = var.gcr_project_iam_roles
 }
+
+module "workload-identity" {
+  source = "../workload-identity"
+
+  project_id         = module.project_factory.project_id
+  cluster_project_id = var.parent_project_id
+  services           = var.services
+}
