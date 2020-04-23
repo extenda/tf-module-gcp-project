@@ -15,3 +15,9 @@ variable services {
   }))
   description = "List of services with IAM Roles to assign to the Services Service Account"
 }
+
+variable ksa_name {
+  description "The name of Kubernetes Service Account to bind workload for"
+  type = string
+  default = "default"
+}
