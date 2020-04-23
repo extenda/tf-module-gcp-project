@@ -23,6 +23,7 @@ If `cluster_project_id` variable is empty than module does nothing.
 | project\_id | ID of the project handling service accounts | `string` | n/a | yes |
 | cluster\_project\_id | ID of the project with kubernetes cluster | `string` | n/a | yes |
 | services | List of services with IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | n/a | yes |
+| ksa\_name | The name of Kubernetes Service Account to bind workload for | `string` | `"default"` | no |
 
 ## Outputs
 
