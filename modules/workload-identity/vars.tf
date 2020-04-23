@@ -17,7 +17,7 @@ variable services {
 }
 
 variable ksa_name {
-  description "The name of Kubernetes Service Account to bind workload for"
+  description = "The name of Kubernetes Service Account to bind workload for"
   type = string
   default = "default"
 }
