@@ -18,6 +18,11 @@ variable services {
 
 variable ksa_name {
   description = "The name of Kubernetes Service Account to bind workload for"
-  type = string
-  default = "default"
+  type        = string
+  default     = "default"
+}
+
+variable sa_depends_on {
+  description = "Service Account which this module depends on"
+  type        = any
 }

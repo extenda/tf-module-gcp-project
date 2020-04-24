@@ -101,4 +101,5 @@ module "workload-identity" {
   project_id         = module.project_factory.project_id
   cluster_project_id = var.parent_project_id
   services           = var.services
+  sa_depends_on      = module.services_sa.email
 }
