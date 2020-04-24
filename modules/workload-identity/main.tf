@@ -10,4 +10,5 @@ resource "google_service_account_iam_member" "workload" {
   service_account_id = "projects/${var.project_id}/serviceAccounts/${each.value}"
   role               = "roles/iam.workloadIdentityUser"
   member             = "serviceAccount:${var.cluster_project_id}.svc.id.goog[${each.key}/${var.ksa_name}]"
+  depends_on         = [var.sa_depends_on]
 }
