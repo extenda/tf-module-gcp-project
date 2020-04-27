@@ -20,6 +20,7 @@ module "project_factory" {
   bucket_project  = var.name
 
   activate_apis = var.activate_apis
+  labels        = var.labels
 
   shared_vpc         = var.shared_vpc
   shared_vpc_subnets = var.shared_vpc_subnets
