@@ -47,6 +47,12 @@ variable default_service_account {
   default     = "deprivilege"
 }
 
+variable "labels" {
+  description = "Map of labels for the project"
+  type        = map(string)
+  default     = {}
+}
+
 ## Terraform state bucket
 variable bucket_name {
   description = "The name of the bucket that will contain terraform state - must be globally unique"
