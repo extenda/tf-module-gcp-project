@@ -13,6 +13,16 @@ variable parent_project_iam_roles {
   description = "List of IAM Roles to add to the parent project"
 }
 
+variable dns_project_id {
+  type        = string
+  description = "ID of the project hosting Google Cloud DNS"
+}
+
+variable dns_project_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to DNS project"
+}
+
 variable gcr_project_id {
   type        = string
   description = "ID of the project hosting Google Container Registry"
