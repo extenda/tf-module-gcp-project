@@ -42,7 +42,7 @@ output terraform_state_bucket {
 
 output service_emails {
   description = "Services service account emails"
-  value = module.services_sa.email
+  value       = module.services_sa.email
 }
 
 output gsuite_group_email {

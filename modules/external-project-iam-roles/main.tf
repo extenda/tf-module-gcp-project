@@ -29,3 +29,11 @@ resource "google_project_iam_member" "gke_gcr_roles" {
   role    = each.key
   member  = "serviceAccount:${var.gke_service_account}"
 }
+
+resource "google_project_iam_member" "dns_project_roles" {
+  for_each = var.dns_project_id != "" ? toset(var.dns_project_iam_roles) : toset([])
+
+  project = var.dns_project_id
+  role    = each.key
+  member  = "serviceAccount:${var.service_account}"
+}

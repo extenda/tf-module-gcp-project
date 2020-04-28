@@ -217,9 +217,23 @@ variable parent_project_id {
 variable parent_project_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to the parent project"
-  default     = [
+  default = [
     "roles/container.admin",
     "roles/iam.serviceAccountUser"
+  ]
+}
+
+variable dns_project_id {
+  type        = string
+  description = "ID of the project hosting Google Cloud DNS"
+  default     = ""
+}
+
+variable dns_project_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to DNS project"
+  default = [
+    "roles/dns.admin"
   ]
 }
 
@@ -232,7 +246,7 @@ variable gcr_project_id {
 variable gcr_project_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add GCR project"
-  default     = [
+  default = [
     "roles/storage.admin"
   ]
 }
@@ -246,7 +260,7 @@ variable gke_service_account {
 variable gke_parent_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to the parent project for GKE service account"
-  default     = [
+  default = [
     "roles/logging.logWriter",
     "roles/monitoring.metricWriter",
     "roles/monitoring.viewer"
@@ -256,7 +270,7 @@ variable gke_parent_iam_roles {
 variable gke_gcr_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to the GCR project for GKE service account"
-  default     = [
+  default = [
     "roles/storage.objectViewer"
   ]
 }
