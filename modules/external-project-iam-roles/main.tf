@@ -31,7 +31,7 @@ resource "google_project_iam_member" "gke_gcr_roles" {
 }
 
 resource "google_project_iam_member" "dns_project_roles" {
-  for_each = var.dns_project_id != "" ? toset(var.dns_project_iam_roles) : toset([])
+  for_each = var.dns_project_id != "" && (var.service_account != "") ? toset(var.dns_project_iam_roles) : toset([])
 
   project = var.dns_project_id
   role    = each.key
