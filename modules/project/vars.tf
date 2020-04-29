@@ -83,7 +83,8 @@ variable ci_cd_sa {
       iam_roles = [
         "roles/iam.serviceAccountUser",
         "roles/run.admin",
-        "roles/storage.admin"
+        "roles/storage.admin",
+        "roles/secretmanager.secretAccessor"
       ]
     }
   ]
