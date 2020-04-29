@@ -9,6 +9,11 @@ provider "google" {
   credentials = var.credentials
 }
 
+# provider "google-beta" {
+#   region      = "europe-west-1"
+#   credentials = var.credentials
+# }
+
 provider "gsuite" {
   impersonated_user_email = coalesce(var.impersonated_user_email, format("%s@%s", "terraform", var.domain))
 

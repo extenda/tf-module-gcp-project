@@ -1,5 +1,6 @@
 locals {
   ci_cd_sa_email = var.create_ci_cd_service_account ? module.ci_cd_sa.email[var.ci_cd_sa[0].name] : ""
+  environment    = length(regexall(".*-prod$", var.name)) > 0 ? "prod" : "staging"
 }
 
 module "project_factory" {
@@ -105,4 +106,13 @@ module "workload-identity" {
   cluster_project_id = var.parent_project_id
   services           = var.services
   sa_depends_on      = module.services_sa.email
+}
+
+module "github_secret" {
+  source = "../github-secret"
+
+  repositories = var.services[*].repository
+
+  secret_name  = "GCLOUD_AUTH_${upper(local.environment)}"
+  secret_value = module.ci_cd_sa.private_key_encoded
 }
