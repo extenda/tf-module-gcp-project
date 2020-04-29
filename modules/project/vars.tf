@@ -81,6 +81,7 @@ variable ci_cd_sa {
     {
       name = "ci-cd-pipeline"
       iam_roles = [
+        "roles/cloudsql.editor",
         "roles/iam.serviceAccountUser",
         "roles/run.admin",
         "roles/storage.admin",
