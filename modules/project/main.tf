@@ -5,7 +5,7 @@ locals {
 
 module "project_factory" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "6.1"
+  version = "8.0"
 
   name              = var.name
   random_project_id = var.random_project_id
