@@ -1,7 +1,7 @@
 variable gcp_secret_project {
   description = "GCP project that contains Secret Manager"
   type        = string
-  default     = "pipeline-secrets-1136"
+  default     = "tf-admin-90301274"
 }
 
 variable github_organization {

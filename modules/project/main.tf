@@ -1,6 +1,6 @@
 locals {
   ci_cd_sa_email = var.create_ci_cd_service_account ? module.ci_cd_sa.email[var.ci_cd_sa[0].name] : ""
-  environment    = length(regexall(".*-prod$", var.name)) > 0 ? "prod" : "staging"
+  secret_suffix  = var.env_name == "" ? "" : "_${upper(var.env_name)}"
 }
 
 module "project_factory" {
@@ -113,6 +113,6 @@ module "github_secret" {
 
   repositories = var.services[*].repository
 
-  secret_name  = "GCLOUD_AUTH_${upper(local.environment)}"
-  secret_value = module.ci_cd_sa.private_key_encoded
+  secret_name  = "GCLOUD_AUTH${local.secret_suffix}"
+  secret_value = try(lookup(module.ci_cd_sa.private_key_encoded, "ci-cd-pipeline", ""), "")
 }
