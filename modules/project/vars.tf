@@ -155,12 +155,14 @@ variable secret_manager_sa {
 
 variable services {
   type = list(object({
-    name      = string
-    iam_roles = list(string)
+    name       = string
+    repository = string
+    iam_roles  = list(string)
   }))
   default = [
     {
-      name = "foo"
+      name       = "foo"
+      repository = "foo"
       iam_roles = [
         "bar"
       ]

@@ -1,10 +1,11 @@
 locals {
   ci_cd_sa_email = var.create_ci_cd_service_account ? module.ci_cd_sa.email[var.ci_cd_sa[0].name] : ""
+  secret_suffix  = var.env_name == "" ? "" : "_${upper(var.env_name)}"
 }
 
 module "project_factory" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "6.1"
+  version = "8.0"
 
   name              = var.name
   random_project_id = var.random_project_id
@@ -105,4 +106,13 @@ module "workload-identity" {
   cluster_project_id = var.parent_project_id
   services           = var.services
   sa_depends_on      = module.services_sa.email
+}
+
+module "github_secret" {
+  source = "../github-secret"
+
+  repositories = var.services[*].repository
+
+  secret_name  = "GCLOUD_AUTH${local.secret_suffix}"
+  secret_value = try(lookup(module.ci_cd_sa.private_key_encoded, "ci-cd-pipeline", ""), "")
 }

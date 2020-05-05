@@ -41,7 +41,7 @@ No provider.
 | random\_project\_id | Adds a suffix of 4 random characters to the project\_id | `bool` | `true` | no |
 | secret\_manager\_sa | Map of IAM Roles to assign to the Secret Manager Access Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "secret-accessor"<br>  }<br>]</pre> | no |
 | service\_group\_name | The name of the group that will be created for a service | `string` | `""` | no |
-| services | Map of IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "bar"<br>    ],<br>    "name": "foo"<br>  }<br>]</pre> | no |
+| services | Map of IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name       = string<br>    repository = string<br>    iam_roles  = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "bar"<br>    ],<br>    "name": "foo",<br>    "repository": "foo"<br>  }<br>]</pre> | no |
 | shared\_vpc | The ID of the host project which hosts the shared VPC | `string` | `""` | no |
 | shared\_vpc\_subnets | List of subnets fully qualified subnet IDs (ie. projects/$project\_id/regions/$region/subnetworks/$subnet\_id) | `list(string)` | `[]` | no |
 
