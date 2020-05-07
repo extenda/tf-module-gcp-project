@@ -12,13 +12,13 @@ provider "github" {
 }
 
 data "github_actions_public_key" "repo_key" {
-  for_each = var.secret_value != "" ? toset(var.repositories) : toset([])
+  for_each = var.create_secret ? toset(var.repositories) : toset([])
 
   repository = each.key
 }
 
 resource "github_actions_secret" "gcloud_secret" {
-  for_each = var.secret_value != "" ? toset(var.repositories) : toset([])
+  for_each = var.create_secret ? toset(var.repositories) : toset([])
 
   repository      = each.key
   secret_name     = var.secret_name

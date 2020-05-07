@@ -25,3 +25,9 @@ variable secret_value {
   type        = string
   default     = ""
 }
+
+variable create_secret {
+  description = "If actually create a secret"
+  type        = bool
+  default     = true
+}

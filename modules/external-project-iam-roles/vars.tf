@@ -47,3 +47,8 @@ variable gke_gcr_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to the GCR project"
 }
+
+variable service_account_exists {
+  type        = bool
+  description = "If service_account for service exists or not"
+}
