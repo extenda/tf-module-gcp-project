@@ -11,6 +11,7 @@ module "project_factory" {
   random_project_id = var.random_project_id
 
   default_service_account = var.default_service_account
+  skip_gcloud_download    = true
 
   org_id          = var.org_id
   folder_id       = var.folder_id
