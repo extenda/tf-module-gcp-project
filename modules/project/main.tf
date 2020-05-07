@@ -34,7 +34,6 @@ module "ci_cd_sa" {
   create_service_group   = var.create_ci_cd_group
   service_group_name     = var.service_group_name
   clan_gsuite_group      = var.clan_gsuite_group
-  common_iam_roles       = var.common_iam_roles
 
   project_id = module.project_factory.project_id
   services   = var.ci_cd_sa
@@ -49,7 +48,6 @@ module "cloudrun_sa" {
   create_service_group   = var.create_cloudrun_group
   service_group_name     = var.service_group_name
   clan_gsuite_group      = var.clan_gsuite_group
-  common_iam_roles       = var.common_iam_roles
 
   project_id = module.project_factory.project_id
   services   = var.cloudrun_sa
@@ -64,7 +62,6 @@ module "secret_manager_sa" {
   create_service_group   = var.create_secret_manager_group
   service_group_name     = var.service_group_name
   clan_gsuite_group      = var.clan_gsuite_group
-  common_iam_roles       = var.common_iam_roles
 
   project_id = module.project_factory.project_id
   services   = var.secret_manager_sa
@@ -79,7 +76,7 @@ module "services_sa" {
   create_service_group   = var.create_services_group
   service_group_name     = var.service_group_name
   clan_gsuite_group      = var.clan_gsuite_group
-  common_iam_roles       = ["roles/monitoring.metricWriter", "roles/logging.logWriter", "roles/monitoring.viewer", "roles/cloudtrace.agent"]
+  common_iam_roles       = var.common_iam_roles
 
   project_id = module.project_factory.project_id
   services   = var.services

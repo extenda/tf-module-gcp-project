@@ -13,6 +13,7 @@ variable services {
 variable common_iam_roles {
   description = "Default list of IAM Roles to assign to every Services Service Account"
   type        = list(string)
+  default     = []
 }
 
 variable create_service_account {

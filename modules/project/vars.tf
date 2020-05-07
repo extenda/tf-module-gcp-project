@@ -174,7 +174,7 @@ variable services {
 variable common_iam_roles {
   description = "Default list of IAM Roles to assign to every Services Service Account"
   type        = list(string)
-  default     = []
+  default     = ["roles/monitoring.metricWriter", "roles/logging.logWriter", "roles/monitoring.viewer", "roles/cloudtrace.agent", "roles/secretmanager.secretAccessor"]
 }
 
 variable create_service_sa {
