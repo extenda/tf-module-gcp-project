@@ -86,6 +86,7 @@ module "services_sa" {
 module "parent_project_iam" {
   source = "../external-project-iam-roles"
 
+  service_account_exists   = var.create_service_sa
   service_account          = local.ci_cd_sa_email
   parent_project_id        = var.parent_project_id
   parent_project_iam_roles = var.parent_project_iam_roles
@@ -111,8 +112,9 @@ module "workload-identity" {
 module "github_secret" {
   source = "../github-secret"
 
-  repositories = var.services[*].repository
+  repositories  = var.services[*].repository
 
-  secret_name  = "GCLOUD_AUTH${local.secret_suffix}"
-  secret_value = try(lookup(module.ci_cd_sa.private_key_encoded, "ci-cd-pipeline", ""), "")
+  create_secret = var.create_service_sa
+  secret_name   = "GCLOUD_AUTH${local.secret_suffix}"
+  secret_value  = try(lookup(module.ci_cd_sa.private_key_encoded, "ci-cd-pipeline", ""), "")
 }
