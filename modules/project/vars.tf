@@ -171,6 +171,12 @@ variable services {
   description = "Map of IAM Roles to assign to the Services Service Account"
 }
 
+variable common_iam_roles {
+  description = "Default list of IAM Roles to assign to every Services Service Account"
+  type        = list(string)
+  default     = []
+}
+
 variable create_service_sa {
   description = "If the Service Account for new Services should be created"
   type        = bool

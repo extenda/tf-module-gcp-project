@@ -1,6 +1,6 @@
 locals {
   service_roles = flatten([for service_key, service in var.services : [
-    for role_key, role in service.iam_roles : {
+    for role_key, role in distinct(concat(service.iam_roles, var.common_iam_roles)) : {
       name        = service.name
       role        = role
       service_id  = var.create_service_account == true ? google_service_account.sa[service.name].account_id : ""
