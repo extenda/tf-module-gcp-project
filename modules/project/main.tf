@@ -114,7 +114,7 @@ module "workload-identity" {
 module "github_secret" {
   source = "../github-secret"
 
-  repositories  = var.services[*].repository
+  repositories  = var.repositories
 
   create_secret = var.create_service_sa
   secret_name   = "GCLOUD_AUTH${local.secret_suffix}"

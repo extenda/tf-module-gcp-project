@@ -156,19 +156,23 @@ variable secret_manager_sa {
 variable services {
   type = list(object({
     name       = string
-    repository = string
     iam_roles  = list(string)
   }))
   default = [
     {
       name       = "foo"
-      repository = "foo"
       iam_roles = [
         "bar"
       ]
     }
   ]
   description = "Map of IAM Roles to assign to the Services Service Account"
+}
+
+variable repositories {
+  description = "The GitHub repositories to update"
+  type        = list(string)
+  default     = []
 }
 
 variable common_iam_roles {
