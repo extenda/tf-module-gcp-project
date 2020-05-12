@@ -93,6 +93,12 @@ module "parent_project_iam" {
   parent_project_id        = var.parent_project_id
   parent_project_iam_roles = var.parent_project_iam_roles
 
+  project_id            = module.project_factory.project_id
+  services              = var.services
+  common_iam_roles      = var.common_iam_roles
+  create_service_sa     = var.create_service_sa
+  sa_depends_on         = module.services_sa.email
+
   dns_project_id        = var.dns_project_id
   dns_project_iam_roles = var.dns_project_iam_roles
   gcr_project_id        = var.gcr_project_id
