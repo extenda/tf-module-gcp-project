@@ -86,7 +86,7 @@ module "services_sa" {
 }
 
 module "parent_project_iam" {
-  source = "/home/askoriy/extenda/github/extenda/tf-module-gcp-project/modules/external-project-iam-roles"
+  source = "../external-project-iam-roles"
 
   service_account_exists   = var.create_service_sa
   service_account          = local.ci_cd_sa_email
