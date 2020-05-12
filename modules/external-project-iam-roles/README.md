@@ -21,7 +21,7 @@
 | service\_account\_exists | If service_account for service exists or not | `bool` | n/a | yes |
 | project\_id | Local (clan) Project ID where service account is created | `string` | n/a | yes |
 | services | List of services with IAM roles | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | n/a | yes |
-| common\_iam\_roles / List of IAM Roles to assign to every Services Service Account in Tribe project | `list(string)` | `[]` | no |
+| common\_iam\_roles | List of IAM Roles to assign to every Services Service Account in Tribe project | `list(string)` | `[]` | no |
 | sa\_depends\_on | Service Account which this module depends on | `any` | n/a | yes |
 
 
