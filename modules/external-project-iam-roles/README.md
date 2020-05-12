@@ -25,30 +25,6 @@
 | sa\_depends\_on | Service Account which this module depends on | `any` | n/a | yes |
 
 
-variable project_id {
-  description = "Local (clan) Project ID where service account is created"
-}
-
-variable services {
-  type = list(object({
-    name      = string
-    iam_roles = list(string)
-  }))
-  description = "List of services with IAM roles"
-}
-
-variable common_iam_roles {
-  description = "List of IAM Roles to assign to every Services Service Account in Tribe project"
-  type        = list(string)
-  default     = []
-}
-
-variable sa_depends_on {
-  description = "Service Account which this module depends on"
-  type        = any
-}
-
-
 ## Outputs
 
 No output.
