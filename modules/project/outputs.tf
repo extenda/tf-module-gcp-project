@@ -45,6 +45,12 @@ output service_emails {
   value       = module.services_sa.email
 }
 
+output service_private_keys_encoded {
+  description = "The Services service account base64 encoded JSON key"
+  value       = module.services_sa.private_key_encoded
+  sensitive   = true
+}
+
 output gsuite_group_email {
   value = module.services_sa.gsuite_group_email
 }
