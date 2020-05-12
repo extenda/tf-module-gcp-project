@@ -1,8 +1,8 @@
 locals {
   service_roles = flatten([for service_key, service in var.services : [
     for role_key, role in var.common_iam_roles : {
-      name        = service.name
-      role        = role
+      name = service.name
+      role = role
     }
     ]
   ])

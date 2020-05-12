@@ -86,18 +86,18 @@ module "services_sa" {
 }
 
 module "parent_project_iam" {
-  source = "../external-project-iam-roles"
+  source = "/home/askoriy/extenda/github/extenda/tf-module-gcp-project/modules/external-project-iam-roles"
 
   service_account_exists   = var.create_service_sa
   service_account          = local.ci_cd_sa_email
   parent_project_id        = var.parent_project_id
   parent_project_iam_roles = var.parent_project_iam_roles
 
-  project_id            = module.project_factory.project_id
-  services              = var.services
-  common_iam_roles      = var.common_iam_roles
-  create_service_sa     = var.create_service_sa
-  sa_depends_on         = module.services_sa.email
+  project_id        = module.project_factory.project_id
+  services          = var.services
+  common_iam_roles  = var.common_iam_roles
+  create_service_sa = var.create_service_sa
+  sa_depends_on     = module.services_sa.email
 
   dns_project_id        = var.dns_project_id
   dns_project_iam_roles = var.dns_project_iam_roles
@@ -120,7 +120,7 @@ module "workload-identity" {
 module "github_secret" {
   source = "../github-secret"
 
-  repositories  = var.repositories
+  repositories = var.repositories
 
   create_secret = var.create_service_sa
   secret_name   = "GCLOUD_AUTH${local.secret_suffix}"
