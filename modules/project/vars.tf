@@ -288,3 +288,13 @@ variable gke_gcr_iam_roles {
     "roles/storage.objectViewer"
   ]
 }
+
+variable additional_user_access {
+  type = list(object({
+    name      = string
+    iam_roles = list(string)
+    members   = list(string)
+  }))
+  default = []
+  description = "List of IAM Roles to assign to groups and users"
+}
