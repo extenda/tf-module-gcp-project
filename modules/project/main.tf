@@ -125,3 +125,12 @@ module "github_secret" {
   secret_name   = "GCLOUD_AUTH${local.secret_suffix}"
   secret_value  = try(lookup(module.ci_cd_sa.private_key_encoded, "ci-cd-pipeline", ""), "")
 }
+
+module "additional_user_access" {
+  source = "../additional-user-access"
+
+  project_id             = module.project_factory.project_id
+  domain                 = var.domain
+  additional_user_access = var.additional_user_access
+  clan_gsuite_group      = var.clan_gsuite_group
+}
