@@ -145,7 +145,7 @@ module "service_accounts" {
 
 module "gke_service_accounts" {
   source = "../service-account"
-
+  
   create_service_account = var.create_gke_sa
   project_id             = module.project_factory.project_id
   service_accounts       = var.gke_service_account

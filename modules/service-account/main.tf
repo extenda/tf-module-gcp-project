@@ -1,9 +1,9 @@
 locals {
   service_account_roles = flatten([for sa_key, sa in var.service_accounts : [
     for role_key, role in service_accounts.iam_roles : {
-      name        = sa.name
-      role        = role
-      service_id  = var.create_service_account == true ? google_service_account.service_acc[sa.name].account_id : ""
+      name       = sa.name
+      role       = role
+      service_id = var.create_service_account == true ? google_service_account.service_acc[sa.name].account_id : ""
     }
     ]
   ])
@@ -43,3 +43,14 @@ resource "google_service_account_key" "key_json" {
   depends_on = [google_service_account.service_acc]
 }
 
+resource "google_project_iam_member" "external_roles" {
+  for_each = {
+    for sa in local.service_account_roles :
+    "${sa.name}.${sa.role}" => sa
+  }
+  project = var.external_project_id
+  role    = each.value.role
+  member  = "serviceAccount:${google_service_account.service_acc[each.value.name].email}"
+
+  depends_on = [google_service_account.service_acc]
+}

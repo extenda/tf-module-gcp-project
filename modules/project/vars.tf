@@ -320,10 +320,9 @@ variable gke_service_account {
   }))
   default = [
     {
-      name      = "tf-gke-k8s-cluster"
-      iam_roles = [
-        "bar"
-      ]
+      name      = ""
+      iam_roles = []
+      external_iam_roles = []
     }
   ]
   description = "Map of IAM Roles to assign to the GKE Service Account"
@@ -331,15 +330,15 @@ variable gke_service_account {
 
 variable service_accounts {
  type = list(object({
-    name       = string
-    iam_roles  = list(string)
+    name               = string
+    iam_roles          = list(string)
+    external_iam_roles = map(list(string))
   }))
   default = [
     {
-      name      = "foo"
-      iam_roles = [
-        "bar"
-      ]
+      name               = ""
+      iam_roles          = []
+      external_iam_roles = []
     }
   ]
   description = "Map of IAM Roles to assign to the Service Account"
