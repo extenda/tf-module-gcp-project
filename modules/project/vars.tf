@@ -265,22 +265,6 @@ variable gcr_project_iam_roles {
   ]
 }
 
-variable gke_service_account {
-  type        = string
-  description = "GKE service account email that IAM roles will be added to in the parent project"
-  default     = ""
-}
-
-variable gke_parent_iam_roles {
-  type        = list(string)
-  description = "List of IAM Roles to add to the parent project for GKE service account"
-  default = [
-    "roles/logging.logWriter",
-    "roles/monitoring.metricWriter",
-    "roles/monitoring.viewer"
-  ]
-}
-
 variable gke_gcr_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to the GCR project for GKE service account"
@@ -301,18 +285,6 @@ variable additional_user_access {
 
 ## Service Accounts
 
-variable create_sa {
-  description = "If the Service Account should be created"
-  type        = bool
-  default     = true
-}
-
-variable create_gke_sa {
-  description = "If the Service Account for the GKE cluster should be created"
-  type        = bool
-  default     = true
-}
-
 variable gke_service_account {
   type = list(object({
     name       = string
@@ -320,9 +292,12 @@ variable gke_service_account {
   }))
   default = [
     {
-      name      = ""
-      iam_roles = []
-      external_iam_roles = []
+      name      = "tf-gke-k8s-cluster"
+      iam_roles = [
+      "roles/logging.logWriter",
+      "roles/monitoring.metricWriter",
+       "roles/monitoring.viewer"
+       ]
     }
   ]
   description = "Map of IAM Roles to assign to the GKE Service Account"
@@ -330,16 +305,9 @@ variable gke_service_account {
 
 variable service_accounts {
  type = list(object({
-    name               = string
-    iam_roles          = list(string)
-    external_iam_roles = map(list(string))
+    name      = string
+    iam_roles = list(string)
   }))
-  default = [
-    {
-      name               = ""
-      iam_roles          = []
-      external_iam_roles = []
-    }
-  ]
+  default = []
   description = "Map of IAM Roles to assign to the Service Account"
 }
