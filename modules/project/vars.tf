@@ -47,7 +47,7 @@ variable default_service_account {
   default     = "deprivilege"
 }
 
-variable "labels" {
+variable labels {
   description = "Map of labels for the project"
   type        = map(string)
   default     = {}
@@ -158,14 +158,7 @@ variable services {
     name       = string
     iam_roles  = list(string)
   }))
-  default = [
-    {
-      name       = "foo"
-      iam_roles = [
-        "bar"
-      ]
-    }
-  ]
+  default = []
   description = "Map of IAM Roles to assign to the Services Service Account"
 }
 
@@ -262,30 +255,6 @@ variable gcr_project_iam_roles {
   description = "List of IAM Roles to add GCR project"
   default = [
     "roles/storage.admin"
-  ]
-}
-
-variable gke_service_account {
-  type        = string
-  description = "GKE service account email that IAM roles will be added to in the parent project"
-  default     = ""
-}
-
-variable gke_parent_iam_roles {
-  type        = list(string)
-  description = "List of IAM Roles to add to the parent project for GKE service account"
-  default = [
-    "roles/logging.logWriter",
-    "roles/monitoring.metricWriter",
-    "roles/monitoring.viewer"
-  ]
-}
-
-variable gke_gcr_iam_roles {
-  type        = list(string)
-  description = "List of IAM Roles to add to the GCR project for GKE service account"
-  default = [
-    "roles/storage.objectViewer"
   ]
 }
 

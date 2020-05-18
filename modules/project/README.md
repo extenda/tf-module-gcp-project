@@ -29,9 +29,6 @@ No provider.
 | folder\_id | The ID of a folder to host this project | `any` | n/a | yes |
 | gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | `list(string)` | <pre>[<br>  "roles/storage.admin"<br>]</pre> | no |
 | gcr\_project\_id | ID of the project hosting Google Container Registry | `string` | `""` | no |
-| gke\_gcr\_iam\_roles | List of IAM Roles to add to the GCR project for GKE service account | `list(string)` | <pre>[<br>  "roles/storage.objectViewer"<br>]</pre> | no |
-| gke\_parent\_iam\_roles | List of IAM Roles to add to the parent project for GKE service account | `list(string)` | <pre>[<br>  "roles/logging.logWriter",<br>  "roles/monitoring.metricWriter",<br>  "roles/monitoring.viewer"<br>]</pre> | no |
-| gke\_service\_account | GKE service account email that IAM roles will be added to in the parent project | `string` | `""` | no |
 | impersonated\_user\_email | Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>` | `string` | `""` | no |
 | labels | Map of labels for the project | `map(string)` | `{}` | no |
 | name | The name for the project | `any` | n/a | yes |
@@ -39,9 +36,9 @@ No provider.
 | parent\_project\_iam\_roles | List of IAM Roles to add to the parent project | `list(string)` | <pre>[<br>  "roles/container.admin",<br>  "roles/iam.serviceAccountUser"<br>]</pre> | no |
 | parent\_project\_id | ID of the project to which add additional IAM roles for current project's CI/CD service account. Ignore if empty | `string` | `""` | no |
 | random\_project\_id | Adds a suffix of 4 random characters to the project\_id | `bool` | `true` | no |
-| secret\_manager\_sa | Map of IAM Roles to assign to the Secret Manager Access Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "secret-accessor"<br>  }<br>]</pre> | no |
+| secret\_manager\_sa | Map of IAM Roles to assign to the Secret Manager Access Service Account |  <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre>  | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "secret-accessor"<br>  }<br>]</pre> | no |
 | service\_group\_name | The name of the group that will be created for a service | `string` | `""` | no |
-| services | Map of IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name       = string<br>    repository = string<br>    iam_roles  = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "bar"<br>    ],<br>    "name": "foo",<br>    "repository": "foo"<br>  }<br>]</pre> | no |
+| services | Map of IAM Roles to assign to the Services Service Account |  <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre>  | [] | no |
 | shared\_vpc | The ID of the host project which hosts the shared VPC | `string` | `""` | no |
 | shared\_vpc\_subnets | List of subnets fully qualified subnet IDs (ie. projects/$project\_id/regions/$region/subnetworks/$subnet\_id) | `list(string)` | `[]` | no |
 
@@ -52,11 +49,10 @@ No provider.
 | ci\_cd\_service\_account\_email | The CI/CD pipeline service account email |
 | ci\_cd\_service\_account\_private\_key\_encoded | The CI/CD pipeline service account base64 encoded JSON key |
 | cloudrun\_service\_account\_email | The Cloud Run service account email |
-| gsuite\_group\_email | n/a |
+| gsuite\_group\_email | The GSuite group emails created per each service |
 | project\_id | The project ID |
 | project\_name | The project name |
 | secret\_manager\_service\_account\_private\_key\_encoded | The Cloud Run service account base64 encoded JSON key |
 | service\_account\_email | The default service acccount email |
 | service\_emails | Services service account emails |
 | terraform\_state\_bucket | Bucket for saving terraform state of project resources |
-

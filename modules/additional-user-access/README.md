@@ -13,7 +13,6 @@
 | domain | Domain name of the Organization | `string` | n/a | yes |
 | project\_id | Project ID to add IAM roles to | `string` | n/a | yes |
 
-
 ## Outputs
 
 No output.
