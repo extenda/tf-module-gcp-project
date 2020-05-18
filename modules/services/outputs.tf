@@ -1,7 +1,7 @@
 output email {
   description = "The service account emails"
   value = {
-    for name, sa in google_service_account.service_acc :
+    for name, sa in google_service_account.sa :
     name => sa.email
   }
 }
@@ -22,4 +22,11 @@ output private_key_encoded {
     name => key.private_key
   }
   sensitive = true
+}
+
+output gsuite_group_email {
+  value = {
+    for key, group in gsuite_group.service_group :
+    group.name => group.email
+  }
 }

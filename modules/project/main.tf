@@ -29,7 +29,7 @@ module "project_factory" {
 }
 
 module "ci_cd_sa" {
-  source = "../service-account"
+  source = "../services"
 
   create_service_account = var.create_ci_cd_service_account
   create_service_group   = var.create_ci_cd_group
@@ -43,7 +43,7 @@ module "ci_cd_sa" {
 }
 
 module "cloudrun_sa" {
-  source = "../service-account"
+  source = "../services"
 
   create_service_account = var.create_cloudrun_service_account
   create_service_group   = var.create_cloudrun_group
@@ -57,7 +57,7 @@ module "cloudrun_sa" {
 }
 
 module "secret_manager_sa" {
-  source = "../service-account"
+  source = "../services"
 
   create_service_account = var.create_secret_manager_service_account
   create_service_group   = var.create_secret_manager_group
@@ -71,7 +71,7 @@ module "secret_manager_sa" {
 }
 
 module "services_sa" {
-  source = "../service-account"
+  source = "../services"
 
   create_service_account = var.create_service_sa
   create_service_group   = var.create_services_group
@@ -102,9 +102,9 @@ module "parent_project_iam" {
   dns_project_iam_roles = var.dns_project_iam_roles
   gcr_project_id        = var.gcr_project_id
   gcr_project_iam_roles = var.gcr_project_iam_roles
-  gke_service_account   = var.gke_service_account
-  gke_parent_iam_roles  = var.gke_parent_iam_roles
-  gke_gcr_iam_roles     = var.gke_gcr_iam_roles
+  # gke_service_account   = var.gke_service_account
+  # gke_parent_iam_roles  = var.gke_parent_iam_roles
+  # gke_gcr_iam_roles     = var.gke_gcr_iam_roles
 }
 
 module "workload-identity" {
@@ -133,4 +133,24 @@ module "additional_user_access" {
   domain                 = var.domain
   additional_user_access = var.additional_user_access
   clan_gsuite_group      = var.clan_gsuite_group
+}
+
+module "service_accounts" {
+  source = "../service-account"
+
+  create_service_account = var.create_sa
+  project_id             = module.project_factory.project_id
+  service_accounts       = var.service_accounts
+}
+
+module "gke_service_accounts" {
+  source = "../service-account"
+
+  create_service_account = var.create_gke_sa
+  project_id             = module.project_factory.project_id
+  service_accounts       = var.gke_service_account
+  gcr_project_id         = var.gcr_project_id
+  gcr_project_iam_roles  = var.gcr_project_iam_roles
+  gke_parent_iam_roles   = var.gke_parent_iam_roles
+  gke_gcr_iam_roles      = var.gke_gcr_iam_roles
 }

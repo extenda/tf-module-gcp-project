@@ -1,18 +1,18 @@
 locals {
-  service_roles = flatten([for service_key, service in var.services : [
-    for role_key, role in distinct(concat(service.iam_roles, var.common_iam_roles)) : {
-      name        = service.name
+  service_account_roles = flatten([for sa_key, sa in var.service_accounts : [
+    for role_key, role in service_accounts.iam_roles : {
+      name        = sa.name
       role        = role
-      service_id  = var.create_service_account == true ? google_service_account.sa[service.name].account_id : ""
+      service_id  = var.create_service_account == true ? google_service_account.service_acc[sa.name].account_id : ""
     }
     ]
   ])
 }
 
-resource "google_service_account" "sa" {
+resource "google_service_account" "service_acc" {
   for_each = {
-    for service in var.services :
-    service.name => service
+    for sa in var.service_accounts :
+    sa.name => sa
     if var.create_service_account == true
   }
   account_id   = each.key
@@ -22,77 +22,24 @@ resource "google_service_account" "sa" {
 
 resource "google_project_iam_member" "project_roles" {
   for_each = {
-    for service in local.service_roles :
-    "${service.name}.${service.role}" => service
-    if var.create_service_account == true && var.create_service_group == false
+    for sa in local.service_account_roles :
+    "${sa.name}.${sa.role}" => sa
   }
   project = var.project_id
   role    = each.value.role
-  member  = "serviceAccount:${google_service_account.sa[each.value.name].email}"
+  member  = "serviceAccount:${google_service_account.service_acc[each.value.name].email}"
 
-  depends_on = [google_service_account.sa]
+  depends_on = [google_service_account.service_acc]
 }
 
 resource "google_service_account_key" "key_json" {
   for_each = {
-    for service in var.services :
-    service.name => service
+    for sa in var.service_accounts :
+    sa.name => sa
     if var.create_service_account == true
   }
   service_account_id = "projects/${var.project_id}/serviceAccounts/${each.key}@${var.project_id}.iam.gserviceaccount.com"
-  depends_on = [google_service_account.sa]
+  
+  depends_on = [google_service_account.service_acc]
 }
 
-resource "gsuite_group" "service_group" {
-  for_each = {
-    for service in var.services :
-    service.name => service
-    if var.create_service_account == true && var.create_service_group == true
-  }
-  email       = "${var.service_group_name}-${each.key}@${var.domain}"
-  name        = "${var.service_group_name}-${each.key}"
-  description = "${each.key} GSuite Group"
-
-  depends_on = [google_service_account.sa]
-}
-
-
-resource "gsuite_group_member" "service_account_sa_group_member" {
-  for_each = {
-    for service in var.services :
-    service.name => service
-    if var.create_service_account == true && var.create_service_group == true
-  }
-  group = "${var.service_group_name}-${each.key}@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
-
-  depends_on = [gsuite_group.service_group]
-}
-
-resource "gsuite_group_member" "clan_group_member" {
-  for_each = {
-    for service in var.services :
-    service.name => service
-    if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging"
-  }
-  group = "${var.service_group_name}-${each.key}@${var.domain}"
-  email = "${var.clan_gsuite_group}@${var.domain}"
-  role  = "MEMBER"
-
-  depends_on = [gsuite_group.service_group]
-}
-
-
-resource "google_project_iam_member" "service_group_roles" {
-  for_each = {
-    for service in local.service_roles :
-    "${service.name}.${service.role}" => service
-    if var.create_service_account == true && var.create_service_group == true
-  }
-  project = var.project_id
-  role    = each.value.role
-  member  = "group:${var.service_group_name}-${each.value.name}@${var.domain}"
-
-  depends_on = [gsuite_group.service_group]
-}

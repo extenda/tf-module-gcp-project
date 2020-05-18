@@ -47,7 +47,7 @@ variable default_service_account {
   default     = "deprivilege"
 }
 
-variable "labels" {
+variable labels {
   description = "Map of labels for the project"
   type        = map(string)
   default     = {}
@@ -297,4 +297,50 @@ variable additional_user_access {
   }))
   default = []
   description = "List of IAM Roles to assign to groups and users"
+}
+
+## Service Accounts
+
+variable create_sa {
+  description = "If the Service Account should be created"
+  type        = bool
+  default     = true
+}
+
+variable create_gke_sa {
+  description = "If the Service Account for the GKE cluster should be created"
+  type        = bool
+  default     = true
+}
+
+variable gke_service_account {
+  type = list(object({
+    name       = string
+    iam_roles  = list(string)
+  }))
+  default = [
+    {
+      name      = "tf-gke-k8s-cluster"
+      iam_roles = [
+        "bar"
+      ]
+    }
+  ]
+  description = "Map of IAM Roles to assign to the GKE Service Account"
+}
+
+variable service_accounts {
+ type = list(object({
+    name       = string
+    iam_roles  = list(string)
+  }))
+  default = [
+    {
+      name      = "foo"
+      iam_roles = [
+        "bar"
+      ]
+    }
+  ]
+  description = "Map of IAM Roles to assign to the Service Account"
 }
