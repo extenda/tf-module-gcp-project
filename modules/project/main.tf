@@ -102,8 +102,10 @@ module "parent_project_iam" {
   dns_project_iam_roles = var.dns_project_iam_roles
   gcr_project_id        = var.gcr_project_id
   gcr_project_iam_roles = var.gcr_project_iam_roles
-  gke_service_account   = module.gke_service_accounts.email
+  gke_sa_exists         = var.create_gke_sa
+  gke_service_account   = "tf-gke-sa@${module.project_factory.project_id}.iam.gserviceaccount.com"
   gke_gcr_iam_roles     = var.gke_gcr_iam_roles
+  gke_depends_on        = module.gke_service_accounts.email
 }
 
 module "workload-identity" {
@@ -137,13 +139,15 @@ module "additional_user_access" {
 module "service_accounts" {
   source = "../service-account"
 
-  project_id       = module.project_factory.project_id
-  service_accounts = var.service_accounts
+  create_service_account = var.create_sa
+  project_id             = module.project_factory.project_id
+  service_accounts       = var.service_accounts
 }
 
 module "gke_service_accounts" {
   source = "../service-account"
 
-  project_id       = module.project_factory.project_id
-  service_accounts = var.gke_service_account
+  create_service_account = var.create_gke_sa
+  project_id             = module.project_factory.project_id
+  service_accounts       = var.gke_service_account
 }

@@ -19,4 +19,3 @@
 ## Outputs
 
 No output.
-

@@ -3,8 +3,6 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
 | create\_service\_account | If this Service Account should be created | `bool` | n/a | yes |
-| gcr\_project\_id | ID of the project hosting Google Container Registry. Don't add roles if value is empty | `string` | n/a | no |
-| parent\_project\_id | ID of the parent project. Don't add roles if value is empty | `string` | n/a | no |
 | project\_id | Project ID where we will create the service accounts | `any` | n/a | yes |
 | service_accounts | Map of IAM Roles to assign to the Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | n/a | yes |
 

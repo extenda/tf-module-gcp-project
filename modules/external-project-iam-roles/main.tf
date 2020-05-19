@@ -38,7 +38,7 @@ resource "google_project_iam_member" "gcr_project_roles" {
 }
 
 resource "google_project_iam_member" "gke_gcr_roles" {
-  for_each = (var.parent_project_id != "") && (var.gke_service_account != "") ? toset(var.gke_gcr_iam_roles) : toset([])
+  for_each = var.gke_sa_exists == true ? toset(var.gke_gcr_iam_roles) : toset([])
 
   project = var.gcr_project_id
   role    = each.key

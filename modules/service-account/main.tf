@@ -1,9 +1,8 @@
 locals {
   service_account_roles = flatten([for sa_key, sa in var.service_accounts : [
-    for role_key, role in service_accounts.iam_roles : {
+    for role_key, role in sa.iam_roles : {
       name       = sa.name
       role       = role
-      service_id = var.create_service_account == true ? google_service_account.service_acc[sa.name].account_id : ""
     }
     ]
   ])
@@ -24,6 +23,7 @@ resource "google_project_iam_member" "project_roles" {
   for_each = {
     for sa in local.service_account_roles :
     "${sa.name}.${sa.role}" => sa
+    if var.create_service_account == true
   }
   project = var.project_id
   role    = each.value.role

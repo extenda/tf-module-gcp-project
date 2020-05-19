@@ -4,8 +4,8 @@ variable project_id {
 
 variable service_accounts {
   type = list(object({
-    name               = string
-    iam_roles          = list(string)
+    name      = string
+    iam_roles = list(string)
   }))
   description = "Map of IAM Roles to assign to the Service Account"
 }

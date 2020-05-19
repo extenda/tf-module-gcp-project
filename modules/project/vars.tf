@@ -158,14 +158,7 @@ variable services {
     name       = string
     iam_roles  = list(string)
   }))
-  default = [
-    {
-      name       = "foo"
-      iam_roles = [
-        "bar"
-      ]
-    }
-  ]
+  default = []
   description = "Map of IAM Roles to assign to the Services Service Account"
 }
 
@@ -292,7 +285,7 @@ variable gke_service_account {
   }))
   default = [
     {
-      name      = "tf-gke-k8s-cluster"
+      name      = "tf-gke-sa"
       iam_roles = [
       "roles/logging.logWriter",
       "roles/monitoring.metricWriter",
@@ -310,4 +303,16 @@ variable service_accounts {
   }))
   default = []
   description = "Map of IAM Roles to assign to the Service Account"
+}
+
+variable create_sa {
+  description = "If the Service Account should be created"
+  type        = bool
+  default     = true
+}
+
+variable create_gke_sa {
+  description = "If the GKE Service Account should be created"
+  type        = bool
+  default     = false
 }
