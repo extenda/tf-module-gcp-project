@@ -20,3 +20,8 @@ variable domain {
   type        = string
   description = "Domain name of the Organization - needed for var impersonated_user_email"
 }
+
+variable env_name {
+  type        = string
+  description = "Environment name (staging/prod). Creation of some resources depends on env_name"
+}

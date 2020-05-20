@@ -130,6 +130,7 @@ module "additional_user_access" {
   domain                 = var.domain
   additional_user_access = var.additional_user_access
   clan_gsuite_group      = var.clan_gsuite_group
+  env_name               = var.env_name
 }
 
 module "service_accounts" {
