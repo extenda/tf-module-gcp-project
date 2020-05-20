@@ -16,6 +16,7 @@ No provider.
 | create\_ci\_cd\_service\_account | If the CI/CD Service Account should be created | `bool` | `true` | no |
 | create\_cloudrun\_group | If the Service GSuite Group should be created for the CloudRun Runtime Service Account | `bool` | `false` | no |
 | create\_cloudrun\_service\_account | If the CloudRun Runtime Service Account should be created | `bool` | `true` | no |
+| create\_sa | If the Service Account should be created | `bool` | `true` | no |
 | create\_secret\_manager\_group | If the Service GSuite Group should be created for the Secret Manager Access Service Account | `bool` | `false` | no |
 | create\_secret\_manager\_service\_account | If the Secret Manager Access Service Account should be created | `bool` | `false` | no |
 | create\_service\_sa | If the Service Account for new Services should be created | `bool` | `true` | no |
@@ -38,6 +39,7 @@ No provider.
 | random\_project\_id | Adds a suffix of 4 random characters to the project\_id | `bool` | `true` | no |
 | secret\_manager\_sa | Map of IAM Roles to assign to the Secret Manager Access Service Account |  <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre>  | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "secret-accessor"<br>  }<br>]</pre> | no |
 | service\_group\_name | The name of the group that will be created for a service | `string` | `""` | no |
+| service\_accounts | Map of IAM Roles to assign to the Service Account |  <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre>  | [] | no |
 | services | Map of IAM Roles to assign to the Services Service Account |  <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre>  | [] | no |
 | shared\_vpc | The ID of the host project which hosts the shared VPC | `string` | `""` | no |
 | shared\_vpc\_subnets | List of subnets fully qualified subnet IDs (ie. projects/$project\_id/regions/$region/subnetworks/$subnet\_id) | `list(string)` | `[]` | no |
@@ -54,5 +56,7 @@ No provider.
 | project\_name | The project name |
 | secret\_manager\_service\_account\_private\_key\_encoded | The Cloud Run service account base64 encoded JSON key |
 | service\_account\_email | The default service acccount email |
+| service\_account\_emails | The service account emails created by service-account submodule |
+| service\_account\_private\_keys\_encoded | Service accounts base64 encoded JSON keys |
 | service\_emails | Services service account emails |
 | terraform\_state\_bucket | Bucket for saving terraform state of project resources |
