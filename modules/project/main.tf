@@ -93,18 +93,15 @@ module "parent_project_iam" {
   parent_project_id        = var.parent_project_id
   parent_project_iam_roles = var.parent_project_iam_roles
 
-  project_id        = module.project_factory.project_id
-  services          = var.services
-  common_iam_roles  = var.common_iam_roles
-  sa_depends_on     = module.services_sa.email
+  project_id       = module.project_factory.project_id
+  services         = var.services
+  common_iam_roles = var.common_iam_roles
+  sa_depends_on    = module.services_sa.email
 
   dns_project_id        = var.dns_project_id
   dns_project_iam_roles = var.dns_project_iam_roles
   gcr_project_id        = var.gcr_project_id
   gcr_project_iam_roles = var.gcr_project_iam_roles
-  gke_service_account   = var.gke_service_account
-  gke_parent_iam_roles  = var.gke_parent_iam_roles
-  gke_gcr_iam_roles     = var.gke_gcr_iam_roles
 }
 
 module "workload-identity" {
