@@ -29,7 +29,7 @@ module "project_factory" {
 }
 
 module "ci_cd_sa" {
-  source = "../services"
+  source = "./modules/services"
 
   create_service_account = var.create_ci_cd_service_account
   create_service_group   = var.create_ci_cd_group
@@ -43,7 +43,7 @@ module "ci_cd_sa" {
 }
 
 module "cloudrun_sa" {
-  source = "../services"
+  source = "./modules/services"
 
   create_service_account = var.create_cloudrun_service_account
   create_service_group   = var.create_cloudrun_group
@@ -57,7 +57,7 @@ module "cloudrun_sa" {
 }
 
 module "secret_manager_sa" {
-  source = "../services"
+  source = "./modules/services"
 
   create_service_account = var.create_secret_manager_service_account
   create_service_group   = var.create_secret_manager_group
@@ -71,7 +71,7 @@ module "secret_manager_sa" {
 }
 
 module "services_sa" {
-  source = "../services"
+  source = "./modules/services"
 
   create_service_account = var.create_service_sa
   create_service_group   = var.create_services_group
@@ -86,7 +86,7 @@ module "services_sa" {
 }
 
 module "parent_project_iam" {
-  source = "../external-project-iam-roles"
+  source = "./modules/external-project-iam-roles"
 
   service_account_exists   = var.create_service_sa
   service_account          = local.ci_cd_sa_email
@@ -105,7 +105,7 @@ module "parent_project_iam" {
 }
 
 module "workload-identity" {
-  source = "../workload-identity"
+  source = "./modules/workload-identity"
 
   project_id         = module.project_factory.project_id
   cluster_project_id = var.parent_project_id
@@ -114,7 +114,7 @@ module "workload-identity" {
 }
 
 module "github_secret" {
-  source = "../github-secret"
+  source = "./modules/github-secret"
 
   repositories = var.repositories
 
@@ -124,7 +124,7 @@ module "github_secret" {
 }
 
 module "additional_user_access" {
-  source = "../additional-user-access"
+  source = "./modules/additional-user-access"
 
   project_id             = module.project_factory.project_id
   domain                 = var.domain
@@ -133,7 +133,7 @@ module "additional_user_access" {
 }
 
 module "service_accounts" {
-  source = "../service-account"
+  source = "./modules/service-account"
 
   create_service_account = var.create_sa
   project_id             = module.project_factory.project_id
