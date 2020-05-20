@@ -55,19 +55,3 @@ output gsuite_group_email {
   description = "The GSuite group emails created per each service"
   value       = module.services_sa.gsuite_group_email
 }
-
-output service_account_emails {
-  description = "The service account emails created by service-account submodule"
-  value       = module.service_accounts.email
-}
-
-output service_account_private_keys_encoded {
-  description = "Service accounts base64 encoded JSON keys"
-  value       = module.service_accounts.private_key_encoded
-  sensitive   = true
-}
-
-output gke_service_account_email {
-  description = "The GKE service account email created by service-account submodule"
-  value       = module.gke_service_accounts.email
-}

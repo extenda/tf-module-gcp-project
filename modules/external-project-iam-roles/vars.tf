@@ -56,27 +56,7 @@ variable gcr_project_iam_roles {
   description = "List of IAM Roles to add GCR project"
 }
 
-variable gke_service_account {
-  type        = string
-  description = "GKE service account email that IAM roles will be added to"
-}
-
-variable gke_gcr_iam_roles {
-  type        = list(string)
-  description = "List of IAM Roles to add to the GCR project"
-}
-
 variable service_account_exists {
   type        = bool
   description = "If service_account for service exists or not"
-}
-
-variable gke_depends_on {
-  type        = any
-  description = "The GKE service Account which this module depends on"
-}
-
-variable gke_sa_exists {
-  type        = bool
-  description = "If the GKE service account exists or not"
 }

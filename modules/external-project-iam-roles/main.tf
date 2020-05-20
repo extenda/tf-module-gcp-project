@@ -37,14 +37,6 @@ resource "google_project_iam_member" "gcr_project_roles" {
   member  = "serviceAccount:${var.service_account}"
 }
 
-resource "google_project_iam_member" "gke_gcr_roles" {
-  for_each = var.gke_sa_exists == true ? toset(var.gke_gcr_iam_roles) : toset([])
-
-  project = var.gcr_project_id
-  role    = each.key
-  member  = "serviceAccount:${var.gke_service_account}"
-}
-
 resource "google_project_iam_member" "dns_project_roles" {
   for_each = var.dns_project_id != "" && (var.service_account_exists) ? toset(var.dns_project_iam_roles) : toset([])
 

@@ -258,14 +258,6 @@ variable gcr_project_iam_roles {
   ]
 }
 
-variable gke_gcr_iam_roles {
-  type        = list(string)
-  description = "List of IAM Roles to add to the GCR project for GKE service account"
-  default = [
-    "roles/storage.objectViewer"
-  ]
-}
-
 variable additional_user_access {
   type = list(object({
     name      = string
@@ -274,45 +266,4 @@ variable additional_user_access {
   }))
   default = []
   description = "List of IAM Roles to assign to groups and users"
-}
-
-## Service Accounts
-
-variable gke_service_account {
-  type = list(object({
-    name       = string
-    iam_roles  = list(string)
-  }))
-  default = [
-    {
-      name      = "tf-gke-sa"
-      iam_roles = [
-      "roles/logging.logWriter",
-      "roles/monitoring.metricWriter",
-       "roles/monitoring.viewer"
-       ]
-    }
-  ]
-  description = "Map of IAM Roles to assign to the GKE Service Account"
-}
-
-variable service_accounts {
- type = list(object({
-    name      = string
-    iam_roles = list(string)
-  }))
-  default = []
-  description = "Map of IAM Roles to assign to the Service Account"
-}
-
-variable create_sa {
-  description = "If the Service Account should be created"
-  type        = bool
-  default     = true
-}
-
-variable create_gke_sa {
-  description = "If the GKE Service Account should be created"
-  type        = bool
-  default     = false
 }
