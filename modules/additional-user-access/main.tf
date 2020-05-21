@@ -19,6 +19,7 @@ resource "gsuite_group" "access_group" {
   for_each = {
     for group in var.additional_user_access :
     group.name => group
+    if var.env_name == "prod"
   }
   email       = "${var.clan_gsuite_group}-prod-${each.key}@${var.domain}"
   name        = "${var.clan_gsuite_group}-prod-${each.key}"
@@ -30,6 +31,7 @@ resource "gsuite_group_member" "access_group_member" {
   for_each = {
     for group in local.group_members :
     "${group.name}/${group.member}" => group
+    if var.env_name == "prod"
   }
   group = "${var.clan_gsuite_group}-prod-${each.value.name}@${var.domain}"
   email = each.value.member
@@ -42,6 +44,7 @@ resource "google_project_iam_member" "local_access_group_roles" {
   for_each = {
     for group in local.group_roles :
     "${group.name}.${group.role}" => group
+    if var.env_name == "prod"
   }
   project = var.project_id
   role    = each.value.role

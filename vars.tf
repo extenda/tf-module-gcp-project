@@ -267,3 +267,20 @@ variable additional_user_access {
   default = []
   description = "List of IAM Roles to assign to groups and users"
 }
+
+## Service Accounts
+
+variable service_accounts {
+ type = list(object({
+    name      = string
+    iam_roles = list(string)
+  }))
+  default = []
+  description = "Map of IAM Roles to assign to the Service Account"
+}
+
+variable create_sa {
+  description = "If the Service Account should be created"
+  type        = bool
+  default     = true
+}
