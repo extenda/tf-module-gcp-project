@@ -67,7 +67,7 @@ resource "google_project_iam_member" "local_scheduler_role" {
   count = var.create_custom_roles ? 1 : 0
 
   project = var.project_id
-  role    = google_project_iam_custom_role.cs_custom_role.name
+  role    = google_project_iam_custom_role.cs_custom_role[0].name
   member  = "group:${var.clan_gsuite_group}@${var.domain}"
 
   depends_on = [google_project_iam_custom_role.cs_custom_role]
