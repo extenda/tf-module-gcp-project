@@ -54,6 +54,8 @@ resource "google_project_iam_member" "local_access_group_roles" {
 }
 
 resource "google_project_iam_custom_role" "cs_custom_role" {
+  count = var.create_custom_roles ? 1 : 0
+
   project     = var.project_id
   role_id     = "cloudschedulerrole"
   title       = "Cloud Scheduler role"
@@ -62,6 +64,8 @@ resource "google_project_iam_custom_role" "cs_custom_role" {
 }
 
 resource "google_project_iam_member" "local_scheduler_role" {
+  count = var.create_custom_roles ? 1 : 0
+
   project = var.project_id
   role    = google_project_iam_custom_role.cs_custom_role.name
   member  = "group:${var.clan_gsuite_group}@${var.domain}"

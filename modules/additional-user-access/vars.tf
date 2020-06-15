@@ -25,3 +25,8 @@ variable env_name {
   type        = string
   description = "Environment name (staging/prod). Creation of some resources depends on env_name"
 }
+
+variable create_custom_roles {
+  description = "If the Custom Roles should be created"
+  type        = bool
+}

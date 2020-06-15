@@ -284,3 +284,9 @@ variable create_sa {
   type        = bool
   default     = true
 }
+
+variable create_custom_roles {
+  description = "If the Custom Roles from the additioanl-use-access submodule should be created"
+  type        = bool
+  default     = true
+}
