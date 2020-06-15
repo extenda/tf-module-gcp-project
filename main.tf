@@ -131,6 +131,7 @@ module "additional_user_access" {
   additional_user_access = var.additional_user_access
   clan_gsuite_group      = var.clan_gsuite_group
   env_name               = var.env_name
+  create_custom_roles    = var.create_custom_roles
 }
 
 module "service_accounts" {

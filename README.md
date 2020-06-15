@@ -29,6 +29,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | create\_ci\_cd\_service\_account | If the CI/CD Service Account should be created | `bool` | `true` | no |
 | create\_cloudrun\_group | If the Service GSuite Group should be created for the CloudRun Runtime Service Account | `bool` | `false` | no |
 | create\_cloudrun\_service\_account | If the CloudRun Runtime Service Account should be created | `bool` | `true` | no |
+| create\_custom\_roles | If the Custom Roles from the additioanl-use-access submodule should be created | `bool` | `true` | no |
 | create\_sa | If the Service Account should be created | `bool` | `true` | no |
 | create\_secret\_manager\_group | If the Service GSuite Group should be created for the Secret Manager Access Service Account | `bool` | `false` | no |
 | create\_secret\_manager\_service\_account | If the Secret Manager Access Service Account should be created | `bool` | `false` | no |
