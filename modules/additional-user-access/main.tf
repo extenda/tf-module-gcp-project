@@ -52,3 +52,18 @@ resource "google_project_iam_member" "local_access_group_roles" {
 
   depends_on = [gsuite_group.access_group]
 }
+
+resource "google_project_iam_custom_role" "cs_custom_role" {
+  role_id     = "cloudschedulerrole"
+  title       = "Cloud Scheduler role"
+  description = "The role for the Cloud Scheduler"
+  permissions = ["appengine.applications.create", "serviceusage.services.enable"]
+}
+
+resource "google_project_iam_member" "scheduler_role" {
+  project = var.project_id
+  role    = google_project_iam_custom_role.cs_custom_role.name
+  member  = "${var.clan_gsuite_group}@${var.domain}"
+
+  depends_on = [google_project_iam_custom_role.cs_custom_role]
+}
