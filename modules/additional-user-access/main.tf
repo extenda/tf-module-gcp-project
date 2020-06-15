@@ -60,10 +60,10 @@ resource "google_project_iam_custom_role" "cs_custom_role" {
   permissions = ["appengine.applications.create", "serviceusage.services.enable"]
 }
 
-resource "google_project_iam_member" "scheduler_role" {
+resource "google_project_iam_member" "local_scheduler_role" {
   project = var.project_id
   role    = google_project_iam_custom_role.cs_custom_role.name
-  member  = "${var.clan_gsuite_group}@${var.domain}"
+  member  = "group:${var.clan_gsuite_group}@${var.domain}"
 
   depends_on = [google_project_iam_custom_role.cs_custom_role]
 }
