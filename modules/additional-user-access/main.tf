@@ -54,6 +54,7 @@ resource "google_project_iam_member" "local_access_group_roles" {
 }
 
 resource "google_project_iam_custom_role" "cs_custom_role" {
+  project     = var.project_id
   role_id     = "cloudschedulerrole"
   title       = "Cloud Scheduler role"
   description = "The role for the Cloud Scheduler"
