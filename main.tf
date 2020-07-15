@@ -85,23 +85,50 @@ module "services_sa" {
   env_name   = var.env_name
 }
 
-module "parent_project_iam" {
-  source = "./modules/external-project-iam-roles"
+module "parent_project_services_roles" {
+  source = "./modules/external-roles"
 
-  service_account_exists   = var.create_service_sa
-  service_account          = local.ci_cd_sa_email
-  parent_project_id        = var.parent_project_id
-  parent_project_iam_roles = var.parent_project_iam_roles
+  roles_map = {
+    for service in var.services:
+      "${service.name}@${module.project_factory.project_id}.iam.gserviceaccount.com" => {
+        "${var.parent_project_id}" = var.common_iam_roles
+      }
 
-  project_id       = module.project_factory.project_id
-  services         = var.services
-  common_iam_roles = var.common_iam_roles
+  }
   sa_depends_on    = module.services_sa.email
+}
 
-  dns_project_id        = var.dns_project_id
-  dns_project_iam_roles = var.dns_project_iam_roles
-  gcr_project_id        = var.gcr_project_id
-  gcr_project_iam_roles = var.gcr_project_iam_roles
+module "parent_project_roles" {
+  source = "./modules/external-roles"
+
+  roles_map = {
+    "${local.ci_cd_sa_email}" = {
+      "${var.parent_project_id}" = var.parent_project_iam_roles
+    }
+  }
+  sa_depends_on    = module.services_sa.email
+}
+
+module "dns_project_roles" {
+  source = "./modules/external-roles"
+
+  roles_map = {
+    "${local.ci_cd_sa_email}" = {
+      "${var.dns_project_id}" = var.dns_project_iam_roles
+    }
+  }
+  sa_depends_on    = module.services_sa.email
+}
+
+module "gcr_project_roles" {
+  source = "./modules/external-roles"
+
+  roles_map = {
+    "${local.ci_cd_sa_email}" = {
+      "${var.gcr_project_id}" = var.gcr_project_iam_roles
+    }
+  }
+  sa_depends_on    = module.services_sa.email
 }
 
 module "workload-identity" {
