@@ -1,5 +1,5 @@
 module service-account {
-  source                 = "../modules/service-account"
+  source                 = "../../modules/service-account"
   project_id             = "project-test-id"
   create_service_account = true
   create_service_group   = true
