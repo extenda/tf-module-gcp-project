@@ -155,10 +155,10 @@ variable secret_manager_sa {
 
 variable services {
   type = list(object({
-    name       = string
-    iam_roles  = list(string)
+    name      = string
+    iam_roles = list(string)
   }))
-  default = []
+  default     = []
   description = "Map of IAM Roles to assign to the Services Service Account"
 }
 
@@ -264,18 +264,18 @@ variable additional_user_access {
     iam_roles = list(string)
     members   = list(string)
   }))
-  default = []
+  default     = []
   description = "List of IAM Roles to assign to groups and users"
 }
 
 ## Service Accounts
 
 variable service_accounts {
- type = list(object({
+  type = list(object({
     name      = string
     iam_roles = list(string)
   }))
-  default = []
+  default     = []
   description = "Map of IAM Roles to assign to the Service Account"
 }
 

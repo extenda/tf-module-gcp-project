@@ -1,15 +1,19 @@
-This module is for creating specific iam roles in specific projects for existing service account.
+This module is intended to create specific IAM roles in specific projects for the existing service account.
 
-Module accept a list of service accounts, projects and roles in next data structure passed to roles_map variable:
+The module accepts a list of service accounts, projects and roles. The following data structure is passed to roles_map variable:
 
 ```
-service-account@project_id.iam.gserviceaccount.com:
+service-account1@project_id.iam.gserviceaccount.com:
   external_project1_id :
     - roles/role1
     - roles/role2
   external_project2_id :
     - roles/role3
     - roles/role4
+service-account2@project_id.iam.gserviceaccount.com:
+  external_project3_id :
+    - roles/role5
+    - roles/role6
 ```
 
 See [example](../../examples/external-roles) of using the module
@@ -24,8 +28,8 @@ See [example](../../examples/external-roles) of using the module
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| roles_map | Nested map of service accounts to projects to list of roles | `map(map(list(string)))` | n/a | yes |
-| sa\_depends\_on | Service Account which this module depends on | `any` | n/a | no |
+| roles\_map | Nested map of service accounts to projects to list of roles | `map(map(list(string)))` | n/a | yes |
+| sa\_depends\_on | Service Account which this module depends on | `any` | "" | no |
 
 ## Outputs
 

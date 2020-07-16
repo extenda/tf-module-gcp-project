@@ -1,6 +1,6 @@
 variable roles_map {
   description = "Map of roles in external projects"
-  type = map(map(list(string)))
+  type        = map(map(list(string)))
 }
 
 variable sa_depends_on {
