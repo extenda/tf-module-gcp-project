@@ -18,10 +18,10 @@ service-account2@project_id.iam.gserviceaccount.com:
 
 See [example](../../examples/external-roles) of using the module
 
-If `project_id` variable provided then only service name may be passed to map instead of whole service account:
+If `project_id` variable provided then only service account short name (without `@project_id.iam.gserviceaccount.com`) may be passed to map instead of whole service account:
 
 ```
-service1:
+service-account1:
   external_project1_id :
     - roles/role1
     - roles/role2
