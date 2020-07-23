@@ -134,9 +134,15 @@ module "gcr_project_roles" {
 module "custom_external_roles" {
   source = "./modules/external-roles"
 
-  roles_map     = var.custom_external_roles
-  project_id    = module.project_factory.project_id
-  sa_depends_on = module.services_sa.email
+  roles_map  = var.custom_external_roles
+  project_id = module.project_factory.project_id
+  sa_depends_on = [
+    module.ci_cd_sa.email,
+    module.cloudrun_sa.email,
+    module.secret_manager_sa.email,
+    module.services_sa.email,
+    module.service_accounts.email,
+  ]
 }
 
 module "workload-identity" {
