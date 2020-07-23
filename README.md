@@ -36,6 +36,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | create\_service\_sa | If the Service Account for new Services should be created | `bool` | `true` | no |
 | create\_services\_group | If the Service GSuite Group should be created for the Services (services variable) | `bool` | `true` | no |
 | credentials | JSON encoded service account credentials file with rights to run the Project Factory. If this file is absent Terraform will fallback to GOOGLE\_APPLICATION\_CREDENTIALS env variable. | `any` | n/a | yes |
+| custom\_external\_roles | Map of service or service account to external projects to list of iam roles for add | `map(map(list(string)))` | `{}` | no |
 | default\_service\_account | Project default service account setting: can be one of delete, deprivilege, disable, or keep. | `string` | `"deprivilege"` | no |
 | dns\_project\_iam\_roles | List of IAM Roles to add to DNS project | `list(string)` | <pre>[<br>  "roles/dns.admin"<br>]</pre> | no |
 | dns\_project\_id | ID of the project hosting Google Cloud DNS | `string` | `""` | no |

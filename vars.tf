@@ -290,3 +290,11 @@ variable create_custom_roles {
   type        = bool
   default     = true
 }
+
+# Custom external IAM roles
+
+variable custom_external_roles {
+  description = "Map of service or service account to external projects to list of iam roles for add"
+  type        = map(map(list(string)))
+  default     = {}
+}
