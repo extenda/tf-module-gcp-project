@@ -131,6 +131,14 @@ module "gcr_project_roles" {
   sa_depends_on = module.services_sa.email
 }
 
+module "custom_external_roles" {
+  source = "./modules/external-roles"
+
+  roles_map     = var.custom_external_roles
+  project_id    = module.project_factory.project_id
+  sa_depends_on = module.services_sa.email
+}
+
 module "workload-identity" {
   source = "./modules/workload-identity"
 
