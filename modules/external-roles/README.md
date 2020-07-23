@@ -18,6 +18,20 @@ service-account2@project_id.iam.gserviceaccount.com:
 
 See [example](../../examples/external-roles) of using the module
 
+If `project_id` variable provided then only service name may be passed to map instead of whole service account:
+
+```
+service1:
+  external_project1_id :
+    - roles/role1
+    - roles/role2
+  external_project2_id :
+    - roles/role3
+    - roles/role4
+```
+
+
+
 ## Providers
 
 | Name | Version |
@@ -29,6 +43,7 @@ See [example](../../examples/external-roles) of using the module
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
 | roles\_map | Nested map of service accounts to projects to list of roles | `map(map(list(string)))` | n/a | yes |
+| project\_id | Project ID of service account if service name passed only | `string` | `""` | no |
 | sa\_depends\_on | Service Account which this module depends on | `any` | "" | no |
 
 ## Outputs
