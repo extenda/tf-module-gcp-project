@@ -64,7 +64,7 @@ resource "google_project_iam_custom_role" "cs_custom_role" {
 }
 
 resource "google_project_iam_member" "local_scheduler_role" {
-  count = var.create_custom_roles ? 1 : 0
+  count = var.create_custom_roles && var.clan_gsuite_group != "" ? 1 : 0
 
   project = var.project_id
   role    = google_project_iam_custom_role.cs_custom_role[0].name
