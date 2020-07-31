@@ -8,6 +8,11 @@ output project_name {
   value       = module.project_factory.project_name
 }
 
+output project_number {
+  description = "The project number"
+  value       = module.project_factory.project_number
+}
+
 output service_account_email {
   description = "The default service acccount email"
   value       = module.project_factory.service_account_email
