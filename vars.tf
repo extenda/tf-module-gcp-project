@@ -226,6 +226,7 @@ variable parent_project_iam_roles {
   description = "List of IAM Roles to add to the parent project"
   default = [
     "roles/container.admin",
+    "roles/monitoring.admin",
     "roles/iam.serviceAccountUser"
   ]
 }
