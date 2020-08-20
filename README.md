@@ -43,6 +43,9 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | domain | Domain name of the Organization | `string` | n/a | yes |
 | env\_name | Environment name (staging/prod). Creation of some resources depends on env\_name | `string` | `""` | no |
 | folder\_id | The ID of a folder to host this project | `any` | n/a | yes |
+| github\_organization | GitHub organization to use GitHub prodifer with | `string` | `extenda` | no |
+| github\_token\_gcp\_project | GCP project that contains Secret Manager for Github token | `string` | `tf-admin-90301274` | no |
+| github\_token\_gcp\_secret | SGP secret name for GitHub token | `string` | `github-token` | no |
 | gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | `list(string)` | <pre>[<br>  "roles/storage.admin"<br>]</pre> | no |
 | gcr\_project\_id | ID of the project hosting Google Container Registry | `string` | `""` | no |
 | impersonated\_user\_email | Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>` | `string` | `""` | no |

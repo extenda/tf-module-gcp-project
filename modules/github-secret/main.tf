@@ -1,8 +1,8 @@
 data "google_secret_manager_secret_version" "github_token" {
   provider = google-beta
 
-  project = var.gcp_secret_project
-  secret  = "github-token"
+  project = var.github_token_gcp_project
+  secret  = var.github_token_gcp_secret
 }
 
 provider "github" {

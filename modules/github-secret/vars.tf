@@ -1,13 +1,16 @@
-variable gcp_secret_project {
-  description = "GCP project that contains Secret Manager"
+variable github_token_gcp_project {
+  description = "GCP project that contains Secret Manager for Github token"
   type        = string
-  default     = "tf-admin-90301274"
+}
+
+variable github_token_gcp_secret {
+  description = "SGP secret name for GitHub token"
+  type        = string
 }
 
 variable github_organization {
   description = "GitHub organization"
   type        = string
-  default     = "extenda"
 }
 
 variable repositories {
