@@ -30,6 +30,24 @@ variable activate_apis {
   description = "The list of apis to activate within the project"
 }
 
+variable github_organization {
+  type        = string
+  description = "GitHub organization to use GitHub prodifer with"
+  default     = "extenda"
+}
+
+variable github_token_gcp_project {
+  type        = string
+  description = "GCP project that contains Secret Manager for Github token"
+  default     = "tf-admin-90301274"
+}
+
+variable github_token_gcp_secret {
+  type        = string
+  description = "SGP secret name for GitHub token"
+  default     = "github-token"
+}
+
 variable shared_vpc {
   type        = string
   description = "The ID of the host project which hosts the shared VPC"
