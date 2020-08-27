@@ -131,6 +131,7 @@ module "workload-identity" {
 module "github_secret" {
   source = "./modules/github-secret"
 
+  github_token             = var.github_token
   github_token_gcp_project = var.github_token_gcp_project
   github_token_gcp_secret  = var.github_token_gcp_secret
   github_organization      = var.github_organization
