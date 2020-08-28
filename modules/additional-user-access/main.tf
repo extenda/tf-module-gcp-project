@@ -60,7 +60,7 @@ resource "google_project_iam_custom_role" "cs_custom_role" {
   role_id     = "cloudschedulerrole"
   title       = "Cloud Scheduler role"
   description = "The role for the Cloud Scheduler"
-  permissions = ["appengine.applications.create", "serviceusage.services.enable"]
+  permissions = ["appengine.applications.create", "serviceusage.services.enable", "cloudscheduler.jobs.run", "cloudscheduler.jobs.fullView"]
 }
 
 resource "google_project_iam_member" "local_scheduler_role" {
