@@ -46,6 +46,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | github\_organization | GitHub organization to use GitHub prodifer with | `string` | `extenda` | no |
 | github\_token\_gcp\_project | GCP project that contains Secret Manager for Github token | `string` | `tf-admin-90301274` | no |
 | github\_token\_gcp\_secret | SGP secret name for GitHub token | `string` | `github-token` | no |
+| github\_token | GitHub token value (instead of query GCP secret) | `string` | `""` | no |
 | gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | `list(string)` | <pre>[<br>  "roles/storage.admin"<br>]</pre> | no |
 | gcr\_project\_id | ID of the project hosting Google Container Registry | `string` | `""` | no |
 | impersonated\_user\_email | Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>` | `string` | `""` | no |

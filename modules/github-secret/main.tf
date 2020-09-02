@@ -1,13 +1,14 @@
 data "google_secret_manager_secret_version" "github_token" {
   provider = google-beta
 
+  count   = (var.github_token == "") ? 1 : 0
   project = var.github_token_gcp_project
   secret  = var.github_token_gcp_secret
 }
 
 provider "github" {
   version      = "~> 2.0"
-  token        = data.google_secret_manager_secret_version.github_token.secret_data
+  token        = (var.github_token != "") ? var.github_token : data.google_secret_manager_secret_version.github_token[0].secret_data
   organization = var.github_organization
 }
 

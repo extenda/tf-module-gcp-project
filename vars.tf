@@ -48,6 +48,12 @@ variable github_token_gcp_secret {
   default     = "github-token"
 }
 
+variable github_token {
+  type        = string
+  description = "GitHub token value (instead request GCP secret)"
+  default     = ""
+}
+
 variable shared_vpc {
   type        = string
   description = "The ID of the host project which hosts the shared VPC"

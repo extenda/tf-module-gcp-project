@@ -8,6 +8,12 @@ variable github_token_gcp_secret {
   type        = string
 }
 
+variable github_token {
+  type        = string
+  description = "GitHub token value (instead of query GCP secret)"
+  default     = ""
+}
+
 variable github_organization {
   description = "GitHub organization"
   type        = string
