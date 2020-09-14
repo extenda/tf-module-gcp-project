@@ -109,6 +109,7 @@ variable ci_cd_sa {
         "roles/iam.serviceAccountUser",
         "roles/run.admin",
         "roles/storage.admin",
+        "roles/cloudfunctions.admin",
         "roles/secretmanager.secretAccessor"
       ]
     }
