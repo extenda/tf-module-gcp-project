@@ -2,6 +2,10 @@ variable project_id {
   description = "Local (clan) Project ID where service account is created"
 }
 
+variable project_number {
+  description = "Local (clan) Project Number where service account exists"
+}
+
 variable services {
   type = list(object({
     name      = string
