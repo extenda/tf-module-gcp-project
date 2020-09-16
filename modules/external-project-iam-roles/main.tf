@@ -6,7 +6,6 @@ locals {
     }
     ]
   ])
-  pubsub_sa = "service-${var.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }
 
 resource "google_project_iam_member" "parent_project_service_roles" {
@@ -44,10 +43,4 @@ resource "google_project_iam_member" "dns_project_roles" {
   project = var.dns_project_id
   role    = each.key
   member  = "serviceAccount:${var.service_account}"
-}
-
-resource "google_project_iam_member" "pubsub_sa_role" {
-  project = var.project_id
-  role    = "roles/iam.ServiceAccountTokenCreator"
-  member  = "serviceAccount:${local.pubsub_sa}"
 }

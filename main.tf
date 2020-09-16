@@ -95,7 +95,6 @@ module "parent_project_iam" {
   parent_project_iam_roles = var.parent_project_iam_roles
 
   project_id       = module.project_factory.project_id
-  project_number   = module.project_factory.project_number
   services         = var.services
   common_iam_roles = var.common_iam_roles
   sa_depends_on    = module.services_sa.email
