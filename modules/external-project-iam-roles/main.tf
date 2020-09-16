@@ -29,12 +29,12 @@ resource "google_project_iam_member" "parent_project_roles" {
   member  = "serviceAccount:${var.service_account}"
 }
 
-resource "google_project_iam_member" "gcr_project_roles" {
+resource "google_storage_bucket_iam_member" "gcr_bucket_roles" {
   for_each = (var.gcr_project_id != "") && (var.service_account_exists) ? toset(var.gcr_project_iam_roles) : toset([])
 
-  project = var.gcr_project_id
-  role    = each.key
-  member  = "serviceAccount:${var.service_account}"
+  bucket = "eu.artifacts.${var.gcr_project_id}.appspot.com"
+  role   = "each.key"
+  member = "serviceAccount:${var.service_account}"
 }
 
 resource "google_project_iam_member" "dns_project_roles" {
