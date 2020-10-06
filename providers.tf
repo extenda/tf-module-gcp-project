@@ -1,10 +1,22 @@
 terraform {
   # The configuration for this backend will be filled in by Terragrunt
   required_version = ">= 0.12.18"
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version     = "~> 3.8"
+    }
+    google-beta = {
+      source = "hashicorp/google-beta"
+    }
+    gsuite = {
+      source = "DeviaVir/gsuite"
+      version = "~> 0.1.35"
+    }
+  }
 }
 
 provider "google" {
-  version     = "~> 3.8"
   region      = "europe-west-1"
   credentials = var.credentials
 }
@@ -22,6 +34,4 @@ provider "gsuite" {
     "https://www.googleapis.com/auth/admin.directory.group",
     "https://www.googleapis.com/auth/admin.directory.group.member"
   ]
-
-  version = "~> 0.1.35"
 }
