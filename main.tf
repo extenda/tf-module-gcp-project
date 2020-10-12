@@ -4,8 +4,7 @@ locals {
 }
 
 module "project_factory" {
-  source  = "terraform-google-modules/project-factory/google//modules/shared_vpc"
-  version = "9.1"
+  source = "github.com/extenda/terraform-google-project-factory?ref=v9.1.1"
 
   name              = var.name
   random_project_id = var.random_project_id
