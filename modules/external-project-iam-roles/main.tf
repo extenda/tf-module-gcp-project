@@ -12,7 +12,7 @@ resource "google_project_iam_member" "parent_project_service_roles" {
   for_each = {
     for service in local.service_roles :
     "${service.name}.${service.role}" => service
-    if var.service_account_exists == true
+    if var.service_account_exists == true && var.parent_project_id != ""
   }
   project = var.parent_project_id
   role    = each.value.role
