@@ -110,7 +110,8 @@ variable ci_cd_sa {
         "roles/run.admin",
         "roles/storage.admin",
         "roles/cloudfunctions.admin",
-        "roles/secretmanager.secretAccessor"
+        "roles/secretmanager.secretAccessor",
+        "roles/dataflow.admin"
       ]
     }
   ]
