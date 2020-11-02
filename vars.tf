@@ -112,7 +112,8 @@ variable ci_cd_sa {
         "roles/cloudfunctions.admin",
         "roles/secretmanager.secretAccessor",
         "roles/dataflow.worker",
-        "roles/dataflow.admin"
+        "roles/dataflow.admin",
+        "roles/bigquery.dataEditor"
       ]
     }
   ]
