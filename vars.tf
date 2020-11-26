@@ -252,7 +252,6 @@ variable parent_project_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to the parent project"
   default = [
-    "roles/cicd.gke.manager",
     "roles/monitoring.admin",
     "roles/iam.serviceAccountUser"
   ]
