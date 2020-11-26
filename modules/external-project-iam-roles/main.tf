@@ -44,3 +44,13 @@ resource "google_project_iam_member" "dns_project_roles" {
   role    = each.key
   member  = "serviceAccount:${var.service_account}"
 }
+
+resource "google_project_iam_custom_role" "gke_custom_role" {
+  count = var.create_custom_roles ? 1 : 0
+
+  project     = var.parent_project_id
+  role_id     = "cicd.gke.manager"
+  title       = "CI/CD GKE manager role"
+  description = "Custom role for minimal access to gke"
+  permissions = ["container.apiServices.get", "container.apiServices.list", "container.clusters.get", "ccontainer.clusters.getCredentials"]
+}
