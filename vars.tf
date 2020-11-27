@@ -325,3 +325,15 @@ variable custom_external_roles {
   type        = map(map(list(string)))
   default     = {}
 }
+
+variable gke_host {
+  description = "Kubernetes endpoint"
+  type        = string
+  default     = ""
+}
+
+variable gke_ca_certificate {
+  description = "Kubernetes certificate"
+  type        = string
+  default     = ""
+}
