@@ -1,10 +1,11 @@
 locals {
   ci_cd_sa_email = var.create_ci_cd_service_account ? module.ci_cd_sa.email[var.ci_cd_sa[0].name] : ""
   secret_suffix  = var.env_name == "" ? "" : "_${upper(var.env_name)}"
+  pubsub_sa      = "service-${module.project_factory.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
 }
 
 module "project_factory" {
-  source = "github.com/extenda/terraform-google-project-factory?ref=v9.1.1"
+  source = "github.com/extenda/terraform-google-project-factory?ref=v9.1.2"
 
   name              = var.name
   random_project_id = var.random_project_id
@@ -151,6 +152,8 @@ module "additional_user_access" {
   clan_gsuite_group      = var.clan_gsuite_group
   env_name               = var.env_name
   create_custom_roles    = var.create_custom_roles
+  pubsub_sa              = local.pubsub_sa
+  pubsub_api_enabled     = contains(module.project_factory.enabled_apis, "pubsub.googleapis.com")
 }
 
 module "service_accounts" {

@@ -72,3 +72,11 @@ resource "google_project_iam_member" "local_scheduler_role" {
 
   depends_on = [google_project_iam_custom_role.cs_custom_role]
 }
+
+resource "google_project_iam_member" "token_creator_binding" {
+  count = var.pubsub_api_enabled ? 1 : 0
+
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${var.pubsub_sa}"
+}
