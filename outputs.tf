@@ -66,3 +66,8 @@ output service_account_private_keys_encoded {
   value       = module.service_accounts.private_key_encoded
   sensitive   = true
 }
+
+output enabled_apis {
+  description = "Enabled APIs in the project"
+  value       = module.project_factory.enabled_apis
+}
