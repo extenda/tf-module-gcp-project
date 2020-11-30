@@ -30,3 +30,14 @@ variable create_custom_roles {
   description = "If the Custom Roles should be created"
   type        = bool
 }
+
+variable pubsub_sa {
+  description = "Pub/Sub defult SA"
+  type        = string
+}
+
+variable pubsub_api_enabled {
+  description = "Check if Pub/Sub API is enabled"
+  type        = bool
+  default     = false
+}
