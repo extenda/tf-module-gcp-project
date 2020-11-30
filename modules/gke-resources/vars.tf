@@ -13,7 +13,7 @@ variable services {
     name      = string
     iam_roles = list(string)
   }))
-  description = "List of services with IAM Roles to assign to the Services Service Account"
+  description = "List of services to setup namespace for"
 }
 
 variable gke_host {
@@ -26,7 +26,12 @@ variable gke_ca_certificate {
   type        = string
 }
 
+variable cicd_service {
+  description = "cicd pipeline service account"
+  type        = string
+}
+
 variable sa_depends_on {
-  description = "Service Account which this module depends on"
+  description = "Service Accounts which this module depends on"
   type        = any
 }
