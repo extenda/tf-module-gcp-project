@@ -163,3 +163,19 @@ module "service_accounts" {
   project_id             = module.project_factory.project_id
   service_accounts       = var.service_accounts
 }
+
+module "gke_resources" {
+  source = "./modules/gke-resources"
+
+  project_id         = module.project_factory.project_id
+  cluster_project_id = var.parent_project_id
+  services           = var.services
+  gke_ca_certificate = var.gke_ca_certificate
+  gke_host           = var.gke_host
+  cicd_service       = module.ci_cd_sa.email.ci-cd-pipeline
+  sa_depends_on = [
+    module.ci_cd_sa.email,
+    module.services_sa.email,
+  ]
+}
+

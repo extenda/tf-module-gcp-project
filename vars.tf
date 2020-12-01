@@ -252,7 +252,6 @@ variable parent_project_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to the parent project"
   default = [
-    "roles/container.admin",
     "roles/monitoring.admin",
     "roles/iam.serviceAccountUser"
   ]
@@ -325,4 +324,16 @@ variable custom_external_roles {
   description = "Map of service or service account to external projects to list of iam roles for add"
   type        = map(map(list(string)))
   default     = {}
+}
+
+variable gke_host {
+  description = "Kubernetes endpoint"
+  type        = string
+  default     = ""
+}
+
+variable gke_ca_certificate {
+  description = "Kubernetes certificate"
+  type        = string
+  default     = ""
 }
