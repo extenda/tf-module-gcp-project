@@ -60,3 +60,8 @@ variable service_account_exists {
   type        = bool
   description = "If service_account for service exists or not"
 }
+
+variable project_type {
+  description = "What project type this is"
+  type        = string
+}

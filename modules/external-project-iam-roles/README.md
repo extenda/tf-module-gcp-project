@@ -19,6 +19,7 @@
 | service\_account\_exists | If service_account for service exists or not | `bool` | n/a | yes |
 | project\_id | Local (clan) Project ID where service account is created | `string` | n/a | yes |
 | services | List of services with IAM roles | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))<br></pre> | n/a | yes |
+| project_type | project type this is applied to | `string` | n/a | yes |
 | sa\_depends\_on | Service Account which this module depends on | `any` | n/a | yes |
 
 ## Outputs

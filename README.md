@@ -61,6 +61,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | service\_accounts | Map of IAM Roles to assign to the Service Account |  <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre>  | [] | no |
 | services | Map of IAM Roles to assign to the Services Service Account |  <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre>  | [] | no |
 | shared\_vpc | The ID of the host project which hosts the shared VPC | `string` | `""` | no |
+| project_type | project type this is applied to | `string` | `clan_project` | no |
 | shared\_vpc\_subnets | List of subnets fully qualified subnet IDs (ie. projects/$project\_id/regions/$region/subnetworks/$subnet\_id) | `list(string)` | `[]` | no |
 
 ## Outputs

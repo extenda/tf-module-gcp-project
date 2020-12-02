@@ -5,9 +5,8 @@ locals {
   }
 }
 
-
 resource "kubernetes_namespace" "service_namespace" {
-  for_each = var.cluster_project_id != "" ? local.service_name : {}
+  for_each = var.project_type == "clan_project" ? local.service_name : {}
   metadata {
     name = each.key
   }
@@ -19,17 +18,19 @@ resource "kubernetes_namespace" "service_namespace" {
 }
 
 resource "kubernetes_default_service_account" "service_workload_identity" {
-  for_each = var.cluster_project_id != "" ? local.service_name : {}
+  for_each = var.project_type == "clan_project" ? local.service_name : {}
   metadata {
     annotations = {
       "iam.gke.io/gcp-service-account" = "${each.key}@${var.project_id}.iam.gserviceaccount.com"
     }
     namespace = each.key
   }
+
+  depends_on = [kubernetes_namespace.service_namespace]
 }
 
 resource "kubernetes_role" "ci_cd_namespace_admin_role" {
-  for_each = var.cluster_project_id != "" ? local.service_name : {}
+  for_each = var.project_type == "clan_project" ? local.service_name : {}
 
   metadata {
     namespace = each.key
@@ -40,9 +41,12 @@ resource "kubernetes_role" "ci_cd_namespace_admin_role" {
     resources   = ["*"]
     verbs       = ["*"]
   }
+
+  depends_on = [kubernetes_namespace.service_namespace]
 }
 
 resource "kubernetes_cluster_role" "ci_cd_cluster_role" {
+  count = var.project_type == "clan_project" ? 1 : 0
 
   metadata {
     name = "cicd-pipeline-cluster-role"
@@ -52,12 +56,15 @@ resource "kubernetes_cluster_role" "ci_cd_cluster_role" {
     resources   = ["persistentvolumes"]
     verbs       = ["*"]
   }
+
+  depends_on = [kubernetes_namespace.service_namespace]
 }
 
 resource "kubernetes_cluster_role_binding" "ci_cd_cluster_role_binding" {
+  count = var.project_type == "clan_project" ? 1 : 0
 
   metadata {
-    name = "${var.cicd_service}"
+    name = var.cicd_service
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
@@ -66,13 +73,15 @@ resource "kubernetes_cluster_role_binding" "ci_cd_cluster_role_binding" {
   }
   subject {
     kind      = "User"
-    name      = "${var.cicd_service}"
+    name      = var.cicd_service
     api_group = "rbac.authorization.k8s.io"
   }
+
+  depends_on = [kubernetes_namespace.service_namespace]
 }
 
 resource "kubernetes_role_binding" "ci_cd_namespace_admin_role_binding" {
-  for_each = var.cluster_project_id != "" ? local.service_name : {}
+  for_each = var.project_type == "clan_project" ? local.service_name : {}
 
   metadata {
     namespace = each.key
@@ -85,7 +94,9 @@ resource "kubernetes_role_binding" "ci_cd_namespace_admin_role_binding" {
   }
   subject {
     kind      = "User"
-    name      = "${var.cicd_service}"
+    name      = var.cicd_service
     api_group = "rbac.authorization.k8s.io"
   }
+
+  depends_on = [kubernetes_namespace.service_namespace]
 }
