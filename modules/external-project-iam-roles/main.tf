@@ -30,11 +30,12 @@ resource "google_project_iam_member" "parent_project_roles" {
 }
 
 resource "google_project_iam_member" "parent_project_gke_role" {
+  count = var.project_type == "clan_project" ? 1 : 0
+
   project = var.parent_project_id
-  role    = google_project_iam_custom_role.gke_custom_role.id
+  role    = "projects/${var.parent_project_id}/roles/cicd.gke.manager"
   member  = "serviceAccount:${var.service_account}"
 
-  depends_on = [google_project_iam_custom_role.gke_custom_role]
 }
 
 resource "google_project_iam_member" "gcr_project_roles" {
@@ -54,9 +55,11 @@ resource "google_project_iam_member" "dns_project_roles" {
 }
 
 resource "google_project_iam_custom_role" "gke_custom_role" {
-  project     = var.parent_project_id
+  count = var.project_type == "tribe_project" ? 1 : 0
+  
+  project     = var.project_id
   role_id     = "cicd.gke.manager"
   title       = "CI/CD GKE manager role"
   description = "Custom role for minimal access to GKE"
-  permissions = ["container.apiServices.get", "container.apiServices.list", "container.clusters.get", "container.clusters.getCredentials"]
+  permissions = ["container.apiServices.get", "container.apiServices.list", "container.clusters.get", "container.clusters.getCredentials", "container.clusters.list"]
 }

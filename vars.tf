@@ -337,3 +337,9 @@ variable gke_ca_certificate {
   type        = string
   default     = ""
 }
+
+variable project_type {
+  description = "what type of project this is applied to"
+  type        = string
+  default     = "clan_project"
+}

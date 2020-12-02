@@ -103,6 +103,7 @@ module "parent_project_iam" {
   dns_project_iam_roles = var.dns_project_iam_roles
   gcr_project_id        = var.gcr_project_id
   gcr_project_iam_roles = var.gcr_project_iam_roles
+  project_type          = var.project_type
 }
 
 module "custom_external_roles" {
@@ -167,12 +168,13 @@ module "service_accounts" {
 module "gke_resources" {
   source = "./modules/gke-resources"
 
+  project_type       = var.project_type
   project_id         = module.project_factory.project_id
   cluster_project_id = var.parent_project_id
   services           = var.services
   gke_ca_certificate = var.gke_ca_certificate
   gke_host           = var.gke_host
-  cicd_service       = module.ci_cd_sa.email.ci-cd-pipeline
+  cicd_service       = module.ci_cd_sa.email
   sa_depends_on = [
     module.ci_cd_sa.email,
     module.services_sa.email,
