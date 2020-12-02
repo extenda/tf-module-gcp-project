@@ -26,6 +26,7 @@ resource "kubernetes_default_service_account" "service_workload_identity" {
     }
     namespace = each.key
   }
+
   depends_on = [kubernetes_namespace.service_namespace]
 }
 
@@ -55,6 +56,7 @@ resource "kubernetes_cluster_role" "ci_cd_cluster_role" {
     resources   = ["persistentvolumes"]
     verbs       = ["*"]
   }
+
   depends_on = [kubernetes_namespace.service_namespace]
 }
 
