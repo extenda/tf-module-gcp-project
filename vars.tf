@@ -329,7 +329,7 @@ variable custom_external_roles {
 variable gke_host {
   description = "Kubernetes endpoint"
   type        = string
-  default     = ""
+  default     = "no-gke-host"
 }
 
 variable gke_ca_certificate {
