@@ -27,8 +27,8 @@ variable gke_ca_certificate {
 }
 
 variable cicd_service {
-  description = "cicd pipeline service account"
-  type        = any
+  description = "Cicd pipeline service account email"
+  type        = string
 }
 
 variable project_type {

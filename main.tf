@@ -174,10 +174,7 @@ module "gke_resources" {
   services           = var.services
   gke_ca_certificate = var.gke_ca_certificate
   gke_host           = var.gke_host
-  cicd_service       = module.ci_cd_sa.email
-  sa_depends_on = [
-    module.ci_cd_sa.email,
-    module.services_sa.email,
-  ]
+  cicd_service       = locals.ci_cd_sa_email
+  sa_depends_on      = module.services_sa.email
 }
 

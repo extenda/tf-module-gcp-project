@@ -13,8 +13,8 @@
 | services | List of services to setup namespace for | <pre>list(object({<br>    name      = string<br>  }))<br></pre> | n/a | yes |
 | gke_host | Kubernetes endpoint | `string` | n/a | yes |
 | gke_ca_certificate | Kubernetes certificate | `string` | n/a | yes |
-| cicd_service | cicd pipeline service account | `string` | n/a | yes |
-| project_type | project type this is applied to | `string` | n/a | yes |
+| cicd_service | Cicd pipeline service account email | `string` | n/a | yes |
+| project_type | Project type this is applied to | `string` | n/a | yes |
 | sa\_depends\_on | Service Account which this module depends on | `any` | n/a | yes |
 
 ## Outputs

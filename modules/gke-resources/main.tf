@@ -64,7 +64,7 @@ resource "kubernetes_cluster_role_binding" "ci_cd_cluster_role_binding" {
   count = var.project_type == "clan_project" ? 1 : 0
 
   metadata {
-    name = var.cicd_service.ci-cd-pipeline
+    name = var.cicd_service
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
@@ -73,7 +73,7 @@ resource "kubernetes_cluster_role_binding" "ci_cd_cluster_role_binding" {
   }
   subject {
     kind      = "User"
-    name      = var.cicd_service.ci-cd-pipeline
+    name      = var.cicd_service
     api_group = "rbac.authorization.k8s.io"
   }
 
@@ -94,7 +94,7 @@ resource "kubernetes_role_binding" "ci_cd_namespace_admin_role_binding" {
   }
   subject {
     kind      = "User"
-    name      = var.cicd_service.ci-cd-pipeline
+    name      = var.cicd_service
     api_group = "rbac.authorization.k8s.io"
   }
 
