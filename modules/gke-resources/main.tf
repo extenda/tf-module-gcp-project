@@ -49,7 +49,7 @@ resource "kubernetes_cluster_role" "ci_cd_cluster_role" {
   count = var.project_type == "clan_project" ? 1 : 0
 
   metadata {
-    name = "cicd-pipeline-cluster-role"
+    name = "${var.project_id}-cluster-role"
   }
   rule {
     api_groups  = [""]
@@ -69,7 +69,7 @@ resource "kubernetes_cluster_role_binding" "ci_cd_cluster_role_binding" {
   role_ref {
     api_group = "rbac.authorization.k8s.io"
     kind      = "ClusterRole"
-    name      = "cicd-pipeline-cluster-role"
+    name      = "${var.project_id}-cluster-role"
   }
   subject {
     kind      = "User"
