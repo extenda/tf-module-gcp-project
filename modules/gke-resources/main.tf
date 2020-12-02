@@ -5,7 +5,6 @@ locals {
   }
 }
 
-
 resource "kubernetes_namespace" "service_namespace" {
   for_each = var.project_type == "clan_project" ? local.service_name : {}
   metadata {
@@ -42,6 +41,7 @@ resource "kubernetes_role" "ci_cd_namespace_admin_role" {
     resources   = ["*"]
     verbs       = ["*"]
   }
+
   depends_on = [kubernetes_namespace.service_namespace]
 }
 
@@ -76,6 +76,7 @@ resource "kubernetes_cluster_role_binding" "ci_cd_cluster_role_binding" {
     name      = var.cicd_service.ci-cd-pipeline
     api_group = "rbac.authorization.k8s.io"
   }
+
   depends_on = [kubernetes_namespace.service_namespace]
 }
 
@@ -96,5 +97,6 @@ resource "kubernetes_role_binding" "ci_cd_namespace_admin_role_binding" {
     name      = var.cicd_service.ci-cd-pipeline
     api_group = "rbac.authorization.k8s.io"
   }
+
   depends_on = [kubernetes_namespace.service_namespace]
 }
