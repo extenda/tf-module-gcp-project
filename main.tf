@@ -178,3 +178,12 @@ module "gke_resources" {
   sa_depends_on      = module.services_sa.email
 }
 
+module "pact_broker" {
+  source = "./modules/pact-broker"
+
+  pact_project_id        = var.pact_project_id
+  project_id             = module.project_factory.project_id
+  pactbroker_user_secret = var.pactbroker_user_secret
+  pactbroker_pass_secret = var.pactbroker_pass_secret
+  create_pact_secrets    = var.create_pact_secrets
+}
