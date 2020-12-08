@@ -343,3 +343,29 @@ variable project_type {
   type        = string
   default     = "clan_project"
 }
+
+# Pact-broker
+
+variable pactbroker_user_secret {
+  type        = string
+  description = "GCP secret name for pact-broker user"
+  default     = "pactbroker_username"
+}
+
+variable pactbroker_pass_secret {
+  type        = string
+  description = "GCP secret name for pact-broker password"
+  default     = "pactbroker_password"
+}
+
+variable create_pact_secrets {
+  description = "If the pact-broker secrets should be created"
+  type        = bool
+  default     = false
+}
+
+variable pact_project_id {
+  description = "GCP project that contains secrets for pact-broker"
+  type        = string
+  default     = "platform-prod-2481"
+}
