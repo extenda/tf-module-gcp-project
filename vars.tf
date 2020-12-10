@@ -349,13 +349,13 @@ variable project_type {
 variable pactbroker_user_secret {
   type        = string
   description = "GCP secret name for pact-broker user"
-  default     = "pactbroker_username"
+  default     = "pactbroker_ro_username"
 }
 
 variable pactbroker_pass_secret {
   type        = string
   description = "GCP secret name for pact-broker password"
-  default     = "pactbroker_password"
+  default     = "pactbroker_ro_password"
 }
 
 variable create_pact_secrets {

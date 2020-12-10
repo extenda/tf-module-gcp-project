@@ -34,3 +34,8 @@ variable create_pact_secrets {
   description = "If the pact-broker secrets should be created"
   type        = bool
 }
+
+variable env_name {
+  type        = string
+  description = "Environment name (staging/prod). Creation of some resources depends on it"
+}
