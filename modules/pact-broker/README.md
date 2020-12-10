@@ -9,6 +9,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | create\_pact\_secrets | If the pact-broker secrets should be created | `bool` | n/a | yes |
+| env\_name | Environment name (staging/prod). Creation of some resources depends on it | `string` | n/a | yes |
 | pact\_project\_id | GCP project that contains secrets for pact-broker | `string` | n/a | yes |
 | pactbroker\_pass | Pact-broker password value (instead of query GCP secret) | `string` | `""` | no |
 | pactbroker\_pass\_secret | GCP secret name for pact-broker password | `string` | n/a | yes |

@@ -186,4 +186,5 @@ module "pact_broker" {
   pactbroker_user_secret = var.pactbroker_user_secret
   pactbroker_pass_secret = var.pactbroker_pass_secret
   create_pact_secrets    = var.create_pact_secrets
+  env_name               = var.env_name
 }
