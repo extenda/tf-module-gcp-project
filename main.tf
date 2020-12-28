@@ -5,13 +5,13 @@ locals {
 }
 
 module "project_factory" {
-  source = "github.com/extenda/terraform-google-project-factory?ref=v9.1.2"
+  source = "terraform-google-modules/project-factory/google"
+  version = "10.0.1"
 
   name              = var.name
   random_project_id = var.random_project_id
 
   default_service_account = var.default_service_account
-  skip_gcloud_download    = true
 
   org_id          = var.org_id
   folder_id       = var.folder_id
@@ -25,8 +25,8 @@ module "project_factory" {
   activate_apis = var.activate_apis
   labels        = var.labels
 
-  shared_vpc         = var.shared_vpc
-  shared_vpc_subnets = var.shared_vpc_subnets
+  svpc_host_project_id = var.shared_vpc
+  shared_vpc_subnets   = var.shared_vpc_subnets
 }
 
 module "ci_cd_sa" {
