@@ -52,8 +52,8 @@ resource "kubernetes_cluster_role" "ci_cd_cluster_role" {
     name = "${var.project_id}-cluster-role"
   }
   rule {
-    api_groups  = [""]
-    resources   = ["persistentvolumes"]
+    api_groups  = ["*"]
+    resources   = ["persistentvolumes", "orders"]
     verbs       = ["*"]
   }
 
