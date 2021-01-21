@@ -6,7 +6,7 @@ locals {
 
 module "project_factory" {
   source = "terraform-google-modules/project-factory/google"
-  version = "10.0.1"
+  version = "10.1.0"
 
   name              = var.name
   random_project_id = var.random_project_id
@@ -21,6 +21,7 @@ module "project_factory" {
   bucket_location   = "EU"
   bucket_project    = var.name
   bucket_versioning = true
+  bucket_labels     = var.bucket_labels
 
   activate_apis = var.activate_apis
   labels        = var.labels
