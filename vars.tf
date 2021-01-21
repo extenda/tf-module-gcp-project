@@ -82,6 +82,12 @@ variable bucket_name {
   description = "The name of the bucket that will contain terraform state - must be globally unique"
 }
 
+variable "bucket_labels" {
+  description = " A map of key/value label pairs to assign to the bucket"
+  type        = map
+  default     = {}
+}
+
 ## CI/CD Service Account
 
 variable create_ci_cd_service_account {
