@@ -189,3 +189,12 @@ module "pact_broker" {
   create_pact_secrets    = var.create_pact_secrets
   env_name               = var.env_name
 }
+
+module "platform_alerts" {
+  source = "./modules/platform-alert-webhook"
+
+  pipeline_project_id     = var.pipeline_project_id
+  project_id              = module.project_factory.project_id
+  webhook_url_secret      = var.webhook_url_secret
+  project_type            = var.project_type
+}
