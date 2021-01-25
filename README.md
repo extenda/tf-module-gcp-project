@@ -62,6 +62,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | pactbroker\_pass\_secret | GCP secret name for pact-broker password | `string` | `"pactbroker_password"` | no |
 | pactbroker\_user\_secret | GCP secret name for pact-broker user | `string` | `"pactbroker_username"` | no |
 | parent\_project\_iam\_roles | List of IAM Roles to add to the parent project | `list(string)` | <pre>[<br>  "roles/monitoring.admin",<br>  "roles/iam.serviceAccountUser"<br>]</pre> | no |
+| pipeline\_project\_id | GCP project that contains secrets for gcp-platform-alerts | `string` | `pipeline-secrets-1136` | no |
 | parent\_project\_id | ID of the project to which add additional IAM roles for current project's CI/CD service account. Ignore if empty | `string` | `""` | no |
 | project\_type | what type of project this is applied to | `string` | `"clan_project"` | no |
 | random\_project\_id | Adds a suffix of 4 random characters to the project\_id | `bool` | `true` | no |
@@ -72,6 +73,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | services | Map of IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | `[]` | no |
 | shared\_vpc | The ID of the host project which hosts the shared VPC | `string` | `""` | no |
 | shared\_vpc\_subnets | List of subnets fully qualified subnet IDs (ie. projects/$project\_id/regions/$region/subnetworks/$subnet\_id) | `list(string)` | `[]` | no |
+| webhook\_url\_secret | GCP secret name for webhook url | `string` | `slack-webhook-gcp-platform` | no |
 
 ## Outputs
 
