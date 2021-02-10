@@ -190,11 +190,11 @@ module "pact_broker" {
   env_name               = var.env_name
 }
 
-module "platform_alerts" {
-  source = "./modules/platform-alert-webhook"
+module "slack_alerts" {
+  source = "./modules/slack_notify"
 
   pipeline_project_id     = var.pipeline_project_id
   project_id              = module.project_factory.project_id
-  webhook_url_secret      = var.webhook_url_secret
+  slack_notify_secret     = var.slack_notify_secret
   project_type            = var.project_type
 }
