@@ -191,7 +191,7 @@ module "pact_broker" {
 }
 
 module "slack_alerts" {
-  source = "./modules/slack_notify"
+  source = "./modules/slack-notify"
 
   pipeline_project_id     = var.pipeline_project_id
   project_id              = module.project_factory.project_id
