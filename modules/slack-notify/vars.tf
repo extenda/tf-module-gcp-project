@@ -8,8 +8,8 @@ variable pipeline_project_id {
   type        = string
 }
 
-variable webhook_url_secret {
-  description = "Secret name containing the webhook url"
+variable slack_notify_secret {
+  description = "Secret name containing the slack notification bot token"
   type        = string
 }
 

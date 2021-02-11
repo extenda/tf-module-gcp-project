@@ -376,12 +376,12 @@ variable pact_project_id {
   default     = "platform-prod-2481"
 }
 
-# platform alert webhook secret
+# slack alert token secret
 
-variable webhook_url_secret {
+variable slack_notify_secret {
   type        = string
-  description = "GCP secret name for webhook url"
-  default     = "slack-webhook-gcp-platform"
+  description = "GCP secret name for slack token"
+  default     = "slack_notify_token"
 }
 
 variable pipeline_project_id {
