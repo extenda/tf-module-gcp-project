@@ -287,7 +287,8 @@ variable gcr_project_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add GCR project"
   default = [
-    "roles/storage.admin"
+    "roles/storage.admin",
+    "roles/firebase.admin"
   ]
 }
 
