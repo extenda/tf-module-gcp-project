@@ -79,7 +79,6 @@ module "services_sa" {
   create_service_group   = var.create_services_group
   service_group_name     = var.service_group_name
   clan_gsuite_group      = var.clan_gsuite_group
-  common_iam_roles       = var.common_iam_roles
 
   project_id = module.project_factory.project_id
   services   = var.services

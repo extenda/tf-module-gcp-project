@@ -1,12 +1,32 @@
 locals {
   service_roles = flatten([for service_key, service in var.services : [
-    for role_key, role in distinct(concat(service.iam_roles, var.common_iam_roles)) : {
+    for role_key, role in distinct(service.iam_roles) : {
       name        = service.name
       role        = role
       service_id  = var.create_service_account == true ? google_service_account.sa[service.name].account_id : ""
     }
     ]
   ])
+}
+
+
+resource "google_project_iam_custom_role" "common_custom_role" {
+  count = var.create_service_account == true && var.create_service_group == true ? 1 : 0
+
+  project     = var.project_id
+  role_id     = "common.services"
+  title       = "Custom role for each service"
+  description = "Custom role with common permissions for each deployed service"
+  permissions = [
+    "monitoring.metricDescriptors.create", "monitoring.metricDescriptors.get", "monitoring.metricDescriptors.list", "monitoring.monitoredResourceDescriptors.get",
+    "monitoring.monitoredResourceDescriptors.list", "monitoring.timeSeries.create", "logging.logEntries.create", "cloudnotifications.activities.list", "monitoring.alertPolicies.get",
+    "monitoring.alertPolicies.list", "monitoring.dashboards.get", "monitoring.dashboards.list", "monitoring.groups.get", "monitoring.groups.list",
+    "monitoring.metricDescriptors.get", "monitoring.metricDescriptors.list", "monitoring.monitoredResourceDescriptors.get", "monitoring.monitoredResourceDescriptors.list", "monitoring.notificationChannelDescriptors.get",
+    "monitoring.notificationChannelDescriptors.list", "monitoring.notificationChannels.get", "monitoring.notificationChannels.list", "monitoring.publicWidgets.get", "monitoring.publicWidgets.list",
+    "monitoring.services.get", "monitoring.services.list", "monitoring.slos.get", "monitoring.slos.list", "monitoring.timeSeries.list",
+    "monitoring.uptimeCheckConfigs.get", "monitoring.uptimeCheckConfigs.list", "opsconfigmonitoring.resourceMetadata.list", "resourcemanager.projects.get",
+    "stackdriver.projects.get", "cloudtrace.traces.patch", "resourcemanager.projects.get", "secretmanager.versions.access"
+  ]
 }
 
 resource "google_service_account" "sa" {
@@ -95,4 +115,17 @@ resource "google_project_iam_member" "service_group_roles" {
   member  = "group:${var.service_group_name}-${each.value.name}@${var.domain}"
 
   depends_on = [gsuite_group.service_group]
+}
+
+resource "google_project_iam_member" "service_group_roles_common" {
+   for_each = {
+    for service in var.services :
+    service.name => service
+    if var.create_service_account == true && var.create_service_group == true
+  }
+  project = var.project_id
+  role    = google_project_iam_custom_role.common_custom_role[0].name
+  member  = "group:${var.service_group_name}-${each.key}@${var.domain}"
+
+  depends_on = [gsuite_group.service_group, google_project_iam_custom_role.common_custom_role]
 }
