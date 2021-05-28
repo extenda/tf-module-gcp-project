@@ -63,3 +63,11 @@ resource "google_project_iam_custom_role" "gke_custom_role" {
   description = "Custom role for minimal access to GKE"
   permissions = ["container.apiServices.get", "container.apiServices.list", "container.clusters.get", "container.clusters.getCredentials", "container.clusters.list"]
 }
+
+resource "google_project_iam_member" "token_creator_project_role" {
+  count = var.env_name == "staging" ? 1 : 0
+
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${var.service_account}"
+}

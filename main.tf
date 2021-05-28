@@ -104,6 +104,7 @@ module "parent_project_iam" {
   gcr_project_id        = var.gcr_project_id
   gcr_project_iam_roles = var.gcr_project_iam_roles
   project_type          = var.project_type
+  env_name              = var.env_name
 }
 
 module "custom_external_roles" {

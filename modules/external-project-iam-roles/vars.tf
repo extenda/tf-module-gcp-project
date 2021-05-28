@@ -65,3 +65,8 @@ variable project_type {
   description = "What project type this is"
   type        = string
 }
+
+variable env_name {
+  type        = string
+  description = "Environment name (staging/prod). Creation of some resources depends on env_name"
+}
