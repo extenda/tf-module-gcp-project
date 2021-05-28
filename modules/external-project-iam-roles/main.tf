@@ -65,7 +65,7 @@ resource "google_project_iam_custom_role" "gke_custom_role" {
 }
 
 resource "google_project_iam_member" "token_creator_project_role" {
-  count = var.env_name == "staging" ? 1 : 0
+  count = var.env_name == "staging" && var.project_type != "tribe_project"? 1 : 0
 
   project = var.project_id
   role    = "roles/iam.serviceAccountTokenCreator"
