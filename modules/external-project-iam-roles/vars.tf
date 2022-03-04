@@ -70,3 +70,8 @@ variable env_name {
   type        = string
   description = "Environment name (staging/prod). Creation of some resources depends on env_name"
 }
+
+variable platform_project_id {
+  type        = string
+  description = "ID of the project to which add IAM roles for Binary Auth."
+}
