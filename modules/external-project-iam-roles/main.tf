@@ -71,3 +71,21 @@ resource "google_project_iam_member" "token_creator_project_role" {
   role    = "roles/iam.serviceAccountTokenCreator"
   member  = "serviceAccount:${var.service_account}"
 }
+
+resource "google_project_iam_custom_role" "binary_auth_custom_role" {
+  count = var.project_type == "clan_project" ? 1 : 0
+
+  project     = var.project_id
+  role_id     = "cicd.binary.access"
+  title       = "Binary Auth role"
+  description = "Custom role for Binary auth access for CI/CD sa"
+  permissions = ["containeranalysis.notes.attachOccurrence", "containeranalysis.occurrences.create", "cloudkms.cryptoKeyVersions.viewPublicKey", "binaryauthorization.attestors.get", "cloudkms.cryptoKeyVersions.useToSign"]
+}
+
+resource "google_project_iam_member" "platform_project_binary_role" {
+  count = var.project_type == "clan_project" ? 1 : 0
+
+  project = var.platform_project_id
+  role    = "projects/${var.platform_project_id}/roles/cicd.binary.access"
+  member  = "serviceAccount:${var.service_account}"
+}

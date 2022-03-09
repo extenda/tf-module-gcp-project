@@ -391,3 +391,9 @@ variable pipeline_project_id {
   type        = string
   default     = "pipeline-secrets-1136"
 }
+
+variable platform_project_id {
+  type        = string
+  description = "ID of the project to which add IAM roles for Binary Auth."
+  default     = "platform-prod-2481"
+}

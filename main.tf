@@ -93,6 +93,7 @@ module "parent_project_iam" {
   service_account          = local.ci_cd_sa_email
   parent_project_id        = var.parent_project_id
   parent_project_iam_roles = var.parent_project_iam_roles
+  platform_project_id      = var.platform_project_id
 
   project_id       = module.project_factory.project_id
   services         = var.services
