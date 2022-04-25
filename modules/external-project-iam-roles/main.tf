@@ -89,3 +89,11 @@ resource "google_project_iam_member" "platform_project_binary_role" {
   role    = "projects/${var.platform_project_id}/roles/cicd.binary.access"
   member  = "serviceAccount:${var.service_account}"
 }
+
+resource "google_project_iam_member" "project_binary_role" {
+  count = var.project_type == "clan_project" ? 1 : 0
+
+  project = var.project_id
+  role    = "projects/${var.project_id}/roles/cicd.binary.access"
+  member  = "serviceAccount:${var.service_account}"
+}
