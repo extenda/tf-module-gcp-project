@@ -397,3 +397,28 @@ variable platform_project_id {
   description = "ID of the project to which add IAM roles for Binary Auth."
   default     = "platform-prod-2481"
 }
+
+# pubsub dlq handler
+
+variable pubsub_dlq_sa {
+  type = list(object({
+    name      = string
+    iam_roles = list(string)
+  }))
+  default = [
+    {
+      name = "pubsub-dlq-handler"
+      iam_roles = [
+        "roles/iam.serviceAccountTokenCreator",
+        "roles/pubsub.subscriber"
+      ]
+    }
+  ]
+  description = "Map of IAM Roles to assign to the CI/CD Pipeline Service Account"
+}
+
+variable pubsub_dlq_sa_project_id {
+  description = "Project id where the cloud function resides ( where we need invoker permission )"
+  type = string
+  default = "sre-prod-5462"
+}

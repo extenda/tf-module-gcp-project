@@ -44,6 +44,36 @@ module "ci_cd_sa" {
   env_name   = var.env_name
 }
 
+module "pubsub_dlq_sa" {
+  source = "./modules/services"
+
+  create_service_account = var.env_name == "prod" ? true : false
+  create_service_group   = false
+  clan_gsuite_group      = var.clan_gsuite_group
+
+  project_id = module.project_factory.project_id
+  services   = var.pubsub_dlq_sa
+  domain     = var.domain
+  env_name   = var.env_name
+}
+
+module "pubsub_custom_external_role" {
+  source = "./modules/external-roles"
+  count = var.env_name == "prod" ? 1 : 0
+  roles_map  = {
+    "pubsub-dlq-handler" = {
+      (var.pubsub_dlq_sa_project_id) = [
+        "roles/cloudfunctions.invoker",
+        ]
+      }
+    }
+  project_id = module.project_factory.project_id
+  sa_depends_on = [
+    module.pubsub_dlq_sa.email,
+  ]
+}
+
+
 module "cloudrun_sa" {
   source = "./modules/services"
 
