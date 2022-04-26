@@ -49,6 +49,7 @@ module "pubsub_dlq_sa" {
 
   create_service_account = var.env_name == "prod" ? true : false
   create_service_group   = false
+  service_group_name     = ""
   clan_gsuite_group      = var.clan_gsuite_group
 
   project_id = module.project_factory.project_id
