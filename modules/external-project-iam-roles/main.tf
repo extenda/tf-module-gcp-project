@@ -73,7 +73,7 @@ resource "google_project_iam_member" "token_creator_project_role" {
 }
 
 resource "google_project_iam_custom_role" "binary_auth_custom_role" {
-  count = var.project_type == "clan_project" ? 1 : 0
+  count = var.project_type == "clan_project" || var.project_type == "standalone_project" ? 1 : 0
 
   project     = var.project_id
   role_id     = "cicd.binary.access"
@@ -83,7 +83,7 @@ resource "google_project_iam_custom_role" "binary_auth_custom_role" {
 }
 
 resource "google_project_iam_member" "platform_project_binary_role" {
-  count = var.project_type == "clan_project" ? 1 : 0
+  count = var.project_type == "clan_project" || var.project_type == "standalone_project" ? 1 : 0
 
   project = var.platform_project_id
   role    = "projects/${var.platform_project_id}/roles/cicd.binary.access"
@@ -91,7 +91,7 @@ resource "google_project_iam_member" "platform_project_binary_role" {
 }
 
 resource "google_project_iam_member" "project_binary_role" {
-  count = var.project_type == "clan_project" ? 1 : 0
+  count = var.project_type == "clan_project" || var.project_type == "standalone_project" ? 1 : 0
 
   project = var.project_id
   role    = "projects/${var.project_id}/roles/cicd.binary.access"
