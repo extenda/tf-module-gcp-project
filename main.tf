@@ -47,7 +47,7 @@ module "ci_cd_sa" {
 module "pubsub_dlq_sa" {
   source = "./modules/services"
 
-  create_service_account = var.env_name == "prod" ? true : false
+  create_service_account = var.env_name == "prod" && var.create_ci_cd_service_account == true ? true : false
   create_service_group   = false
   service_group_name     = ""
   clan_gsuite_group      = var.clan_gsuite_group
@@ -60,7 +60,7 @@ module "pubsub_dlq_sa" {
 
 module "pubsub_custom_external_role" {
   source = "./modules/external-roles"
-  count = var.env_name == "prod" ? 1 : 0
+  count = var.env_name == "prod" && var.create_ci_cd_service_account == true ? 1 : 0
   roles_map  = {
     "pubsub-dlq-handler" = {
       (var.pubsub_dlq_sa_project_id) = [
