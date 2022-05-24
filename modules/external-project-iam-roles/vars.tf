@@ -75,3 +75,14 @@ variable platform_project_id {
   type        = string
   description = "ID of the project to which add IAM roles for Binary Auth."
 }
+
+variable binary_auth_sa {
+  type        = string
+  description = "Binary Auth default service account"
+}
+
+variable binary_api_enabled {
+  description = "Check if Binary Auth API is enabled"
+  type        = bool
+  default     = false
+}
