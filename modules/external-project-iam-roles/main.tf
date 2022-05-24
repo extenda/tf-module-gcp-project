@@ -97,3 +97,11 @@ resource "google_project_iam_member" "project_binary_role" {
   role    = "projects/${var.project_id}/roles/cicd.binary.access"
   member  = "serviceAccount:${var.service_account}"
 }
+
+resource "google_project_iam_member" "default_binary_sa_role" {
+  count = var.project_type == "tribe_project" || var.binary_api_enabled ? 1 : 0
+
+  project = var.platform_project_id
+  role    = "roles/binaryauthorization.serviceAgent"
+  member  = "serviceAccount:${var.binary_auth_sa}"
+}
