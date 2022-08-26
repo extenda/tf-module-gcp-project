@@ -82,7 +82,7 @@ variable bucket_name {
   description = "The name of the bucket that will contain terraform state - must be globally unique"
 }
 
-variable "bucket_labels" {
+variable bucket_labels {
   description = " A map of key/value label pairs to assign to the bucket"
   type        = map
   default     = {}
@@ -421,4 +421,21 @@ variable pubsub_dlq_sa_project_id {
   description = "Project id where the cloud function resides ( where we need invoker permission )"
   type = string
   default = "sre-prod-5462"
+}
+
+# JIT-access
+
+variable jit_access {
+  type = list(object({
+    group     = string
+    iam_roles = list(string)
+  }))
+  description = "Map of IAM Roles to assign to the group"
+  default     = []
+}
+
+variable create_jit_access {
+  type        = bool
+  description = "If the eligible roles should be created"
+  default     = false
 }

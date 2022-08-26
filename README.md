@@ -32,6 +32,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | create\_cloudrun\_group | If the Service GSuite Group should be created for the CloudRun Runtime Service Account | `bool` | `false` | no |
 | create\_cloudrun\_service\_account | If the CloudRun Runtime Service Account should be created | `bool` | `true` | no |
 | create\_custom\_roles | If the Custom Roles from the additioanl-use-access submodule should be created | `bool` | `true` | no |
+| create\_jit\_access | If the eligible roles should be created | `bool` | `false` | no |
 | create\_pact\_secrets | If the pact-broker secrets should be created | `bool` | `false` | no |
 | create\_sa | If the Service Account should be created | `bool` | `true` | no |
 | create\_secret\_manager\_group | If the Service GSuite Group should be created for the Secret Manager Access Service Account | `bool` | `false` | no |
@@ -55,6 +56,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | gke\_ca\_certificate | Kubernetes certificate | `string` | `""` | no |
 | gke\_host | Kubernetes endpoint | `string` | `"no-gke-host"` | no |
 | impersonated\_user\_email | Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>` | `string` | `""` | no |
+| jit\_access | Map of IAM Roles to assign to the group | <pre>list(object({<br>    group      = string<br>    iam_roles = list(string)<br>  }))</pre> | `[]` | no |
 | labels | Map of labels for the project | `map(string)` | `{}` | no |
 | name | The name for the project | `any` | n/a | yes |
 | org\_id | The organization ID | `any` | n/a | yes |

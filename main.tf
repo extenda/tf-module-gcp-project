@@ -233,3 +233,11 @@ module "slack_alerts" {
   slack_notify_secret     = var.slack_notify_secret
   project_type            = var.project_type
 }
+
+module "jit_access" {
+  source = "./modules/jit-access"
+
+  project_id        = module.project_factory.project_id
+  jit_access        = var.jit_access
+  create_jit_access = var.create_jit_access
+}
