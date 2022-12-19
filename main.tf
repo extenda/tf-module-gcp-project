@@ -241,3 +241,13 @@ module "jit_access" {
   jit_access        = var.jit_access
   create_jit_access = var.create_jit_access
 }
+
+module "clan_roles_staging" {
+  source = "./modules/clan-roles-staging"
+
+  clan_roles        = var.clan_roles
+  project_id        = module.project_factory.project_id
+  env_name          = var.env_name
+  clan_gsuite_group = var.clan_gsuite_group
+  domain            = var.domain
+}

@@ -439,3 +439,9 @@ variable create_jit_access {
   description = "If the eligible roles should be created"
   default     = false
 }
+
+variable clan_roles {
+  type        = list(string)
+  default     = []
+  description = "Roles to be added to the clan's group in the staging project"
+}
