@@ -153,6 +153,7 @@ module "custom_external_roles" {
     module.secret_manager_sa.email,
     module.services_sa.email,
     module.service_accounts.email,
+    module.project_factory.project_id,
   ]
 }
 
