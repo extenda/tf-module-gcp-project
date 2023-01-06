@@ -72,6 +72,7 @@ module "pubsub_custom_external_role" {
   project_id = module.project_factory.project_id
   sa_depends_on = [
     module.pubsub_dlq_sa.email,
+    module.project_factory.project_id,
   ]
 }
 
