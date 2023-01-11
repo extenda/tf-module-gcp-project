@@ -17,7 +17,7 @@ resource "google_project_iam_member" "external_roles" {
     for i in local.service_roles :
     "${i.service_account}:${i.project_id}:${i.role}" => i
     if(i.service_account != "") && (i.project_id != "")
-    && ((length(regexall("^.+@.+.iam.gserviceaccount.com$", i.service_account)) > 0))
+    && (length(i.service_account) > 0)
   }
   project = each.value.project_id
   role    = each.value.role
