@@ -158,15 +158,6 @@ module "custom_external_roles" {
   ]
 }
 
-module "workload-identity" {
-  source = "./modules/workload-identity"
-
-  project_id         = module.project_factory.project_id
-  cluster_project_id = var.parent_project_id
-  services           = var.services
-  sa_depends_on      = module.services_sa.email
-}
-
 module "github_secret" {
   source = "./modules/github-secret"
 
@@ -201,19 +192,6 @@ module "service_accounts" {
   create_service_account = var.create_sa
   project_id             = module.project_factory.project_id
   service_accounts       = var.service_accounts
-}
-
-module "gke_resources" {
-  source = "./modules/gke-resources"
-
-  project_type       = var.project_type
-  project_id         = module.project_factory.project_id
-  cluster_project_id = var.parent_project_id
-  services           = var.services
-  gke_ca_certificate = var.gke_ca_certificate
-  gke_host           = var.gke_host
-  cicd_service       = local.ci_cd_sa_email
-  sa_depends_on      = module.services_sa.email
 }
 
 module "pact_broker" {
