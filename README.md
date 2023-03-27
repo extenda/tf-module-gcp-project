@@ -54,8 +54,6 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | github\_token | GitHub token value (instead request GCP secret) | `string` | `""` | no |
 | github\_token\_gcp\_project | GCP project that contains Secret Manager for Github token | `string` | `"tf-admin-90301274"` | no |
 | github\_token\_gcp\_secret | SGP secret name for GitHub token | `string` | `"github-token"` | no |
-| gke\_ca\_certificate | Kubernetes certificate | `string` | `""` | no |
-| gke\_host | Kubernetes endpoint | `string` | `"no-gke-host"` | no |
 | impersonated\_user\_email | Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>` | `string` | `""` | no |
 | jit\_access | Map of IAM Roles to assign to the group | <pre>list(object({<br>    group      = string<br>    iam_roles = list(string)<br>  }))</pre> | `[]` | no |
 | labels | Map of labels for the project | `map(string)` | `{}` | no |

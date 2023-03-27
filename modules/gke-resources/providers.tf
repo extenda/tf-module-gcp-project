@@ -2,7 +2,7 @@ terraform {
   required_providers {
     kubernetes = {
       source = "hashicorp/kubernetes"
-      version = "1.13.3"
+      version = "2.13.1"
     }
   }
 }
@@ -11,8 +11,6 @@ data "google_client_config" "default" {
 }
 
 provider "kubernetes" {
-  load_config_file = false
-
   host  = "https://${var.gke_host}"
   token = data.google_client_config.default.access_token
   cluster_ca_certificate = base64decode(

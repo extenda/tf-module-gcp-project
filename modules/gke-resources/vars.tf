@@ -3,11 +3,6 @@ variable project_id {
   type        = string
 }
 
-variable cluster_project_id {
-  description = "ID of the project with kubernetes cluster"
-  type        = string
-}
-
 variable services {
   type = list(object({
     name      = string
@@ -27,16 +22,18 @@ variable gke_ca_certificate {
 }
 
 variable cicd_service {
-  description = "Cicd pipeline service account email"
+  description = "ci-cd-pipeline service account email"
   type        = string
 }
 
 variable project_type {
   description = "What project type this is"
   type        = string
+  default     = "clan_project"
 }
 
-variable sa_depends_on {
-  description = "Service Accounts which this module depends on"
-  type        = any
+variable ksa_name {
+  description = "The name of Kubernetes Service Account to bind workload for"
+  type        = string
+  default     = "workload-identity-sa"
 }

@@ -3,10 +3,26 @@ locals {
     for service in var.services :
     service.name => service.name
   }
+
+  service_emails = {
+    for service in var.services :
+    service.name => "${service.name}@${var.project_id}.iam.gserviceaccount.com"
+  }
+}
+
+resource "google_service_account_iam_member" "workload" {
+  for_each = var.project_type == "clan_project" ? local.service_emails : {}
+
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${each.value}"
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${var.project_id}.svc.id.goog[${each.key}/${var.ksa_name}]"
+
+  depends_on = [kubernetes_namespace.service_namespace]
 }
 
 resource "kubernetes_namespace" "service_namespace" {
   for_each = var.project_type == "clan_project" ? local.service_name : {}
+
   metadata {
     name = each.key
   }
@@ -17,9 +33,11 @@ resource "kubernetes_namespace" "service_namespace" {
   }
 }
 
-resource "kubernetes_default_service_account" "service_workload_identity" {
+resource "kubernetes_service_account_v1" "service_workload_identity" {
   for_each = var.project_type == "clan_project" ? local.service_name : {}
+
   metadata {
+    name        = "workload-identity-sa"
     annotations = {
       "iam.gke.io/gcp-service-account" = "${each.key}@${var.project_id}.iam.gserviceaccount.com"
     }
@@ -27,6 +45,21 @@ resource "kubernetes_default_service_account" "service_workload_identity" {
   }
 
   depends_on = [kubernetes_namespace.service_namespace]
+}
+
+resource "kubernetes_secret_v1" "secret_workload_identity" {
+  for_each = var.project_type == "clan_project" ? local.service_name : {}
+
+  metadata {
+    name        = "workload-identity-token"
+    namespace   = each.key
+    annotations = {
+      "kubernetes.io/service-account.name" = "workload-identity-sa"
+    }
+  }
+  type = "kubernetes.io/service-account-token"
+
+  depends_on = [kubernetes_service_account_v1.service_workload_identity]
 }
 
 resource "kubernetes_role" "ci_cd_namespace_admin_role" {
