@@ -119,7 +119,8 @@ variable ci_cd_sa {
         "roles/secretmanager.secretAccessor",
         "roles/dataflow.admin",
         "roles/bigquery.admin",
-        "roles/datastore.importExportAdmin"
+        "roles/datastore.importExportAdmin",
+        "roles/monitoring.admin"
       ]
     }
   ]
