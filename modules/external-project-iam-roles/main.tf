@@ -125,3 +125,23 @@ resource "google_project_iam_member" "default_binary_sa_role" {
   role    = "roles/binaryauthorization.serviceAgent"
   member  = "serviceAccount:${var.binary_auth_sa}"
 }
+
+resource "google_project_iam_member" "project_lb_role" {
+  count = var.project_type == "clan_project" ? 1 : 0
+
+  project = var.project_id
+  role    = "projects/${var.project_id}/roles/cicd.lb.manager"
+  member  = "serviceAccount:${var.service_account}"
+
+  depends_on = [google_project_iam_custom_role.lb_custom_role]
+}
+
+resource "google_project_iam_custom_role" "lb_custom_role" {
+  count = var.project_type == "clan_project" ? 1 : 0
+
+  project     = var.project_id
+  role_id     = "cicd.lb.manager"
+  title       = "CI/CD Load Balancer manager role"
+  description = "Custom role for minimal access to create and manage clan's LB"
+  permissions = ["compute.sslCertificates.create", "compute.sslCertificates.delete", "compute.sslCertificates.get", "compute.sslCertificates.list", "compute.globalOperations.get"]
+}

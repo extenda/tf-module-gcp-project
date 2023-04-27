@@ -120,7 +120,9 @@ variable ci_cd_sa {
         "roles/dataflow.admin",
         "roles/bigquery.admin",
         "roles/datastore.importExportAdmin",
-        "roles/monitoring.admin"
+        "roles/monitoring.admin",
+        "roles/compute.loadBalancerAdmin",
+        "roles/dns.admin"
       ]
     }
   ]
