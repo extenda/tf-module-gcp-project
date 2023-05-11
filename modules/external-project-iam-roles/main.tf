@@ -208,3 +208,11 @@ resource "google_project_iam_custom_role" "lb_custom_role" {
    "dns.resourceRecordSets.update",
    ]
 }
+
+resource "google_project_iam_member" "compute_project_roles" {
+  for_each = var.project_type == "clan_project" ? toset(var.compute_project_iam_roles) : toset([])
+
+  project = var.project_id
+  role    = each.key
+  member  = "serviceAccount:${var.compute_sa}"
+}

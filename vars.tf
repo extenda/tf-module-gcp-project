@@ -121,8 +121,7 @@ variable ci_cd_sa {
         "roles/bigquery.admin",
         "roles/datastore.importExportAdmin",
         "roles/monitoring.admin",
-        "roles/compute.loadBalancerAdmin",
-        "roles/dns.admin"
+        "roles/clouddeploy.operator"
       ]
     }
   ]
@@ -278,6 +277,16 @@ variable dns_project_iam_roles {
   description = "List of IAM Roles to add to DNS project"
   default = [
     "roles/dns.admin"
+  ]
+}
+
+variable compute_project_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to default compute service account"
+  default     = [
+    "roles/clouddeploy.jobRunner",
+    "roles/container.developer",
+    "roles/storage.objectViewer"
   ]
 }
 
