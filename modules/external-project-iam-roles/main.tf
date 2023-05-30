@@ -105,3 +105,11 @@ resource "google_project_iam_member" "default_binary_sa_role" {
   role    = "roles/binaryauthorization.serviceAgent"
   member  = "serviceAccount:${var.binary_auth_sa}"
 }
+
+resource "google_project_iam_member" "default_cloud_run_sa_role" {
+  count = var.project_type == "clan_project" || var.cloud_run_api_enabled ? 1 : 0
+
+  project = var.gcr_project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${var.cloud_run_default_sa}"
+}
