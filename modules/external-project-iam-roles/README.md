@@ -10,9 +10,9 @@
 |------|-------------|------|---------|:--------:|
 | binary\_api\_enabled | Check if Binary Auth API is enabled | `bool` | `false` | no |
 | binary\_auth\_sa | Binary Auth default service account | `string` | n/a | yes |
+| cloud\_run\_api\_enabled | Check if Cloud Run API is enabled | `bool` | `false` | no |
+| cloud\_run\_default\_sa | Cloud Run default service account | `string` | `""` | no |
 | common\_iam\_roles | List of IAM Roles to assign to every Services Service Account in Tribe project | `list(string)` | `[]` | no |
-| compute\_project\_iam\_roles | List of IAM Roles to add to default compute service account | `list(string)` | n/a | yes |
-| compute\_sa | Compute Engine default service account | `string` | n/a | yes |
 | dns\_project\_iam\_roles | List of IAM Roles to add to DNS project | `list(string)` | n/a | yes |
 | dns\_project\_id | ID of the project hosting Google Cloud DNS | `string` | n/a | yes |
 | env\_name | Environment name (staging/prod). Creation of some resources depends on env\_name | `string` | n/a | yes |

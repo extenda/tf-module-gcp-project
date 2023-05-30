@@ -1,9 +1,9 @@
 locals {
-  ci_cd_sa_email = var.create_ci_cd_service_account ? module.ci_cd_sa.email[var.ci_cd_sa[0].name] : ""
-  secret_suffix  = var.env_name == "" ? "" : "_${upper(var.env_name)}"
-  pubsub_sa      = "service-${module.project_factory.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
-  binary_auth_sa = "service-${module.project_factory.project_number}@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
-  compute_sa     = "${module.project_factory.project_number}-compute@developer.gserviceaccount.com"
+  ci_cd_sa_email       = var.create_ci_cd_service_account ? module.ci_cd_sa.email[var.ci_cd_sa[0].name] : ""
+  secret_suffix        = var.env_name == "" ? "" : "_${upper(var.env_name)}"
+  pubsub_sa            = "service-${module.project_factory.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
+  binary_auth_sa       = "service-${module.project_factory.project_number}@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+  cloud_run_default_sa = "service-${module.project_factory.project_number}@serverless-robot-prod.iam.gserviceaccount.com" 
 }
 
 module "project_factory" {
@@ -144,6 +144,8 @@ module "parent_project_iam" {
   binary_auth_sa            = local.binary_auth_sa
   compute_sa                = local.compute_sa
   compute_project_iam_roles = var.compute_project_iam_roles
+  cloud_run_api_enabled     = contains(module.project_factory.enabled_apis, "run.googleapis.com")
+  cloud_run_default_sa      = local.cloud_run_default_sa
 }
 
 module "custom_external_roles" {
