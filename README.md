@@ -29,6 +29,8 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | clan\_roles | Roles to be added to the clan's group in the staging project | `list(string)` | `[]` | no |
 | cloudrun\_sa | Map of IAM Roles to assign to the CloudRun Runtime Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/editor",<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "cloudrun-runtime"<br>  }<br>]</pre> | no |
 | common\_iam\_roles | Default list of IAM Roles to assign to every Services Service Account | `list(string)` | <pre>[<br>  "roles/monitoring.metricWriter",<br>  "roles/logging.logWriter",<br>  "roles/monitoring.viewer",<br>  "roles/cloudtrace.agent",<br>  "roles/secretmanager.secretAccessor"<br>]</pre> | no |
+| compute\_project\_iam\_roles | List of IAM Roles to add to default compute service account | `list(string)` | n/a | yes |
+| compute\_sa | Compute Engine default service account | `string` | n/a | yes |
 | compute\_project\_iam\_roles | List of IAM Roles to add to default compute service account | `list(string)` | <pre>[<br>  "roles/clouddeploy.jobRunner",<br>  "roles/container.developer",<br>  "roles/storage.objectViewer"<br>]</pre> | no |
 | create\_ci\_cd\_group | If the Service GSuite Group should be created for the CI/CD Service Account | `bool` | `false` | no |
 | create\_ci\_cd\_service\_account | If the CI/CD Service Account should be created | `bool` | `true` | no |

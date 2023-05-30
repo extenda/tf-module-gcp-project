@@ -3,6 +3,7 @@ locals {
   secret_suffix        = var.env_name == "" ? "" : "_${upper(var.env_name)}"
   pubsub_sa            = "service-${module.project_factory.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
   binary_auth_sa       = "service-${module.project_factory.project_number}@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
+  compute_sa           = "${module.project_factory.project_number}-compute@developer.gserviceaccount.com"
   cloud_run_default_sa = "service-${module.project_factory.project_number}@serverless-robot-prod.iam.gserviceaccount.com" 
 }
 
