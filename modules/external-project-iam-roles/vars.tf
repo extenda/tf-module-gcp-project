@@ -86,3 +86,15 @@ variable binary_api_enabled {
   type        = bool
   default     = false
 }
+
+variable cloud_run_default_sa {
+  description = "Cloud Run default service account"
+  type        = string
+  default     = ""
+}
+
+variable cloud_run_api_enabled {
+  description = "Check if Cloud Run API is enabled"
+  type        = bool
+  default     = false
+}
