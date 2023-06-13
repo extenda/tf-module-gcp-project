@@ -77,7 +77,7 @@ resource "google_project_iam_member" "project_binary_role" {
 }
 
 resource "google_project_iam_member" "default_binary_sa_role" {
-  count = var.project_type == "clan_project" || var.binary_api_enabled ? 1 : 0
+  count = var.project_type == "clan_project" && var.binary_api_enabled ? 1 : 0
 
   project = var.platform_project_id
   role    = "roles/binaryauthorization.serviceAgent"
