@@ -119,7 +119,11 @@ variable ci_cd_sa {
         "roles/secretmanager.secretAccessor",
         "roles/dataflow.admin",
         "roles/bigquery.admin",
-        "roles/datastore.importExportAdmin"
+        "roles/datastore.importExportAdmin",
+        "roles/spanner.backupWriter",
+        "roles/spanner.databaseUser",
+        "roles/monitoring.admin",
+        "roles/clouddeploy.operator"
       ]
     }
   ]
@@ -249,21 +253,6 @@ variable impersonated_user_email {
   default     = ""
 }
 
-variable parent_project_id {
-  type        = string
-  description = "ID of the project to which add additional IAM roles for current project's CI/CD service account. Ignore if empty"
-  default     = ""
-}
-
-variable parent_project_iam_roles {
-  type        = list(string)
-  description = "List of IAM Roles to add to the parent project"
-  default = [
-    "roles/monitoring.admin",
-    "roles/iam.serviceAccountUser"
-  ]
-}
-
 variable dns_project_id {
   type        = string
   description = "ID of the project hosting Google Cloud DNS"
@@ -275,6 +264,16 @@ variable dns_project_iam_roles {
   description = "List of IAM Roles to add to DNS project"
   default = [
     "roles/dns.admin"
+  ]
+}
+
+variable compute_project_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to default compute service account"
+  default     = [
+    "roles/clouddeploy.jobRunner",
+    "roles/container.developer",
+    "roles/storage.objectViewer"
   ]
 }
 

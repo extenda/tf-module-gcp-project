@@ -21,19 +21,9 @@ variable sa_depends_on {
   type        = any
 }
 
-variable parent_project_id {
-  type        = string
-  description = "ID of the project to which add additional IAM roles for current project's CI/CD service account. Don't add roles if value is empty"
-}
-
 variable service_account {
   type        = string
   description = "Service account email to add IAM roles in parent project for"
-}
-
-variable parent_project_iam_roles {
-  type        = list(string)
-  description = "List of IAM Roles to add to the parent project"
 }
 
 variable dns_project_id {
@@ -97,4 +87,14 @@ variable cloud_run_api_enabled {
   description = "Check if Cloud Run API is enabled"
   type        = bool
   default     = false
+}
+
+variable compute_sa {
+  type        = string
+  description = "Compute Engine default service account"
+}
+
+variable compute_project_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to default compute service account"
 }

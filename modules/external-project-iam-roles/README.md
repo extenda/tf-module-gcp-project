@@ -18,8 +18,6 @@
 | env\_name | Environment name (staging/prod). Creation of some resources depends on env\_name | `string` | n/a | yes |
 | gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | `list(string)` | n/a | yes |
 | gcr\_project\_id | ID of the project hosting Google Container Registry | `string` | n/a | yes |
-| parent\_project\_iam\_roles | List of IAM Roles to add to the parent project | `list(string)` | n/a | yes |
-| parent\_project\_id | ID of the project to which add additional IAM roles for current project's CI/CD service account. Don't add roles if value is empty | `string` | n/a | yes |
 | platform\_project\_id | ID of the project to which add IAM roles for Binary Auth. | `string` | n/a | yes |
 | project\_id | Local (clan) Project ID where service account is created | `any` | n/a | yes |
 | project\_type | What project type this is | `string` | n/a | yes |

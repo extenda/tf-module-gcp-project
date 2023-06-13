@@ -3,7 +3,8 @@ locals {
   secret_suffix        = var.env_name == "" ? "" : "_${upper(var.env_name)}"
   pubsub_sa            = "service-${module.project_factory.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
   binary_auth_sa       = "service-${module.project_factory.project_number}@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
-  cloud_run_default_sa = "service-${module.project_factory.project_number}@serverless-robot-prod.iam.gserviceaccount.com"
+  compute_sa           = "${module.project_factory.project_number}-compute@developer.gserviceaccount.com"
+  cloud_run_default_sa = "service-${module.project_factory.project_number}@serverless-robot-prod.iam.gserviceaccount.com" 
 }
 
 module "project_factory" {
@@ -120,27 +121,27 @@ module "services_sa" {
 module "parent_project_iam" {
   source = "./modules/external-project-iam-roles"
 
-  service_account_exists   = var.create_service_sa
-  service_account          = local.ci_cd_sa_email
-  parent_project_id        = var.parent_project_id
-  parent_project_iam_roles = var.parent_project_iam_roles
-  platform_project_id      = var.platform_project_id
+  service_account_exists = var.create_service_sa
+  service_account        = local.ci_cd_sa_email
+  platform_project_id    = var.platform_project_id
 
   project_id       = module.project_factory.project_id
   services         = var.services
   common_iam_roles = var.common_iam_roles
   sa_depends_on    = module.services_sa.email
 
-  dns_project_id        = var.dns_project_id
-  dns_project_iam_roles = var.dns_project_iam_roles
-  gcr_project_id        = var.gcr_project_id
-  gcr_project_iam_roles = var.gcr_project_iam_roles
-  project_type          = var.project_type
-  env_name              = var.env_name
-  binary_api_enabled    = contains(module.project_factory.enabled_apis, "binaryauthorization.googleapis.com")
-  binary_auth_sa        = local.binary_auth_sa
-  cloud_run_api_enabled = contains(module.project_factory.enabled_apis, "run.googleapis.com")
-  cloud_run_default_sa  = local.cloud_run_default_sa
+  dns_project_id            = var.dns_project_id
+  dns_project_iam_roles     = var.dns_project_iam_roles
+  gcr_project_id            = var.gcr_project_id
+  gcr_project_iam_roles     = var.gcr_project_iam_roles
+  project_type              = var.project_type
+  env_name                  = var.env_name
+  binary_api_enabled        = contains(module.project_factory.enabled_apis, "binaryauthorization.googleapis.com")
+  binary_auth_sa            = local.binary_auth_sa
+  compute_sa                = local.compute_sa
+  compute_project_iam_roles = var.compute_project_iam_roles
+  cloud_run_api_enabled     = contains(module.project_factory.enabled_apis, "run.googleapis.com")
+  cloud_run_default_sa      = local.cloud_run_default_sa
 }
 
 module "custom_external_roles" {
