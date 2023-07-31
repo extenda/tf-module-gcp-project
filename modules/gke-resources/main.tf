@@ -18,6 +18,7 @@ resource "kubernetes_secret_v1" "secret_workload_identity" {
   type = "kubernetes.io/service-account-token"
 
   depends_on = [kubernetes_default_service_account.service_workload_identity]
+
 }
 
 resource "kubernetes_namespace" "service_namespace" {
