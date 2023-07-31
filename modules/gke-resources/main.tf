@@ -5,6 +5,35 @@ locals {
   }
 }
 
+resource "kubernetes_service_account_v1" "service_workload_identity" {
+  for_each = var.project_type == "clan_project" ? local.service_name : {}
+
+  metadata {
+    name        = "default"
+    annotations = {
+      "iam.gke.io/gcp-service-account" = "${each.key}@${var.project_id}.iam.gserviceaccount.com"
+    }
+    namespace = each.key
+  }
+
+  depends_on = [kubernetes_namespace.service_namespace]
+}
+
+resource "kubernetes_secret_v1" "secret_workload_identity" {
+  for_each = var.project_type == "clan_project" ? local.service_name : {}
+
+  metadata {
+    name        = "default"
+    namespace   = each.key
+    annotations = {
+      "kubernetes.io/service-account.name" = "default"
+    }
+  }
+  type = "kubernetes.io/service-account-token"
+
+  depends_on = [kubernetes_service_account_v1.service_workload_identity]
+}
+
 resource "kubernetes_namespace" "service_namespace" {
   for_each = var.project_type == "clan_project" ? local.service_name : {}
   metadata {
