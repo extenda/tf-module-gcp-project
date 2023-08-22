@@ -20,6 +20,22 @@ resource "google_service_account_iam_member" "workload" {
   depends_on = [kubernetes_namespace.service_namespace]
 }
 
+resource "kubernetes_secret_v1" "secret_workload_identity" {
+  for_each = var.project_type == "clan_project" ? local.service_name : {}
+
+  metadata {
+    name        = "default"
+    namespace   = each.key
+    annotations = {
+      "kubernetes.io/service-account.name" = "default"
+    }
+  }
+  type = "kubernetes.io/service-account-token"
+
+  depends_on = [kubernetes_default_service_account.service_workload_identity]
+
+}
+
 resource "kubernetes_namespace" "service_namespace" {
   for_each = var.project_type == "clan_project" ? local.service_name : {}
 
