@@ -11,7 +11,7 @@ An Extenda Retail maintained Terraform Module, which is intended to create speci
 | Name   | Version   |
 |:-------|:----------|
 | google | ~> 3.8    |
-| gsuite | ~> 0.1.35 |
+| gsuite | ~> 0.1.62 |
 
 GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d/plugins`. See GSuite Provider GitHub Repo for [Installation instructions](https://github.com/DeviaVir/terraform-provider-gsuite#installation).
 
