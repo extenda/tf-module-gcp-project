@@ -107,7 +107,7 @@ variable ci_cd_sa {
     name      = string
     iam_roles = list(string)
   }))
-  default = [
+  default     = [
     {
       name = "ci-cd-pipeline"
       iam_roles = [
@@ -147,7 +147,7 @@ variable cloudrun_sa {
     name      = string
     iam_roles = list(string)
   }))
-  default = [
+  default     = [
     {
       name = "cloudrun-runtime"
       iam_roles = [
@@ -178,7 +178,7 @@ variable secret_manager_sa {
     name      = string
     iam_roles = list(string)
   }))
-  default = [
+  default     = [
     {
       name = "secret-accessor"
       iam_roles = [
@@ -260,7 +260,7 @@ variable parent_project_id {
 variable parent_project_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to the parent project"
-  default = [
+  default     = [
     "roles/monitoring.admin",
     "roles/iam.serviceAccountUser"
   ]
@@ -275,15 +275,15 @@ variable dns_project_id {
 variable dns_project_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to DNS project"
-  default = [
+  default     = [
     "roles/dns.admin"
   ]
 }
 
-variable "compute_project_iam_roles" {
+variable compute_project_iam_roles {
   type        = list(string)
   description = "List of IAM Roles to add to default compute service account"
-  default = [
+  default     = [
     "roles/clouddeploy.jobRunner",
     "roles/container.developer",
     "roles/storage.objectViewer",
