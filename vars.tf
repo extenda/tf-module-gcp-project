@@ -280,13 +280,16 @@ variable dns_project_iam_roles {
   ]
 }
 
-variable compute_project_iam_roles {
+variable "compute_project_iam_roles" {
   type        = list(string)
   description = "List of IAM Roles to add to default compute service account"
-  default     = [
+  default = [
     "roles/clouddeploy.jobRunner",
     "roles/container.developer",
-    "roles/storage.objectViewer"
+    "roles/storage.objectViewer",
+    "roles/secretmanager.secretAccessor",
+    "roles/iam.serviceAccountUser",
+    "roles/run.admin",
   ]
 }
 
