@@ -122,7 +122,8 @@ variable ci_cd_sa {
         "roles/datastore.importExportAdmin",
         "roles/clouddeploy.operator",
         "roles/monitoring.admin",
-        "roles/compute.instanceAdmin.v1"
+        "roles/compute.instanceAdmin.v1",
+        "roles/compute.loadBalancerAdmin"
       ]
     }
   ]
