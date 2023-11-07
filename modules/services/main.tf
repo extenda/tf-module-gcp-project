@@ -130,12 +130,10 @@ resource "google_project_iam_member" "service_group_roles_common" {
   depends_on = [gsuite_group.service_group, google_project_iam_custom_role.common_custom_role]
 }
 
-resource "google_project_iam_binding" "extenda_storage_viewer" {
-  count = var.create_service_group == true ? 1 : 0
+resource "google_project_iam_member" "extenda_storage_viewer" {
+  count = var.create_service_account == true && var.create_service_group == true ? 1 : 0
+
   project = "extenda"
   role    = "roles/storage.objectViewer"
-
-  members = [
-    "group:${var.clan_gsuite_group}@${var.domain}",
-  ]
+  member  = "group:${var.clan_gsuite_group}@${var.domain}"
 }
