@@ -129,3 +129,44 @@ resource "google_project_iam_member" "service_group_roles_common" {
 
   depends_on = [gsuite_group.service_group, google_project_iam_custom_role.common_custom_role]
 }
+
+resource "gsuite_group" "service_clan_group" {
+  count = var.create_service_account == true && var.create_service_group == true ? 1 : 0
+  email       = "${var.clan_gsuite_group}-services@${var.domain}"
+  name        = "${var.clan_gsuite_group}-services"
+  description = "Clan services GSuite Group"
+  depends_on = [google_service_account.sa]
+}
+
+resource "gsuite_group_member" "clan_group_services_member_staging" {
+  for_each = {
+    for service in var.services :
+    service.name => service
+    if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging"
+  }
+  group = "${var.clan_gsuite_group}-services@${var.domain}"
+  email = google_service_account.sa[each.key].email
+  role  = "MEMBER"
+  depends_on = [gsuite_group.service_clan_group]
+}
+
+resource "gsuite_group_member" "clan_group_services_member_prod" {
+  for_each = {
+    for service in var.services :
+    service.name => service
+    if var.create_service_account == true && var.create_service_group == true && var.env_name == "prod"
+  }
+  group = "${var.clan_gsuite_group}-services@${var.domain}"
+  email = google_service_account.sa[each.key].email
+  role  = "MEMBER"
+  depends_on = [gsuite_group.service_clan_group]
+}
+
+resource "google_project_iam_member" "extenda_storage_viewer" {
+  count = var.create_service_account == true && var.create_service_group == true ? 1 : 0
+
+  project = "extenda"
+  role    = "roles/storage.objectViewer"
+  member  = "group:${var.clan_gsuite_group}-services@${var.domain}"
+  depends_on = [gsuite_group.service_clan_group]
+}
