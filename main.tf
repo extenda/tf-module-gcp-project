@@ -171,6 +171,7 @@ module "workload-identity" {
   cluster_project_id = var.parent_project_id
   services           = var.services
   sa_depends_on      = module.services_sa.email
+  cluster_resources  = var.create_cluster_resources
 }
 
 module "github_secret" {
@@ -220,6 +221,7 @@ module "gke_resources" {
   gke_host           = var.gke_host
   cicd_service       = local.ci_cd_sa_email
   sa_depends_on      = module.services_sa.email
+  cluster_resources  = var.create_cluster_resources
 }
 
 module "pact_broker" {

@@ -6,7 +6,7 @@ locals {
 }
 
 resource "kubernetes_namespace" "service_namespace" {
-  for_each = var.project_type == "clan_project" ? local.service_name : {}
+  for_each = var.project_type == "clan_project" && var.cluster_resources == true ? local.service_name : {}
   metadata {
     name = each.key
   }
@@ -18,7 +18,7 @@ resource "kubernetes_namespace" "service_namespace" {
 }
 
 resource "kubernetes_default_service_account" "service_workload_identity" {
-  for_each = var.project_type == "clan_project" ? local.service_name : {}
+  for_each = var.project_type == "clan_project" && var.cluster_resources == true ? local.service_name : {}
   metadata {
     annotations = {
       "iam.gke.io/gcp-service-account" = "${each.key}@${var.project_id}.iam.gserviceaccount.com"
@@ -30,7 +30,7 @@ resource "kubernetes_default_service_account" "service_workload_identity" {
 }
 
 resource "kubernetes_role" "ci_cd_namespace_admin_role" {
-  for_each = var.project_type == "clan_project" ? local.service_name : {}
+  for_each = var.project_type == "clan_project" && var.cluster_resources == true ? local.service_name : {}
 
   metadata {
     namespace = each.key
@@ -46,7 +46,7 @@ resource "kubernetes_role" "ci_cd_namespace_admin_role" {
 }
 
 resource "kubernetes_cluster_role" "ci_cd_cluster_role" {
-  count = var.project_type == "clan_project" ? 1 : 0
+  count = var.project_type == "clan_project" && var.cluster_resources == true ? 1 : 0
 
   metadata {
     name = "${var.project_id}-cluster-role"
@@ -61,7 +61,7 @@ resource "kubernetes_cluster_role" "ci_cd_cluster_role" {
 }
 
 resource "kubernetes_cluster_role_binding" "ci_cd_cluster_role_binding" {
-  count = var.project_type == "clan_project" ? 1 : 0
+  count = var.project_type == "clan_project" && var.cluster_resources == true ? 1 : 0
 
   metadata {
     name = var.cicd_service
@@ -81,7 +81,7 @@ resource "kubernetes_cluster_role_binding" "ci_cd_cluster_role_binding" {
 }
 
 resource "kubernetes_role_binding" "ci_cd_namespace_admin_role_binding" {
-  for_each = var.project_type == "clan_project" ? local.service_name : {}
+  for_each = var.project_type == "clan_project" && var.cluster_resources == true ? local.service_name : {}
 
   metadata {
     namespace = each.key

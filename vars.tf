@@ -460,3 +460,9 @@ variable clan_roles {
   default     = []
   description = "Roles to be added to the clan's group in the staging project"
 }
+
+variable create_cluster_resources {
+  description = "Create cluster resources"
+  type        = bool
+  default     = false
+}
