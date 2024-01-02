@@ -51,7 +51,7 @@ resource "google_project_iam_member" "parent_project_roles" {
 }
 
 resource "google_project_iam_member" "parent_project_gke_role" {
-  count = var.project_type == "clan_project" ? 1 : 0
+  count = var.project_type == "clan_project" && var.parent_project_id != "" ? 1 : 0
 
   project = var.parent_project_id
   role    = "projects/${var.parent_project_id}/roles/cicd.gke.manager"
