@@ -206,6 +206,7 @@ resource "google_project_iam_custom_role" "lb_custom_role" {
    "dns.changes.create",
    "dns.resourceRecordSets.create",
    "dns.resourceRecordSets.update",
+   "vpcaccess.connectors.list",
    ]
 }
 
