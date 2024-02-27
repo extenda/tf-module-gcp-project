@@ -99,7 +99,7 @@ variable create_ci_cd_service_account {
 variable create_ci_cd_group {
   description = "If the Service GSuite Group should be created for the CI/CD Service Account"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable ci_cd_sa {

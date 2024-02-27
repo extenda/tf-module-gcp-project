@@ -38,13 +38,14 @@ module "ci_cd_sa" {
 
   create_service_account = var.create_ci_cd_service_account
   create_service_group   = var.create_ci_cd_group
-  service_group_name     = var.service_group_name
+  service_group_name     = "ci-cd-accounts"
   clan_gsuite_group      = var.clan_gsuite_group
 
-  project_id = module.project_factory.project_id
-  services   = var.ci_cd_sa
-  domain     = var.domain
-  env_name   = var.env_name
+  project_id    = module.project_factory.project_id
+  services      = var.ci_cd_sa
+  domain        = "extendaretail.com"
+  env_name      = var.env_name
+  ci_cd_account = true
 }
 
 module "pubsub_dlq_sa" {

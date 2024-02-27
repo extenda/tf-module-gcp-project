@@ -11,7 +11,7 @@ locals {
 
 
 resource "google_project_iam_custom_role" "common_custom_role" {
-  count = var.create_service_account == true && var.create_service_group == true ? 1 : 0
+  count = var.create_service_account == true && var.ci_cd_account == false && var.create_service_group == true ? 1 : 0
 
   project     = var.project_id
   role_id     = "common.services"
@@ -44,7 +44,7 @@ resource "google_project_iam_member" "project_roles" {
   for_each = {
     for service in local.service_roles :
     "${service.name}.${service.role}" => service
-    if var.create_service_account == true && var.create_service_group == false
+    if var.create_service_account == true && var.create_service_group == false || var.ci_cd_account == true
   }
   project = var.project_id
   role    = each.value.role
@@ -94,7 +94,7 @@ resource "gsuite_group_member" "clan_group_member" {
   for_each = {
     for service in var.services :
     service.name => service
-    if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging"
+    if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging" && var.ci_cd_account == false
   }
   group = "${var.service_group_name}-${each.key}@${var.domain}"
   email = "${var.clan_gsuite_group}@${var.domain}"
@@ -108,7 +108,7 @@ resource "google_project_iam_member" "service_group_roles" {
   for_each = {
     for service in local.service_roles :
     "${service.name}.${service.role}" => service
-    if var.create_service_account == true && var.create_service_group == true
+    if var.create_service_account == true && var.create_service_group == true && var.ci_cd_account == false
   }
   project = var.project_id
   role    = each.value.role
@@ -121,7 +121,7 @@ resource "google_project_iam_member" "service_group_roles_common" {
    for_each = {
     for service in var.services :
     service.name => service
-    if var.create_service_account == true && var.create_service_group == true
+    if var.create_service_account == true && var.create_service_group == true && var.ci_cd_account == false
   }
   project = var.project_id
   role    = google_project_iam_custom_role.common_custom_role[0].name
@@ -131,7 +131,7 @@ resource "google_project_iam_member" "service_group_roles_common" {
 }
 
 resource "gsuite_group" "service_clan_group" {
-  count = var.create_service_account == true && var.create_service_group == true ? 1 : 0
+  count = var.create_service_account == true && var.ci_cd_account == false && var.create_service_group == true ? 1 : 0
   email       = "${var.clan_gsuite_group}-services@${var.domain}"
   name        = "${var.clan_gsuite_group}-services"
   description = "Clan services GSuite Group"
@@ -142,7 +142,7 @@ resource "gsuite_group_member" "clan_group_services_member_staging" {
   for_each = {
     for service in var.services :
     service.name => service
-    if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging"
+    if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging" && var.ci_cd_account == false
   }
   group = "${var.clan_gsuite_group}-services@${var.domain}"
   email = google_service_account.sa[each.key].email
@@ -154,7 +154,7 @@ resource "gsuite_group_member" "clan_group_services_member_prod" {
   for_each = {
     for service in var.services :
     service.name => service
-    if var.create_service_account == true && var.create_service_group == true && var.env_name == "prod"
+    if var.create_service_account == true && var.create_service_group == true && var.env_name == "prod" && var.ci_cd_account == false
   }
   group = "${var.clan_gsuite_group}-services@${var.domain}"
   email = google_service_account.sa[each.key].email
@@ -163,7 +163,7 @@ resource "gsuite_group_member" "clan_group_services_member_prod" {
 }
 
 resource "google_project_iam_member" "extenda_storage_viewer" {
-  count = var.create_service_account == true && var.create_service_group == true ? 1 : 0
+  count = var.create_service_account == true && var.ci_cd_account == false && var.create_service_group == true ? 1 : 0
 
   project = "extenda"
   role    = "roles/storage.objectViewer"
