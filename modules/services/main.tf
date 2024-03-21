@@ -81,13 +81,24 @@ resource "gsuite_group_member" "service_account_sa_group_member" {
   for_each = {
     for service in var.services :
     service.name => service
-    if var.create_service_account == true && var.create_service_group == true
+    if var.create_service_account == true && var.create_service_group == true && var.ci_cd_account == false
   }
   group = "${var.service_group_name}-${each.key}@${var.domain}"
   email = google_service_account.sa[each.key].email
   role  = "MEMBER"
 
   depends_on = [gsuite_group.service_group]
+}
+
+resource "gsuite_group_member" "service_account_ci_cd_group_member" {
+  for_each = {
+    for service in var.services :
+    service.name => service
+    if var.ci_cd_account == true
+  }
+  group = "${var.service_group_name}-${each.key}@${var.domain}"
+  email = google_service_account.sa[each.key].email
+  role  = "MEMBER"
 }
 
 resource "gsuite_group_member" "clan_group_member" {
