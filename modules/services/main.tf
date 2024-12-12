@@ -173,11 +173,37 @@ resource "gsuite_group_member" "clan_group_services_member_prod" {
   depends_on = [gsuite_group.service_clan_group]
 }
 
+resource "gsuite_group_member" "clan_group_services_cloudrun_sa_member" {
+  count = var.ci_cd_account == false && var.create_service_group == true && var.cloud_run_default_sa != "" ? 1 : 0
+
+  group = "${var.clan_gsuite_group}-services@${var.domain}"
+  email = var.cloud_run_default_sa
+  role  = "MEMBER"
+  depends_on = [gsuite_group.service_clan_group]
+}
+
+resource "gsuite_group_member" "clan_group_services_compute_sa_member" {
+  count = var.ci_cd_account == false && var.create_service_group == true && var.compute_sa != "" ? 1 : 0
+
+  group = "${var.clan_gsuite_group}-services@${var.domain}"
+  email = var.compute_sa
+  role  = "MEMBER"
+  depends_on = [gsuite_group.service_clan_group]
+}
+
 resource "google_project_iam_member" "extenda_storage_viewer" {
   count = var.create_service_account == true && var.ci_cd_account == false && var.create_service_group == true ? 1 : 0
 
   project = "extenda"
   role    = "roles/storage.objectViewer"
+  member  = "group:${var.clan_gsuite_group}-services@${var.domain}"
+  depends_on = [gsuite_group.service_clan_group]
+}
+resource "google_project_iam_member" "extenda_artifact_reader" {
+  count = var.create_service_account == true && var.ci_cd_account == false && var.create_service_group == true ? 1 : 0
+
+  project = "extenda"
+  role    = "roles/artifactregistry.reader"
   member  = "group:${var.clan_gsuite_group}-services@${var.domain}"
   depends_on = [gsuite_group.service_clan_group]
 }

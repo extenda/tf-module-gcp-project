@@ -304,6 +304,7 @@ variable gcr_project_iam_roles {
   description = "List of IAM Roles to add GCR project"
   default = [
     "roles/storage.admin",
+    "roles/artifactregistry.admin",
     "roles/firebase.admin"
   ]
 }

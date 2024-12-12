@@ -51,3 +51,15 @@ variable ci_cd_account {
   description   = "Check if service account is ci-cd-pipeline account or not"
   default       = false
 }
+
+variable compute_sa {
+  type        = string
+  description = "Compute Engine default service account"
+  default     = ""
+}
+
+variable cloud_run_default_sa {
+  description = "Cloud Run default service account"
+  type        = string
+  default     = ""
+}
