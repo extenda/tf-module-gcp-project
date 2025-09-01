@@ -11,7 +11,7 @@ An Extenda Retail maintained Terraform Module, which is intended to create speci
 | Name   | Version   |
 |:-------|:----------|
 | google | ~> 3.8    |
-| gsuite | ~> 0.1.35 |
+| gsuite | ~> 0.1.62 |
 
 GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d/plugins`. See GSuite Provider GitHub Repo for [Installation instructions](https://github.com/DeviaVir/terraform-provider-gsuite#installation).
 
@@ -22,12 +22,16 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | activate\_apis | The list of apis to activate within the project | `list(string)` | n/a | yes |
 | additional\_user\_access | List of IAM Roles to assign to groups and users | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>    members   = list(string)<br>  }))</pre> | `[]` | no |
 | billing\_account | The ID of the billing account to associate this project with | `any` | n/a | yes |
+| bucket\_labels | A map of key/value label pairs to assign to the bucket | `map` | `{}` | no |
 | bucket\_name | The name of the bucket that will contain terraform state - must be globally unique | `any` | n/a | yes |
-| ci\_cd\_sa | Map of IAM Roles to assign to the CI/CD Pipeline Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/cloudsql.editor",<br>      "roles/iam.serviceAccountUser",<br>      "roles/run.admin",<br>      "roles/storage.admin",<br>      "roles/cloudfunctions.admin",<br>      "roles/secretmanager.secretAccessor",<br>      "roles/dataflow.admin",<br>      "roles/bigquery.admin"<br>    ],<br>    "name": "ci-cd-pipeline"<br>  }<br>]</pre> | no |
+| ci\_cd\_sa | Map of IAM Roles to assign to the CI/CD Pipeline Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/cloudsql.editor",<br>      "roles/iam.serviceAccountUser",<br>      "roles/run.admin",<br>      "roles/storage.admin",<br>      "roles/cloudfunctions.admin",<br>      "roles/secretmanager.secretAccessor",<br>      "roles/dataflow.admin",<br>      "roles/bigquery.admin",<br>      "roles/datastore.importExportAdmin",<br>      "roles/monitoring.admin",<br>      "roles/clouddeploy.operator"<br>    ],<br>    "name": "ci-cd-pipeline"<br>  }<br>]</pre> | no |
 | clan\_gsuite\_group | The name of the clan group that needs to be added to the Service GSuite Group | `string` | `""` | no |
 | clan\_roles | Roles to be added to the clan's group in the staging project | `list(string)` | `[]` | no |
 | cloudrun\_sa | Map of IAM Roles to assign to the CloudRun Runtime Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/editor",<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "cloudrun-runtime"<br>  }<br>]</pre> | no |
 | common\_iam\_roles | Default list of IAM Roles to assign to every Services Service Account | `list(string)` | <pre>[<br>  "roles/monitoring.metricWriter",<br>  "roles/logging.logWriter",<br>  "roles/monitoring.viewer",<br>  "roles/cloudtrace.agent",<br>  "roles/secretmanager.secretAccessor"<br>]</pre> | no |
+| compute\_project\_iam\_roles | List of IAM Roles to add to default compute service account | `list(string)` | n/a | yes |
+| compute\_sa | Compute Engine default service account | `string` | n/a | yes |
+| compute\_project\_iam\_roles | List of IAM Roles to add to default compute service account | `list(string)` | <pre>[<br>  "roles/clouddeploy.jobRunner",<br>  "roles/container.developer",<br>  "roles/storage.objectViewer"<br>]</pre> | no |
 | create\_ci\_cd\_group | If the Service GSuite Group should be created for the CI/CD Service Account | `bool` | `false` | no |
 | create\_ci\_cd\_service\_account | If the CI/CD Service Account should be created | `bool` | `true` | no |
 | create\_cloudrun\_group | If the Service GSuite Group should be created for the CloudRun Runtime Service Account | `bool` | `false` | no |
@@ -48,7 +52,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | domain | Domain name of the Organization | `string` | n/a | yes |
 | env\_name | Environment name (staging/prod). Creation of some resources depends on env\_name | `string` | `""` | no |
 | folder\_id | The ID of a folder to host this project | `any` | n/a | yes |
-| gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | `list(string)` | <pre>[<br>  "roles/storage.admin"<br>]</pre> | no |
+| gcr\_project\_iam\_roles | List of IAM Roles to add GCR project | `list(string)` | <pre>[<br>  "roles/storage.admin",<br>  "roles/firebase.admin"<br>]</pre> | no |
 | gcr\_project\_id | ID of the project hosting Google Container Registry | `string` | `""` | no |
 | github\_organization | GitHub organization to use GitHub prodifer with | `string` | `"extenda"` | no |
 | github\_token | GitHub token value (instead request GCP secret) | `string` | `""` | no |
@@ -57,17 +61,20 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | gke\_ca\_certificate | Kubernetes certificate | `string` | `""` | no |
 | gke\_host | Kubernetes endpoint | `string` | `"no-gke-host"` | no |
 | impersonated\_user\_email | Email account of GSuite Admin user to impersonate for creating GSuite Groups. If not provided, will default to `terraform@<var.domain>` | `string` | `""` | no |
-| jit\_access | Map of IAM Roles to assign to the group | <pre>list(object({<br>    group      = string<br>    iam_roles = list(string)<br>  }))</pre> | `[]` | no |
+| jit\_access | Map of IAM Roles to assign to the group | <pre>list(object({<br>    group     = string<br>    iam_roles = list(string)<br>  }))</pre> | `[]` | no |
 | labels | Map of labels for the project | `map(string)` | `{}` | no |
 | name | The name for the project | `any` | n/a | yes |
 | org\_id | The organization ID | `any` | n/a | yes |
 | pact\_project\_id | GCP project that contains secrets for pact-broker | `string` | `"platform-prod-2481"` | no |
-| pactbroker\_pass\_secret | GCP secret name for pact-broker password | `string` | `"pactbroker_password"` | no |
-| pactbroker\_user\_secret | GCP secret name for pact-broker user | `string` | `"pactbroker_username"` | no |
+| pactbroker\_pass\_secret | GCP secret name for pact-broker password | `string` | `"pactbroker_ro_password"` | no |
+| pactbroker\_user\_secret | GCP secret name for pact-broker user | `string` | `"pactbroker_ro_username"` | no |
 | parent\_project\_iam\_roles | List of IAM Roles to add to the parent project | `list(string)` | <pre>[<br>  "roles/monitoring.admin",<br>  "roles/iam.serviceAccountUser"<br>]</pre> | no |
-| pipeline\_project\_id | GCP project that contains secrets for slack notify token | `string` | `pipeline-secrets-1136` | no |
 | parent\_project\_id | ID of the project to which add additional IAM roles for current project's CI/CD service account. Ignore if empty | `string` | `""` | no |
+| pipeline\_project\_id | GCP project that contains secrets for webhook url | `string` | `"pipeline-secrets-1136"` | no |
+| platform\_project\_id | ID of the project to which add IAM roles for Binary Auth. | `string` | `"platform-prod-2481"` | no |
 | project\_type | what type of project this is applied to | `string` | `"clan_project"` | no |
+| pubsub\_dlq\_sa | Map of IAM Roles to assign to the CI/CD Pipeline Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/iam.serviceAccountTokenCreator",<br>      "roles/pubsub.subscriber"<br>    ],<br>    "name": "pubsub-dlq-handler"<br>  }<br>]</pre> | no |
+| pubsub\_dlq\_sa\_project\_id | Project id where the cloud function resides ( where we need invoker permission ) | `string` | `"sre-prod-5462"` | no |
 | random\_project\_id | Adds a suffix of 4 random characters to the project\_id | `bool` | `true` | no |
 | repositories | The GitHub repositories to update | `list(string)` | `[]` | no |
 | secret\_manager\_sa | Map of IAM Roles to assign to the Secret Manager Access Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "secret-accessor"<br>  }<br>]</pre> | no |
@@ -76,7 +83,8 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | services | Map of IAM Roles to assign to the Services Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | `[]` | no |
 | shared\_vpc | The ID of the host project which hosts the shared VPC | `string` | `""` | no |
 | shared\_vpc\_subnets | List of subnets fully qualified subnet IDs (ie. projects/$project\_id/regions/$region/subnetworks/$subnet\_id) | `list(string)` | `[]` | no |
-| slack\_notify\_secret | GCP secret name for slack token | `string` | `slack-notify-token` | no |
+| slack\_notify\_secret | GCP secret name for slack token | `string` | `"slack_notify_token"` | no |
+
 
 ## Outputs
 

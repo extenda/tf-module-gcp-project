@@ -54,3 +54,21 @@ variable env_name {
   type        = string
   description = "Environment name (staging/prod). Creation of some resources depends on env_name"
 }
+
+variable ci_cd_account {
+  type          = bool
+  description   = "Check if service account is ci-cd-pipeline account or not"
+  default       = false
+}
+
+variable compute_sa {
+  type        = string
+  description = "Compute Engine default service account"
+  default     = ""
+}
+
+variable cloud_run_default_sa {
+  description = "Cloud Run default service account"
+  type        = string
+  default     = ""
+}

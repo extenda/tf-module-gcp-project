@@ -87,6 +87,16 @@ variable binary_api_enabled {
   default     = false
 }
 
+variable compute_sa {
+  type        = string
+  description = "Compute Engine default service account"
+}
+
+variable compute_project_iam_roles {
+  type        = list(string)
+  description = "List of IAM Roles to add to default compute service account"
+}
+
 variable cloud_run_default_sa {
   description = "Cloud Run default service account"
   type        = string

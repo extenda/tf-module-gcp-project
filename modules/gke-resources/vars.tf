@@ -40,3 +40,9 @@ variable sa_depends_on {
   description = "Service Accounts which this module depends on"
   type        = any
 }
+
+variable cluster_resources {
+  description = "Opt out from cluster resources"
+  type        = bool
+  default     = false
+}
