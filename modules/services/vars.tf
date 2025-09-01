@@ -8,6 +8,15 @@ variable services {
     iam_roles = list(string)
   }))
   description = "Map of IAM Roles to assign to the Services Service Account"
+
+  validation {
+    condition = length([
+      for s in var.services : s
+      if can(regex("^[a-z](?:[-a-z0-9]{4,28}[a-z0-9])$", s.name))
+    ]) == length(var.services)
+
+    error_message = "For the account id that is used to generate the service account email address, the name '${join(", ", [for s in var.services : s.name if can(regex("^[a-z](?:[-a-z0-9]{4,28}[a-z0-9])$", s.name)) == false])}' doesn't match regexp ^[a-z](?:[-a-z0-9]{4,28}[a-z0-9])$"
+  }
 }
 
 variable common_iam_roles {

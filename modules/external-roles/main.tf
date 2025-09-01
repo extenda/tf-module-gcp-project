@@ -22,8 +22,13 @@ resource "google_project_iam_member" "external_roles" {
   project = each.value.project_id
   role    = each.value.role
   member = (
-    length(regexall("^.+@.+.iam.gserviceaccount.com$", each.value.service_account)) > 0
-  ) ? "serviceAccount:${each.value.service_account}" : "serviceAccount:${each.value.service_account}@${var.project_id}.iam.gserviceaccount.com"
-
+    startswith(each.value.service_account, "serviceAccount:")
+    || startswith(each.value.service_account, "group:")
+    || startswith(each.value.service_account, "user:")
+  ) ? each.value.service_account : (
+    length(regexall("^.+@.+\\.iam\\.gserviceaccount\\.com$", each.value.service_account)) > 0
+    ? "serviceAccount:${each.value.service_account}"
+    : "serviceAccount:${each.value.service_account}@${var.project_id}.iam.gserviceaccount.com"
+  )
   depends_on = [var.sa_depends_on]
 }
