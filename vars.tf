@@ -121,7 +121,7 @@ variable ci_cd_sa {
         "roles/bigquery.admin",
         "roles/datastore.importExportAdmin",
         "roles/monitoring.admin",
-        "roles/clouddeploy.operator"
+        "roles/clouddeploy.operator",
         "roles/compute.instanceAdmin.v1",
         "roles/compute.loadBalancerAdmin"
       ]
