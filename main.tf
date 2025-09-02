@@ -264,3 +264,12 @@ module "clan_roles_staging" {
   clan_gsuite_group = var.clan_gsuite_group
   domain            = var.domain
 }
+
+module "cloud_run_log_exclusion" {
+  source = "./modules/logging-exclusion-filter"
+
+  project_id         = module.project_factory.project_id
+  filter_name        = "exclude-cloud-run-requests-by-label"
+  filter_description = "Excludes Cloud Run request logs with status < 429 from services with the 'exclude-logs=cloud-run' label."
+  filter_expression  = "resource.type=\"cloud_run_revision\" AND logName:\"run.googleapis.com%2Frequests\" AND httpRequest.status < 429 AND labels.exclude-logs=\"cloud-run\""
+}
