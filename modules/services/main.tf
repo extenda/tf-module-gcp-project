@@ -174,7 +174,7 @@ resource "gsuite_group_member" "clan_group_services_member_prod" {
 }
 
 resource "gsuite_group_member" "clan_group_services_cloudrun_sa_member" {
-  count = var.ci_cd_account == false && var.create_service_group == true && var.cloud_run_default_sa != "" ? 1 : 0
+  for_each = var.ci_cd_account == false && var.create_service_group == true ? toset(["cloudrun-sa"]) : toset([])
 
   group = "${var.clan_gsuite_group}-services@${var.domain}"
   email = var.cloud_run_default_sa
@@ -183,7 +183,7 @@ resource "gsuite_group_member" "clan_group_services_cloudrun_sa_member" {
 }
 
 resource "gsuite_group_member" "clan_group_services_compute_sa_member" {
-  count = var.ci_cd_account == false && var.create_service_group == true && var.compute_sa != "" ? 1 : 0
+  for_each = var.ci_cd_account == false && var.create_service_group == true ? toset(["compute-sa"]) : toset([])
 
   group = "${var.clan_gsuite_group}-services@${var.domain}"
   email = var.compute_sa
@@ -206,4 +206,15 @@ resource "google_project_iam_member" "extenda_artifact_reader" {
   role    = "roles/artifactregistry.reader"
   member  = "group:${var.clan_gsuite_group}-services@${var.domain}"
   depends_on = [gsuite_group.service_clan_group]
+}
+
+# Migration from count to for_each - backwards compatibility
+moved {
+  from = gsuite_group_member.clan_group_services_cloudrun_sa_member[0]
+  to   = gsuite_group_member.clan_group_services_cloudrun_sa_member["cloudrun-sa"]
+}
+
+moved {
+  from = gsuite_group_member.clan_group_services_compute_sa_member[0]
+  to   = gsuite_group_member.clan_group_services_compute_sa_member["compute-sa"]
 }
