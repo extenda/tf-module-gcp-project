@@ -225,3 +225,16 @@ resource "google_project_iam_member" "default_cloud_run_sa_role" {
   role    = "roles/storage.objectViewer"
   member  = "serviceAccount:${var.cloud_run_default_sa}"
 }
+
+resource "google_project_iam_custom_role" "custom_roles" {
+  for_each = {
+    for role in var.custom_iam_roles :
+    role.role_id => role
+  }
+
+  project     = var.project_id
+  role_id     = each.value.role_id
+  title       = each.value.title
+  description = each.value.description
+  permissions = each.value.permissions
+}

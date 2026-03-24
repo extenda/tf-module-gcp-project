@@ -469,3 +469,14 @@ variable create_cluster_resources {
   type        = bool
   default     = false
 }
+
+variable custom_iam_roles {
+  type = list(object({
+    role_id     = string
+    title       = string
+    description = string
+    permissions = list(string)
+  }))
+  description = "List of custom IAM roles to create with specific permissions"
+  default     = []
+}
