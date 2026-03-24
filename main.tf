@@ -132,6 +132,7 @@ module "parent_project_iam" {
   parent_project_id        = var.parent_project_id
   parent_project_iam_roles = var.parent_project_iam_roles
   platform_project_id      = var.platform_project_id
+  custom_iam_roles         = var.custom_iam_roles
 
   project_id       = module.project_factory.project_id
   services         = var.services

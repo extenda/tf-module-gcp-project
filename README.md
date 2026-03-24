@@ -45,6 +45,7 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | create\_service\_sa | If the Service Account for new Services should be created | `bool` | `true` | no |
 | create\_services\_group | If the Service GSuite Group should be created for the Services (services variable) | `bool` | `true` | no |
 | credentials | JSON encoded service account credentials file with rights to run the Project Factory. If this file is absent Terraform will fallback to GOOGLE\_APPLICATION\_CREDENTIALS env variable. | `any` | `null` | no |
+| custom\_iam\_roles | List of custom IAM roles to create with specific permissions | <pre>list(object({<br>    role_id       = string<br>    title         = string<br>    description   = string<br>    permissions   = list(string)<br>    project_types = list(string)<br>  }))</pre> | `[]` | no |
 | custom\_external\_roles | Map of service or service account to external projects to list of iam roles for add | `map(map(list(string)))` | `{}` | no |
 | default\_service\_account | Project default service account setting: can be one of delete, deprivilege, disable, or keep. | `string` | `"deprivilege"` | no |
 | dns\_project\_iam\_roles | List of IAM Roles to add to DNS project | `list(string)` | <pre>[<br>  "roles/dns.admin"<br>]</pre> | no |
@@ -104,3 +105,34 @@ GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d
 | service\_emails | Services service account emails |
 | service\_private\_keys\_encoded | The Services service account base64 encoded JSON key |
 | terraform\_state\_bucket | Bucket for saving terraform state of project resources |
+
+## Usage Examples
+
+### Custom IAM Roles
+
+The `custom_iam_roles` variable allows clans to create custom IAM roles with specific subsets of permissions. This is useful when you want to restrict access more granularly than what predefined roles offer.
+
+**In your `project.yaml`:**
+
+```yaml
+custom_iam_roles:
+  - role_id: "identity.read"
+    title: "Identity Read Access"
+    description: "Restricted identity toolkit access"
+    permissions:
+      - "firebaseauth.configs.get"
+      - "firebaseauth.configs.getSecret"  
+```
+
+Then assign these custom roles to service accounts using `custom_external_roles`:
+
+```yaml
+custom_external_roles:
+  embedded-login-ui:
+    hiidentity-staff:
+      - "roles/identity.read"
+```
+
+This will:
+1. Create the custom roles in their respective projects with the specified permissions
+2. Assign those custom roles to your service accounts in external projects
