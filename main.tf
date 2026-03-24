@@ -48,13 +48,13 @@ module "ci_cd_sa" {
   ci_cd_account = true
 }
 
-# Grant workload identity pool access to CI/CD service account
+# Grant workload identity pool access to CI/CD service account for each of it's clan repositories
 resource "google_service_account_iam_member" "ci_cd_workload_identity" {
-  count = var.workload_identity_pool_name != "" && var.create_ci_cd_service_account && var.grant_workload_identity_pool_access ? 1 : 0
+  for_each = var.workload_identity_pool_name != "" && var.create_ci_cd_service_account && var.grant_workload_identity_pool_access && length(var.repositories) > 0 ? toset(var.repositories) : toset([])
 
   service_account_id = "projects/${module.project_factory.project_id}/serviceAccounts/${local.ci_cd_sa_email}"
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${var.workload_identity_pool_name}/*"
+  member             = "principalSet://iam.googleapis.com/${var.workload_identity_pool_name}/attribute.repository/${var.github_organization}/${each.key}"
   
   depends_on = [module.ci_cd_sa]
 }
@@ -89,7 +89,6 @@ module "pubsub_custom_external_role" {
     module.project_factory.project_id,
   ]
 }
-
 
 module "cloudrun_sa" {
   source = "./modules/services"
