@@ -480,3 +480,17 @@ variable custom_iam_roles {
   description = "List of custom IAM roles to create with specific permissions"
   default     = []
 }
+
+## Workload Identity Pool Access
+
+variable workload_identity_pool_name {
+  description = "Full resource name of the organization-level workload identity pool. All CI/CD service accounts are automatically granted access."
+  type        = string
+  default     = "projects/377710398576/locations/global/workloadIdentityPools/github-workflows-pool" ## the extenda workload identity pool
+}
+
+variable grant_workload_identity_pool_access {
+  description = "Whether to grant the workload identity pool access to the CI/CD service account"
+  type        = bool
+  default     = true
+}

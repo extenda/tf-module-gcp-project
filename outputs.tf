@@ -71,3 +71,8 @@ output enabled_apis {
   description = "Enabled APIs in the project"
   value       = module.project_factory.enabled_apis
 }
+
+output workload_identity_pool_member {
+  description = "The member string used for workload identity pool binding"
+  value       = var.workload_identity_pool_name != "" && var.create_ci_cd_service_account && var.grant_workload_identity_pool_access ? "principalSet://iam.googleapis.com/${var.workload_identity_pool_name}/*" : ""
+}
