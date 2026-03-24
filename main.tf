@@ -48,6 +48,17 @@ module "ci_cd_sa" {
   ci_cd_account = true
 }
 
+# Grant workload identity pool access to CI/CD service account
+resource "google_service_account_iam_member" "ci_cd_workload_identity" {
+  count = var.workload_identity_pool_name != "" && var.create_ci_cd_service_account && var.grant_workload_identity_pool_access ? 1 : 0
+
+  service_account_id = "projects/${module.project_factory.project_id}/serviceAccounts/${local.ci_cd_sa_email}"
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "principalSet://iam.googleapis.com/${var.workload_identity_pool_name}/*"
+  
+  depends_on = [module.ci_cd_sa]
+}
+
 module "pubsub_dlq_sa" {
   source = "./modules/services"
 
@@ -177,6 +188,7 @@ module "workload-identity" {
   sa_depends_on      = module.services_sa.email
   cluster_resources  = var.create_cluster_resources
 }
+
 
 module "github_secret" {
   source = "./modules/github-secret"
