@@ -206,9 +206,9 @@ module "github_secret" {
   create_secret = var.create_service_sa
   secret_name   = "GCLOUD_AUTH${local.secret_suffix}"
   secret_value = jsonencode({
-    identity_pool = "${var.workload_identity_pool_name}/providers/github-oidc"
-    project_id    = module.project_factory.project_id
-    email         = local.ci_cd_sa_email
+    workload_identity_provider = "${var.workload_identity_pool_name}/providers/github-oidc"
+    project_id                 = module.project_factory.project_id
+    email                      = local.ci_cd_sa_email
   })
 }
 
