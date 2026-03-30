@@ -30,6 +30,12 @@ variable create_service_account {
   description = "If the Service Account should be created"
 }
 
+variable create_service_account_keys {
+  type        = bool
+  description = "If the Service Account keys should be created (set to false when using workload identity)"
+  default     = false
+}
+
 variable create_service_group {
   type        = bool
   description = "If the Service GSuite Group should be created"
