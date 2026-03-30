@@ -496,7 +496,7 @@ variable grant_workload_identity_pool_access {
 }
 
 variable create_service_account_keys {
-  description = "Whether to create service account keys for the CI/CD service account"
+  description = "Whether to create service account keys for the service accounts"
   type        = bool
   default     = false
 }
