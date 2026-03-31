@@ -23,3 +23,9 @@ variable create_service_account {
   type        = bool
   description = "If the Service Account should be created"
 }
+
+variable create_service_account_keys {
+  type        = bool
+  description = "If the Service Account keys should be created"
+  default     = false
+}

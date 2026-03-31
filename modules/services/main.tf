@@ -57,7 +57,7 @@ resource "google_service_account_key" "key_json" {
   for_each = {
     for service in var.services :
     service.name => service
-    if var.create_service_account == true
+    if var.create_service_account == true && var.create_service_account_keys == true
   }
   service_account_id = "projects/${var.project_id}/serviceAccounts/${each.key}@${var.project_id}.iam.gserviceaccount.com"
   depends_on = [google_service_account.sa]

@@ -4,11 +4,11 @@ locals {
   pubsub_sa            = "service-${module.project_factory.project_number}@gcp-sa-pubsub.iam.gserviceaccount.com"
   binary_auth_sa       = "service-${module.project_factory.project_number}@gcp-sa-binaryauthorization.iam.gserviceaccount.com"
   compute_sa           = "${module.project_factory.project_number}-compute@developer.gserviceaccount.com"
-  cloud_run_default_sa = "service-${module.project_factory.project_number}@serverless-robot-prod.iam.gserviceaccount.com" 
+  cloud_run_default_sa = "service-${module.project_factory.project_number}@serverless-robot-prod.iam.gserviceaccount.com"
 }
 
 module "project_factory" {
-  source = "terraform-google-modules/project-factory/google"
+  source  = "terraform-google-modules/project-factory/google"
   version = "10.1.0"
 
   name              = var.name
@@ -36,10 +36,11 @@ module "project_factory" {
 module "ci_cd_sa" {
   source = "./modules/services"
 
-  create_service_account = var.create_ci_cd_service_account
-  create_service_group   = var.create_ci_cd_group
-  service_group_name     = "ci-cd-accounts"
-  clan_gsuite_group      = var.clan_gsuite_group
+  create_service_account      = var.create_ci_cd_service_account
+  create_service_account_keys = false # CI/CD uses workload identity, no keys needed
+  create_service_group        = var.create_ci_cd_group
+  service_group_name          = "ci-cd-accounts"
+  clan_gsuite_group           = var.clan_gsuite_group
 
   project_id    = module.project_factory.project_id
   services      = var.ci_cd_sa
@@ -55,7 +56,7 @@ resource "google_service_account_iam_member" "ci_cd_workload_identity" {
   service_account_id = "projects/${module.project_factory.project_id}/serviceAccounts/${local.ci_cd_sa_email}"
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${var.workload_identity_pool_name}/attribute.repository/${var.github_organization}/${each.key}"
-  
+
   depends_on = [module.ci_cd_sa]
 }
 
@@ -75,14 +76,14 @@ module "pubsub_dlq_sa" {
 
 module "pubsub_custom_external_role" {
   source = "./modules/external-roles"
-  count = var.env_name == "prod" && var.create_ci_cd_service_account == true ? 1 : 0
-  roles_map  = {
+  count  = var.env_name == "prod" && var.create_ci_cd_service_account == true ? 1 : 0
+  roles_map = {
     "pubsub-dlq-handler" = {
       (var.pubsub_dlq_sa_project_id) = [
         "roles/cloudfunctions.invoker",
-        ]
-      }
+      ]
     }
+  }
   project_id = module.project_factory.project_id
   sa_depends_on = [
     module.pubsub_dlq_sa.email,
@@ -93,10 +94,11 @@ module "pubsub_custom_external_role" {
 module "cloudrun_sa" {
   source = "./modules/services"
 
-  create_service_account = var.create_cloudrun_service_account
-  create_service_group   = var.create_cloudrun_group
-  service_group_name     = var.service_group_name
-  clan_gsuite_group      = var.clan_gsuite_group
+  create_service_account      = var.create_cloudrun_service_account
+  create_service_account_keys = var.create_service_account_keys
+  create_service_group        = var.create_cloudrun_group
+  service_group_name          = var.service_group_name
+  clan_gsuite_group           = var.clan_gsuite_group
 
   project_id = module.project_factory.project_id
   services   = var.cloudrun_sa
@@ -107,10 +109,11 @@ module "cloudrun_sa" {
 module "secret_manager_sa" {
   source = "./modules/services"
 
-  create_service_account = var.create_secret_manager_service_account
-  create_service_group   = var.create_secret_manager_group
-  service_group_name     = var.service_group_name
-  clan_gsuite_group      = var.clan_gsuite_group
+  create_service_account      = var.create_secret_manager_service_account
+  create_service_account_keys = var.create_service_account_keys
+  create_service_group        = var.create_secret_manager_group
+  service_group_name          = var.service_group_name
+  clan_gsuite_group           = var.clan_gsuite_group
 
   project_id = module.project_factory.project_id
   services   = var.secret_manager_sa
@@ -121,12 +124,13 @@ module "secret_manager_sa" {
 module "services_sa" {
   source = "./modules/services"
 
-  create_service_account = var.create_service_sa
-  create_service_group   = var.create_services_group
-  service_group_name     = var.service_group_name
-  clan_gsuite_group      = var.clan_gsuite_group
-  cloud_run_default_sa   = local.cloud_run_default_sa
-  compute_sa             = local.compute_sa
+  create_service_account      = var.create_service_sa
+  create_service_account_keys = var.create_service_account_keys
+  create_service_group        = var.create_services_group
+  service_group_name          = var.service_group_name
+  clan_gsuite_group           = var.clan_gsuite_group
+  cloud_run_default_sa        = local.cloud_run_default_sa
+  compute_sa                  = local.compute_sa
 
   project_id = module.project_factory.project_id
   services   = var.services
@@ -201,7 +205,11 @@ module "github_secret" {
 
   create_secret = var.create_service_sa
   secret_name   = "GCLOUD_AUTH${local.secret_suffix}"
-  secret_value  = try(lookup(module.ci_cd_sa.private_key_encoded, "ci-cd-pipeline", ""), "")
+  secret_value = jsonencode({
+    workload_identity_provider = "${var.workload_identity_pool_name}/providers/github-oidc"
+    project_id                 = module.project_factory.project_id
+    email                      = local.ci_cd_sa_email
+  })
 }
 
 module "additional_user_access" {
@@ -220,9 +228,10 @@ module "additional_user_access" {
 module "service_accounts" {
   source = "./modules/service-account"
 
-  create_service_account = var.create_sa
-  project_id             = module.project_factory.project_id
-  service_accounts       = var.service_accounts
+  create_service_account      = var.create_sa
+  create_service_account_keys = var.create_service_account_keys
+  project_id                  = module.project_factory.project_id
+  service_accounts            = var.service_accounts
 }
 
 module "gke_resources" {
@@ -253,10 +262,10 @@ module "pact_broker" {
 module "slack_alerts" {
   source = "./modules/slack-notify"
 
-  pipeline_project_id     = var.pipeline_project_id
-  project_id              = module.project_factory.project_id
-  slack_notify_secret     = var.slack_notify_secret
-  project_type            = var.project_type
+  pipeline_project_id = var.pipeline_project_id
+  project_id          = module.project_factory.project_id
+  slack_notify_secret = var.slack_notify_secret
+  project_type        = var.project_type
 }
 
 module "jit_access" {
