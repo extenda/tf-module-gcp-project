@@ -60,6 +60,17 @@ resource "google_service_account_iam_member" "ci_cd_workload_identity" {
   depends_on = [module.ci_cd_sa]
 }
 
+# Grant token creator role to CI/CD service account for each repository
+resource "google_service_account_iam_member" "ci_cd_token_creator" {
+  for_each = var.workload_identity_pool_name != "" && var.create_ci_cd_service_account && var.grant_workload_identity_pool_access && length(var.repositories) > 0 ? toset(var.repositories) : toset([])
+
+  service_account_id = "projects/${module.project_factory.project_id}/serviceAccounts/${local.ci_cd_sa_email}"
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "principalSet://iam.googleapis.com/${var.workload_identity_pool_name}/attribute.repository/${var.github_organization}/${each.key}"
+
+  depends_on = [module.ci_cd_sa]
+}
+
 module "pubsub_dlq_sa" {
   source = "./modules/services"
 
