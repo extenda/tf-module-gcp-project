@@ -71,6 +71,15 @@ resource "google_service_account_iam_member" "ci_cd_token_creator" {
   depends_on = [module.ci_cd_sa]
 }
 
+# Grant self-impersonation on the CI/CD service account.
+resource "google_service_account_iam_member" "ci_cd_self_impersonation" {
+  service_account_id = "projects/${module.project_factory.project_id}/serviceAccounts/${local.ci_cd_sa_email}"
+  role               = "roles/iam.serviceAccountTokenCreator"
+  member             = "serviceAccount:${local.ci_cd_sa_email}"
+  
+  depends_on = [module.ci_cd_sa]
+}
+
 module "pubsub_dlq_sa" {
   source = "./modules/services"
 
