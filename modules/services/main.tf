@@ -83,9 +83,9 @@ resource "googleworkspace_group_member" "service_account_sa_group_member" {
     service.name => service
     if var.create_service_account == true && var.create_service_group == true && var.ci_cd_account == false
   }
-  group = "${var.service_group_name}-${each.key}@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
+  group_id = "${var.service_group_name}-${each.key}@${var.domain}"
+  email    = google_service_account.sa[each.key].email
+  role     = "MEMBER"
 
   depends_on = [googleworkspace_group.service_group]
 }
@@ -96,9 +96,9 @@ resource "googleworkspace_group_member" "service_account_ci_cd_group_member" {
     service.name => service
     if var.ci_cd_account == true
   }
-  group = "${var.service_group_name}-${each.key}@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
+  group_id = "${var.service_group_name}-${each.key}@${var.domain}"
+  email    = google_service_account.sa[each.key].email
+  role     = "MEMBER"
 }
 
 resource "googleworkspace_group_member" "clan_group_member" {
@@ -107,9 +107,9 @@ resource "googleworkspace_group_member" "clan_group_member" {
     service.name => service
     if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging" && var.ci_cd_account == false
   }
-  group = "${var.service_group_name}-${each.key}@${var.domain}"
-  email = "${var.clan_gsuite_group}@${var.domain}"
-  role  = "MEMBER"
+  group_id = "${var.service_group_name}-${each.key}@${var.domain}"
+  email    = "${var.clan_gsuite_group}@${var.domain}"
+  role     = "MEMBER"
 
   depends_on = [googleworkspace_group.service_group]
 }
@@ -155,9 +155,9 @@ resource "googleworkspace_group_member" "clan_group_services_member_staging" {
     service.name => service
     if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging" && var.ci_cd_account == false
   }
-  group = "${var.clan_gsuite_group}-services@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
+  group_id = "${var.clan_gsuite_group}-services@${var.domain}"
+  email    = google_service_account.sa[each.key].email
+  role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
 }
 
@@ -167,27 +167,27 @@ resource "googleworkspace_group_member" "clan_group_services_member_prod" {
     service.name => service
     if var.create_service_account == true && var.create_service_group == true && var.env_name == "prod" && var.ci_cd_account == false
   }
-  group = "${var.clan_gsuite_group}-services@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
+  group_id = "${var.clan_gsuite_group}-services@${var.domain}"
+  email    = google_service_account.sa[each.key].email
+  role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
 }
 
 resource "googleworkspace_group_member" "clan_group_services_cloudrun_sa_member" {
   for_each = var.ci_cd_account == false && var.create_service_group == true ? toset(["cloudrun-sa"]) : toset([])
 
-  group = "${var.clan_gsuite_group}-services@${var.domain}"
-  email = var.cloud_run_default_sa
-  role  = "MEMBER"
+  group_id = "${var.clan_gsuite_group}-services@${var.domain}"
+  email    = var.cloud_run_default_sa
+  role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
 }
 
 resource "googleworkspace_group_member" "clan_group_services_compute_sa_member" {
   for_each = var.ci_cd_account == false && var.create_service_group == true ? toset(["compute-sa"]) : toset([])
 
-  group = "${var.clan_gsuite_group}-services@${var.domain}"
-  email = var.compute_sa
-  role  = "MEMBER"
+  group_id = "${var.clan_gsuite_group}-services@${var.domain}"
+  email    = var.compute_sa
+  role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
 }
 
