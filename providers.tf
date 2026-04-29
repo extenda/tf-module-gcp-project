@@ -28,9 +28,10 @@ provider "google-beta" {
 
 # The customer id provided with your Google Workspace subscription
 # customer_id: "C03czrdxq"
-# Might need to add customer_id to the provider, 
+# Might need to add customer_id to the provider
 provider "googleworkspace" {
   impersonated_user_email = coalesce(var.impersonated_user_email, format("%s@%s", "terraform", var.domain))
+  customer_id             = var.customer_id
 
   oauth_scopes = [
     "https://www.googleapis.com/auth/admin.directory.user",
