@@ -9,9 +9,9 @@ terraform {
     google-beta = {
       source = "hashicorp/google-beta"
     }
-    gsuite = {
-      source = "DeviaVir/gsuite"
-      version = "~> 0.1.62"
+    googleworkspace = {
+      source = "hashicorp/googleworkspace"
+      version = "~> 0.7.0"
     }
   }
 }
@@ -26,8 +26,12 @@ provider "google-beta" {
   credentials = var.credentials
 }
 
-provider "gsuite" {
+# The customer id provided with your Google Workspace subscription
+# customer_id: "C03czrdxq"
+# Might need to add customer_id to the provider
+provider "googleworkspace" {
   impersonated_user_email = coalesce(var.impersonated_user_email, format("%s@%s", "terraform", var.domain))
+  customer_id             = var.customer_id
 
   oauth_scopes = [
     "https://www.googleapis.com/auth/admin.directory.user",

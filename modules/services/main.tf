@@ -63,7 +63,7 @@ resource "google_service_account_key" "key_json" {
   depends_on = [google_service_account.sa]
 }
 
-resource "gsuite_group" "service_group" {
+resource "googleworkspace_group" "service_group" {
   for_each = {
     for service in var.services :
     service.name => service
@@ -71,47 +71,47 @@ resource "gsuite_group" "service_group" {
   }
   email       = "${var.service_group_name}-${each.key}@${var.domain}"
   name        = "${var.service_group_name}-${each.key}"
-  description = "${each.key} GSuite Group"
+  description = "${each.key} googleworkspace Group"
 
   depends_on = [google_service_account.sa]
 }
 
 
-resource "gsuite_group_member" "service_account_sa_group_member" {
+resource "googleworkspace_group_member" "service_account_sa_group_member" {
   for_each = {
     for service in var.services :
     service.name => service
     if var.create_service_account == true && var.create_service_group == true && var.ci_cd_account == false
   }
-  group = "${var.service_group_name}-${each.key}@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
+  group_id = "${var.service_group_name}-${each.key}@${var.domain}"
+  email    = google_service_account.sa[each.key].email
+  role     = "MEMBER"
 
-  depends_on = [gsuite_group.service_group]
+  depends_on = [googleworkspace_group.service_group]
 }
 
-resource "gsuite_group_member" "service_account_ci_cd_group_member" {
+resource "googleworkspace_group_member" "service_account_ci_cd_group_member" {
   for_each = {
     for service in var.services :
     service.name => service
     if var.ci_cd_account == true
   }
-  group = "${var.service_group_name}-${each.key}@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
+  group_id = "${var.service_group_name}-${each.key}@${var.domain}"
+  email    = google_service_account.sa[each.key].email
+  role     = "MEMBER"
 }
 
-resource "gsuite_group_member" "clan_group_member" {
+resource "googleworkspace_group_member" "clan_group_member" {
   for_each = {
     for service in var.services :
     service.name => service
     if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging" && var.ci_cd_account == false
   }
-  group = "${var.service_group_name}-${each.key}@${var.domain}"
-  email = "${var.clan_gsuite_group}@${var.domain}"
-  role  = "MEMBER"
+  group_id = "${var.service_group_name}-${each.key}@${var.domain}"
+  email    = "${var.clan_gsuite_group}@${var.domain}"
+  role     = "MEMBER"
 
-  depends_on = [gsuite_group.service_group]
+  depends_on = [googleworkspace_group.service_group]
 }
 
 
@@ -125,7 +125,7 @@ resource "google_project_iam_member" "service_group_roles" {
   role    = each.value.role
   member  = "group:${var.service_group_name}-${each.value.name}@${var.domain}"
 
-  depends_on = [gsuite_group.service_group]
+  depends_on = [googleworkspace_group.service_group]
 }
 
 resource "google_project_iam_member" "service_group_roles_common" {
@@ -138,57 +138,57 @@ resource "google_project_iam_member" "service_group_roles_common" {
   role    = google_project_iam_custom_role.common_custom_role[0].name
   member  = "group:${var.service_group_name}-${each.key}@${var.domain}"
 
-  depends_on = [gsuite_group.service_group, google_project_iam_custom_role.common_custom_role]
+  depends_on = [googleworkspace_group.service_group, google_project_iam_custom_role.common_custom_role]
 }
 
-resource "gsuite_group" "service_clan_group" {
+resource "googleworkspace_group" "service_clan_group" {
   count = var.create_service_account == true && var.ci_cd_account == false && var.create_service_group == true ? 1 : 0
   email       = "${var.clan_gsuite_group}-services@${var.domain}"
   name        = "${var.clan_gsuite_group}-services"
-  description = "Clan services GSuite Group"
+  description = "Clan services googleworkspace Group"
   depends_on = [google_service_account.sa]
 }
 
-resource "gsuite_group_member" "clan_group_services_member_staging" {
+resource "googleworkspace_group_member" "clan_group_services_member_staging" {
   for_each = {
     for service in var.services :
     service.name => service
     if var.create_service_account == true && var.create_service_group == true && var.env_name == "staging" && var.ci_cd_account == false
   }
-  group = "${var.clan_gsuite_group}-services@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
-  depends_on = [gsuite_group.service_clan_group]
+  group_id = "${var.clan_gsuite_group}-services@${var.domain}"
+  email    = google_service_account.sa[each.key].email
+  role     = "MEMBER"
+  depends_on = [googleworkspace_group.service_clan_group]
 }
 
-resource "gsuite_group_member" "clan_group_services_member_prod" {
+resource "googleworkspace_group_member" "clan_group_services_member_prod" {
   for_each = {
     for service in var.services :
     service.name => service
     if var.create_service_account == true && var.create_service_group == true && var.env_name == "prod" && var.ci_cd_account == false
   }
-  group = "${var.clan_gsuite_group}-services@${var.domain}"
-  email = google_service_account.sa[each.key].email
-  role  = "MEMBER"
-  depends_on = [gsuite_group.service_clan_group]
+  group_id = "${var.clan_gsuite_group}-services@${var.domain}"
+  email    = google_service_account.sa[each.key].email
+  role     = "MEMBER"
+  depends_on = [googleworkspace_group.service_clan_group]
 }
 
-resource "gsuite_group_member" "clan_group_services_cloudrun_sa_member" {
+resource "googleworkspace_group_member" "clan_group_services_cloudrun_sa_member" {
   for_each = var.ci_cd_account == false && var.create_service_group == true ? toset(["cloudrun-sa"]) : toset([])
 
-  group = "${var.clan_gsuite_group}-services@${var.domain}"
-  email = var.cloud_run_default_sa
-  role  = "MEMBER"
-  depends_on = [gsuite_group.service_clan_group]
+  group_id = "${var.clan_gsuite_group}-services@${var.domain}"
+  email    = var.cloud_run_default_sa
+  role     = "MEMBER"
+  depends_on = [googleworkspace_group.service_clan_group]
 }
 
-resource "gsuite_group_member" "clan_group_services_compute_sa_member" {
+resource "googleworkspace_group_member" "clan_group_services_compute_sa_member" {
   for_each = var.ci_cd_account == false && var.create_service_group == true ? toset(["compute-sa"]) : toset([])
 
-  group = "${var.clan_gsuite_group}-services@${var.domain}"
-  email = var.compute_sa
-  role  = "MEMBER"
-  depends_on = [gsuite_group.service_clan_group]
+  group_id = "${var.clan_gsuite_group}-services@${var.domain}"
+  email    = var.compute_sa
+  role     = "MEMBER"
+  depends_on = [googleworkspace_group.service_clan_group]
 }
 
 resource "google_project_iam_member" "extenda_storage_viewer" {
@@ -197,7 +197,7 @@ resource "google_project_iam_member" "extenda_storage_viewer" {
   project = "extenda"
   role    = "roles/storage.objectViewer"
   member  = "group:${var.clan_gsuite_group}-services@${var.domain}"
-  depends_on = [gsuite_group.service_clan_group]
+  depends_on = [googleworkspace_group.service_clan_group]
 }
 resource "google_project_iam_member" "extenda_artifact_reader" {
   count = var.create_service_account == true && var.ci_cd_account == false && var.create_service_group == true ? 1 : 0
@@ -205,16 +205,16 @@ resource "google_project_iam_member" "extenda_artifact_reader" {
   project = "extenda"
   role    = "roles/artifactregistry.reader"
   member  = "group:${var.clan_gsuite_group}-services@${var.domain}"
-  depends_on = [gsuite_group.service_clan_group]
+  depends_on = [googleworkspace_group.service_clan_group]
 }
 
 # Migration from count to for_each - backwards compatibility
-moved {
-  from = gsuite_group_member.clan_group_services_cloudrun_sa_member[0]
-  to   = gsuite_group_member.clan_group_services_cloudrun_sa_member["cloudrun-sa"]
-}
+#moved {
+#  from = gsuite_group_member.clan_group_services_cloudrun_sa_member[0]
+#  to   = gsuite_group_member.clan_group_services_cloudrun_sa_member["cloudrun-sa"]
+#}
 
-moved {
-  from = gsuite_group_member.clan_group_services_compute_sa_member[0]
-  to   = gsuite_group_member.clan_group_services_compute_sa_member["compute-sa"]
-}
+#moved {
+#  from = gsuite_group_member.clan_group_services_compute_sa_member[0]
+#  to   = gsuite_group_member.clan_group_services_compute_sa_member["compute-sa"]
+#}

@@ -15,7 +15,7 @@ locals {
   ])
 }
 
-resource "gsuite_group" "access_group" {
+resource "googleworkspace_group" "access_group" {
   for_each = {
     for group in var.additional_user_access :
     group.name => group
@@ -23,21 +23,21 @@ resource "gsuite_group" "access_group" {
   }
   email       = "${var.clan_gsuite_group}-prod-${each.key}@${var.domain}"
   name        = "${var.clan_gsuite_group}-prod-${each.key}"
-  description = "${each.key} GSuite Group"
+  description = "${each.key} googleworkspace Group"
 }
 
 
-resource "gsuite_group_member" "access_group_member" {
+resource "googleworkspace_group_member" "access_group_member" {
   for_each = {
     for group in local.group_members :
     "${group.name}/${group.member}" => group
     if var.env_name == "prod"
   }
-  group = "${var.clan_gsuite_group}-prod-${each.value.name}@${var.domain}"
-  email = each.value.member
-  role  = "MEMBER"
+  group_id = "${var.clan_gsuite_group}-prod-${each.value.name}@${var.domain}"
+  email    = each.value.member
+  role     = "MEMBER"
 
-  depends_on = [gsuite_group.access_group]
+  depends_on = [googleworkspace_group.access_group]
 }
 
 resource "google_project_iam_member" "local_access_group_roles" {
@@ -50,7 +50,7 @@ resource "google_project_iam_member" "local_access_group_roles" {
   role    = each.value.role
   member  = "group:${var.clan_gsuite_group}-prod-${each.value.name}@${var.domain}"
 
-  depends_on = [gsuite_group.access_group]
+  depends_on = [googleworkspace_group.access_group]
 }
 
 resource "google_project_iam_custom_role" "cs_custom_role" {
