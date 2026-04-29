@@ -4,7 +4,7 @@ terraform {
       source = "hashicorp/google"
     }
     googleworkspace = {
-      source = "hashicorp/terraform-provider-googleworkspace"
+      source = "hashicorp/googleworkspace"
       version = "~> 0.7.0"
     }
   }
