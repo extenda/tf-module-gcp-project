@@ -86,8 +86,10 @@ resource "googleworkspace_group_member" "service_account_sa_group_member" {
   group_id = "${var.service_group_name}-${each.key}@${var.domain}"
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
-
   depends_on = [googleworkspace_group.service_group]
+  lifecycle {
+    ignore_changes = [email, group_id]
+  }
 }
 
 resource "googleworkspace_group_member" "service_account_ci_cd_group_member" {
@@ -99,6 +101,9 @@ resource "googleworkspace_group_member" "service_account_ci_cd_group_member" {
   group_id = "${var.service_group_name}-${each.key}@${var.domain}"
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
+  lifecycle {
+    ignore_changes = [email, group_id]
+  }
 }
 
 resource "googleworkspace_group_member" "clan_group_member" {
@@ -110,8 +115,12 @@ resource "googleworkspace_group_member" "clan_group_member" {
   group_id = "${var.service_group_name}-${each.key}@${var.domain}"
   email    = "${var.clan_gsuite_group}@${var.domain}"
   role     = "MEMBER"
+  type     = "GROUP"
 
   depends_on = [googleworkspace_group.service_group]
+  lifecycle {
+    ignore_changes = [email, group_id]
+  }
 }
 
 
@@ -159,6 +168,9 @@ resource "googleworkspace_group_member" "clan_group_services_member_staging" {
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
+  lifecycle {
+    ignore_changes = [email, group_id]
+  }
 }
 
 resource "googleworkspace_group_member" "clan_group_services_member_prod" {
@@ -171,6 +183,9 @@ resource "googleworkspace_group_member" "clan_group_services_member_prod" {
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
+  lifecycle {
+    ignore_changes = [email, group_id]
+  }
 }
 
 resource "googleworkspace_group_member" "clan_group_services_cloudrun_sa_member" {
@@ -180,6 +195,9 @@ resource "googleworkspace_group_member" "clan_group_services_cloudrun_sa_member"
   email    = var.cloud_run_default_sa
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
+  lifecycle {
+    ignore_changes = [email, group_id]
+  }
 }
 
 resource "googleworkspace_group_member" "clan_group_services_compute_sa_member" {
@@ -189,6 +207,9 @@ resource "googleworkspace_group_member" "clan_group_services_compute_sa_member" 
   email    = var.compute_sa
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
+  lifecycle {
+    ignore_changes = [email, group_id]
+  }
 }
 
 resource "google_project_iam_member" "extenda_storage_viewer" {
@@ -208,7 +229,7 @@ resource "google_project_iam_member" "extenda_artifact_reader" {
   depends_on = [googleworkspace_group.service_clan_group]
 }
 
-# Migration from count to for_each - backwards compatibility
+#Migration from count to for_each - backwards compatibility
 #moved {
 #  from = gsuite_group_member.clan_group_services_cloudrun_sa_member[0]
 #  to   = gsuite_group_member.clan_group_services_cloudrun_sa_member["cloudrun-sa"]
