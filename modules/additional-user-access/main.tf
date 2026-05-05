@@ -36,6 +36,7 @@ resource "googleworkspace_group_member" "access_group_member" {
   group_id = "${var.clan_gsuite_group}-prod-${each.value.name}@${var.domain}"
   email    = each.value.member
   role     = "MEMBER"
+  type     = "GROUP"
 
   depends_on = [googleworkspace_group.access_group]
 }
