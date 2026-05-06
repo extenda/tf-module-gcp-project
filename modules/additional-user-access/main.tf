@@ -39,6 +39,10 @@ resource "googleworkspace_group_member" "access_group_member" {
   role     = "MEMBER"
   type     = each.value.member_type
 
+  lifecycle {
+    ignore_changes = [type]
+  }
+
   depends_on = [googleworkspace_group.access_group]
 }
 
