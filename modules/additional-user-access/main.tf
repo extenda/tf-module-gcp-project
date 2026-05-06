@@ -8,8 +8,9 @@ locals {
   ])
   group_members = flatten([for group_key, group in var.additional_user_access : [
     for member_key, member in group.members : {
-      name   = group.name
-      member = member
+      name        = group.name
+      member      = member
+      member_type = startswith(split("@", member)[0], "tribe-") ? "GROUP" : "USER"
     }
   ]
   ])
@@ -36,7 +37,7 @@ resource "googleworkspace_group_member" "access_group_member" {
   group_id = "${var.clan_gsuite_group}-prod-${each.value.name}@${var.domain}"
   email    = each.value.member
   role     = "MEMBER"
-  type     = "USER"
+  type     = each.value.member_type
 
   depends_on = [googleworkspace_group.access_group]
 }
