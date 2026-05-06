@@ -177,3 +177,9 @@ terragrunt state push state.migrated.json
 
 Validate
 terragrunt plan -no-color
+
+sed -i \
+  -e 's|registry.terraform.io/deviavir/gsuite|registry.terraform.io/hashicorp/googleworkspace|g' \
+  -e 's|"gsuite_group_member"|"googleworkspace_group_member"|g' \
+  -e 's|"gsuite_group"|"googleworkspace_group"|g' \
+  state.json
