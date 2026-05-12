@@ -500,3 +500,9 @@ variable create_service_account_keys {
   type        = bool
   default     = false
 }
+
+variable customer_id {
+  description = "The unique customer_id for our google workspace"
+  type        = string
+  default     = ""
+}

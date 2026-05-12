@@ -57,8 +57,8 @@ output service_private_keys_encoded {
 }
 
 output gsuite_group_email {
-  description = "The GSuite group emails created per each service"
-  value       = module.services_sa.gsuite_group_email
+  description = "The Google workspace group emails created per each service"
+  value       = module.services_sa.googleworkspace_group_email
 }
 
 output service_account_private_keys_encoded {
