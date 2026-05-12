@@ -101,11 +101,12 @@ resource "googleworkspace_group_member" "service_account_ci_cd_group_member" {
   for_each = {
     for service in var.services :
     service.name => service
-    if var.ci_cd_account == true
+    if var.ci_cd_account == true && var.create_service_group == true
   }
   group_id = "${var.service_group_name}-${each.key}@${var.domain}"
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
+  depends_on = [googleworkspace_group.service_group, time_sleep.sa_propagation]
   lifecycle {
     ignore_changes = [email, group_id]
   }

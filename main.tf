@@ -38,7 +38,7 @@ module "ci_cd_sa" {
 
   create_service_account      = var.create_ci_cd_service_account
   create_service_account_keys = false # CI/CD uses workload identity, no keys needed
-  create_service_group        = var.create_ci_cd_group
+  create_service_group        = length(var.ci_cd_sa) > 0
   service_group_name          = "ci-cd-accounts"
   clan_gsuite_group           = var.clan_gsuite_group
 

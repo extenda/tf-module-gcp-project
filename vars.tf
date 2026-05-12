@@ -96,12 +96,6 @@ variable create_ci_cd_service_account {
   default     = true
 }
 
-variable create_ci_cd_group {
-  description = "If the Service GSuite Group should be created for the CI/CD Service Account"
-  type        = bool
-  default     = false
-}
-
 variable ci_cd_sa {
   type = list(object({
     name      = string
