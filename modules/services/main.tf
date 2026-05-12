@@ -40,6 +40,11 @@ resource "google_service_account" "sa" {
   project      = var.project_id
 }
 
+resource "time_sleep" "sa_propagation" {
+  depends_on      = [google_service_account.sa]
+  create_duration = "30s"
+}
+
 resource "google_project_iam_member" "project_roles" {
   for_each = {
     for service in local.service_roles :
@@ -86,7 +91,7 @@ resource "googleworkspace_group_member" "service_account_sa_group_member" {
   group_id = "${var.service_group_name}-${each.key}@${var.domain}"
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
-  depends_on = [googleworkspace_group.service_group]
+  depends_on = [googleworkspace_group.service_group, time_sleep.sa_propagation]
   lifecycle {
     ignore_changes = [email, group_id]
   }
@@ -167,7 +172,7 @@ resource "googleworkspace_group_member" "clan_group_services_member_staging" {
   group_id = "${var.clan_gsuite_group}-services@${var.domain}"
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
-  depends_on = [googleworkspace_group.service_clan_group]
+  depends_on = [googleworkspace_group.service_clan_group, time_sleep.sa_propagation]
   lifecycle {
     ignore_changes = [email, group_id]
   }
@@ -182,7 +187,7 @@ resource "googleworkspace_group_member" "clan_group_services_member_prod" {
   group_id = "${var.clan_gsuite_group}-services@${var.domain}"
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
-  depends_on = [googleworkspace_group.service_clan_group]
+  depends_on = [googleworkspace_group.service_clan_group, time_sleep.sa_propagation]
   lifecycle {
     ignore_changes = [email, group_id]
   }

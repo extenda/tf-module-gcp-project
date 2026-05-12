@@ -13,6 +13,9 @@ terraform {
       source = "hashicorp/googleworkspace"
       version = "~> 0.7.0"
     }
+    time = {
+      source = "hashicorp/time"
+    }
   }
 }
 
