@@ -96,6 +96,12 @@ variable create_ci_cd_service_account {
   default     = true
 }
 
+variable create_ci_cd_service_group {
+  description = "If the CI/CD Google Workspace group should be created by this stack. Set to false when using a shared pre-existing group."
+  type        = bool
+  default     = false
+}
+
 variable ci_cd_sa {
   type = list(object({
     name      = string
