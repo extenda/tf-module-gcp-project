@@ -92,9 +92,6 @@ resource "googleworkspace_group_member" "service_account_sa_group_member" {
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_group, time_sleep.sa_propagation]
-  lifecycle {
-    ignore_changes = [email, group_id]
-  }
 }
 
 resource "googleworkspace_group_member" "service_account_ci_cd_group_member" {
@@ -107,9 +104,6 @@ resource "googleworkspace_group_member" "service_account_ci_cd_group_member" {
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
   depends_on = [time_sleep.sa_propagation]
-  lifecycle {
-    ignore_changes = [email, group_id]
-  }
 }
 
 resource "googleworkspace_group_member" "clan_group_member" {
@@ -124,9 +118,6 @@ resource "googleworkspace_group_member" "clan_group_member" {
   type     = "GROUP"
 
   depends_on = [googleworkspace_group.service_group]
-  lifecycle {
-    ignore_changes = [email, group_id]
-  }
 }
 
 
@@ -174,9 +165,6 @@ resource "googleworkspace_group_member" "clan_group_services_member_staging" {
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group, time_sleep.sa_propagation]
-  lifecycle {
-    ignore_changes = [email, group_id]
-  }
 }
 
 resource "googleworkspace_group_member" "clan_group_services_member_prod" {
@@ -189,9 +177,6 @@ resource "googleworkspace_group_member" "clan_group_services_member_prod" {
   email    = google_service_account.sa[each.key].email
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group, time_sleep.sa_propagation]
-  lifecycle {
-    ignore_changes = [email, group_id]
-  }
 }
 
 resource "googleworkspace_group_member" "clan_group_services_cloudrun_sa_member" {
@@ -201,9 +186,6 @@ resource "googleworkspace_group_member" "clan_group_services_cloudrun_sa_member"
   email    = var.cloud_run_default_sa
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
-  lifecycle {
-    ignore_changes = [email, group_id]
-  }
 }
 
 resource "googleworkspace_group_member" "clan_group_services_compute_sa_member" {
@@ -213,9 +195,6 @@ resource "googleworkspace_group_member" "clan_group_services_compute_sa_member" 
   email    = var.compute_sa
   role     = "MEMBER"
   depends_on = [googleworkspace_group.service_clan_group]
-  lifecycle {
-    ignore_changes = [email, group_id]
-  }
 }
 
 resource "google_project_iam_member" "extenda_storage_viewer" {
