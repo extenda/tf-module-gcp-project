@@ -78,3 +78,9 @@ variable cloud_run_default_sa {
   type        = string
   default     = ""
 }
+
+variable sa_propagation_delay {
+  description = "Wait duration after service account creation before Google Workspace membership operations"
+  type        = string
+  default     = "120s"
+}

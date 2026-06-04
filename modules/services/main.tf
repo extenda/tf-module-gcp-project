@@ -42,7 +42,7 @@ resource "google_service_account" "sa" {
 
 resource "time_sleep" "sa_propagation" {
   depends_on      = [google_service_account.sa]
-  create_duration = "30s"
+  create_duration = var.sa_propagation_delay
 }
 
 resource "google_project_iam_member" "project_roles" {
