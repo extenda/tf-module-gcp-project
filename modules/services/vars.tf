@@ -6,8 +6,18 @@ variable services {
   type = list(object({
     name      = string
     iam_roles = list(string)
+    # SA-level IAM bindings allow granting roles ON specific target service accounts
+    sa_iam_bindings = optional(list(object({
+      target_sa = string
+      role      = string
+      condition = optional(object({
+        title       = string
+        description = optional(string)
+        expression  = string
+      }))
+    })), [])
   }))
-  description = "Map of IAM Roles to assign to the Services Service Account"
+  description = "Map of IAM Roles to assign to the Services Service Account. Includes optional sa_iam_bindings for resource-level IAM on other service accounts."
 
   validation {
     condition = length([

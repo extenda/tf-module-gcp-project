@@ -7,6 +7,17 @@ locals {
     }
     ]
   ])
+
+  # Flatten SA-level IAM bindings for resource-level permissions on target service accounts
+  sa_iam_bindings = flatten([for service in var.services : [
+    for binding in coalesce(service.sa_iam_bindings, []) : {
+      sa_name     = service.name
+      target_sa   = binding.target_sa
+      role        = binding.role
+      condition   = binding.condition
+      binding_key = "${service.name}.${binding.target_sa}.${binding.role}"
+    }
+  ]])
 }
 
 
@@ -54,6 +65,31 @@ resource "google_project_iam_member" "project_roles" {
   project = var.project_id
   role    = each.value.role
   member  = "serviceAccount:${google_service_account.sa[each.value.name].email}"
+
+  depends_on = [google_service_account.sa]
+}
+
+# SA-level IAM bindings: grant roles ON a target service account (not at project level)
+# This enables scenarios like: SA-A can generate tokens ONLY for SA-B (not all SAs in project)
+resource "google_service_account_iam_member" "sa_level_bindings" {
+  for_each = {
+    for binding in local.sa_iam_bindings :
+    binding.binding_key => binding
+    if var.create_service_account == true
+  }
+
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${each.value.target_sa}@${var.project_id}.iam.gserviceaccount.com"
+  role               = each.value.role
+  member             = "serviceAccount:${google_service_account.sa[each.value.sa_name].email}"
+
+  dynamic "condition" {
+    for_each = each.value.condition != null ? [each.value.condition] : []
+    content {
+      title       = condition.value.title
+      description = lookup(condition.value, "description", null)
+      expression  = condition.value.expression
+    }
+  }
 
   depends_on = [google_service_account.sa]
 }

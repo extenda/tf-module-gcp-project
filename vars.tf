@@ -195,9 +195,19 @@ variable services {
   type = list(object({
     name      = string
     iam_roles = list(string)
+    # SA-level IAM bindings allow granting roles ON specific target service accounts
+    sa_iam_bindings = optional(list(object({
+      target_sa = string
+      role      = string
+      condition = optional(object({
+        title       = string
+        description = optional(string)
+        expression  = string
+      }))
+    })), [])
   }))
   default     = []
-  description = "Map of IAM Roles to assign to the Services Service Account"
+  description = "Map of IAM Roles to assign to the Services Service Account. Includes optional sa_iam_bindings for resource-level IAM on other service accounts."
 }
 
 variable repositories {
@@ -327,9 +337,20 @@ variable service_accounts {
   type = list(object({
     name      = string
     iam_roles = list(string)
+    # SA-level IAM bindings allow granting roles ON specific target service accounts
+    # (e.g., to allow this SA to generate tokens for another specific SA only)
+    sa_iam_bindings = optional(list(object({
+      target_sa = string # The target service account name (not full email)
+      role      = string # Role to grant on the target SA (e.g., roles/iam.serviceAccountTokenCreator)
+      condition = optional(object({
+        title       = string
+        description = optional(string)
+        expression  = string
+      }))
+    })), [])
   }))
   default     = []
-  description = "Map of IAM Roles to assign to the Service Account"
+  description = "Map of IAM Roles to assign to the Service Account. Includes optional sa_iam_bindings for resource-level IAM on other service accounts."
 }
 
 variable create_sa {
