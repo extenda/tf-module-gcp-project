@@ -250,6 +250,15 @@ resource "google_project_iam_member" "extenda_artifact_reader" {
   depends_on = [googleworkspace_group.service_clan_group]
 }
 
+resource "google_project_iam_member" "extenda_secret_accessor" {
+  count = var.create_service_account == true && var.ci_cd_account == false && var.create_service_group == true ? 1 : 0
+
+  project = "extenda"
+  role    = "roles/secretmanager.secretAccessor"
+  member  = "group:${var.clan_gsuite_group}-services@${var.domain}"
+  depends_on = [googleworkspace_group.service_clan_group]
+}
+
 #Migration from count to for_each - backwards compatibility
 #moved {
 #  from = gsuite_group_member.clan_group_services_cloudrun_sa_member[0]
