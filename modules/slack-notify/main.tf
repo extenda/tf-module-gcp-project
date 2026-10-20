@@ -11,7 +11,7 @@ resource "google_secret_manager_secret" "slack_notify_id" {
     terraform = ""
   }
   replication {
-    automatic = true
+    auto {}
   }
   project = var.project_id
 }
