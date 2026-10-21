@@ -18,7 +18,7 @@ resource "google_secret_manager_secret" "user_secret_id" {
   }
 
   replication {
-    automatic = true
+    auto {}
   }
   project = var.project_id
 }
@@ -40,7 +40,7 @@ resource "google_secret_manager_secret" "pass_secret_id" {
   }
 
   replication {
-    automatic = true
+    auto {}
   }
   project = var.project_id
 }
