@@ -8,12 +8,19 @@ An Extenda Retail maintained Terraform Module, which is intended to create speci
 
 ## Providers
 
-| Name   | Version   |
-|:-------|:----------|
-| google | ~> 3.8    |
-| gsuite | ~> 0.1.62 |
+| Name            | Version       |
+|:----------------|:--------------|
+| google          | >= 6.0, < 9   |
+| google-beta     | >= 6.0, < 9   |
+| googleworkspace | ~> 0.7.0      |
+| time            | n/a           |
 
-GSuite Provider must be manually downloaded and installed in `$HOME/.terraform.d/plugins`. See GSuite Provider GitHub Repo for [Installation instructions](https://github.com/DeviaVir/terraform-provider-gsuite#installation).
+Requires Terraform >= 1.3. The module is built on [terraform-google-project-factory](https://github.com/terraform-google-modules/terraform-google-project-factory/) 18.4.0.
+
+## Migration guides
+
+- [v1.x to v2.0](MIGRATION_1.x-2.0.md): Google provider 8.x and project-factory 18.4.0
+- [GSuite to Google Workspace provider](MIGRATION_new_gsuite_provider.md)
 
 ## Inputs
 
