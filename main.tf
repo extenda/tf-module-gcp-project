@@ -169,10 +169,11 @@ module "parent_project_iam" {
   platform_project_id      = var.platform_project_id
   custom_iam_roles         = var.custom_iam_roles
 
-  project_id       = module.project_factory.project_id
-  services         = var.services
-  common_iam_roles = var.common_iam_roles
-  sa_depends_on    = module.services_sa.email
+  project_id                      = module.project_factory.project_id
+  services                        = var.services
+  common_iam_roles                = var.common_iam_roles
+  parent_project_common_iam_roles = var.parent_project_common_iam_roles
+  sa_depends_on                   = module.services_sa.email
 
   dns_project_id            = var.dns_project_id
   dns_project_iam_roles     = var.dns_project_iam_roles

@@ -11,7 +11,13 @@ variable services {
 }
 
 variable common_iam_roles {
-  description = "List of IAM Roles to assign to every Services Service Account in Tribe project"
+  description = "List of IAM Roles to assign to every Services Service Account in its own (clan) project"
+  type        = list(string)
+  default     = []
+}
+
+variable parent_project_common_iam_roles {
+  description = "List of IAM Roles to assign to every Services Service Account in the parent (tribe) project"
   type        = list(string)
   default     = []
 }

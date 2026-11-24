@@ -6,6 +6,14 @@ locals {
     }
     ]
   ])
+
+  parent_service_roles = flatten([for service_key, service in var.services : [
+    for role_key, role in var.parent_project_common_iam_roles : {
+      name = service.name
+      role = role
+    }
+    ]
+  ])
 }
 
 resource "google_project_iam_member" "project_service_roles" {
@@ -31,7 +39,7 @@ resource "google_project_iam_member" "project_gke_role" {
 
 resource "google_project_iam_member" "parent_project_service_roles" {
   for_each = {
-    for service in local.service_roles :
+    for service in local.parent_service_roles :
     "${service.name}.${service.role}" => service
     if var.service_account_exists == true && var.parent_project_id != ""
   }
