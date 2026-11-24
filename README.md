@@ -35,7 +35,7 @@ Requires Terraform >= 1.3. The module is built on [terraform-google-project-fact
 | clan\_gsuite\_group | The name of the clan group that needs to be added to the Service GSuite Group | `string` | `""` | no |
 | clan\_roles | Roles to be added to the clan's group in the staging project | `list(string)` | `[]` | no |
 | cloudrun\_sa | Map of IAM Roles to assign to the CloudRun Runtime Service Account | <pre>list(object({<br>    name      = string<br>    iam_roles = list(string)<br>  }))</pre> | <pre>[<br>  {<br>    "iam_roles": [<br>      "roles/editor",<br>      "roles/secretmanager.secretAccessor"<br>    ],<br>    "name": "cloudrun-runtime"<br>  }<br>]</pre> | no |
-| common\_iam\_roles | Default list of IAM Roles to assign to every Services Service Account | `list(string)` | <pre>[<br>  "roles/monitoring.metricWriter",<br>  "roles/logging.logWriter",<br>  "roles/monitoring.viewer",<br>  "roles/cloudtrace.agent",<br>  "roles/secretmanager.secretAccessor"<br>]</pre> | no |
+| common\_iam\_roles | Default list of IAM Roles to assign to every Services Service Account on the parent (tribe) project | `list(string)` | <pre>[<br>  "roles/monitoring.metricWriter",<br>  "roles/logging.logWriter",<br>  "roles/monitoring.viewer",<br>  "roles/cloudtrace.agent"<br>]</pre> | no |
 | compute\_project\_iam\_roles | List of IAM Roles to add to default compute service account | `list(string)` | n/a | yes |
 | compute\_sa | Compute Engine default service account | `string` | n/a | yes |
 | compute\_project\_iam\_roles | List of IAM Roles to add to default compute service account | `list(string)` | <pre>[<br>  "roles/clouddeploy.jobRunner",<br>  "roles/container.developer",<br>  "roles/storage.objectViewer"<br>]</pre> | no |
