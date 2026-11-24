@@ -217,9 +217,15 @@ variable repositories {
 }
 
 variable common_iam_roles {
-  description = "Default list of IAM Roles to assign to every Services Service Account"
+  description = "Default list of IAM Roles to assign to every Services Service Account in its own (clan) project"
   type        = list(string)
   default     = ["roles/monitoring.metricWriter", "roles/logging.logWriter", "roles/monitoring.viewer", "roles/cloudtrace.agent", "roles/secretmanager.secretAccessor"]
+}
+
+variable parent_project_common_iam_roles {
+  description = "List of IAM Roles to assign to every Services Service Account on the parent (tribe) project"
+  type        = list(string)
+  default     = ["roles/monitoring.metricWriter", "roles/logging.logWriter", "roles/monitoring.viewer", "roles/cloudtrace.agent"]
 }
 
 variable create_service_sa {
